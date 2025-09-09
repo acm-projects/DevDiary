@@ -93,181 +93,162 @@
     <li><a href="https://www.mongodb.com/try/download/community" target="_blank">MongoDB Download</a></li>
 </ul>
 
-<h1 align="center">🗓️ Milestones 🗓️</h1>
+---
 
-<details style="margin-bottom: 5px;">
-  <summary><h3 style="display: inline;">Week 1</h3></summary>
-  <ul>
-    <li>Decide Tech Stack</li>
-    <li>Finalize MVPs and stretch goals according to team members</li>
-    <li>Assign roles to each member (Frontend, Backend, Full Stack based on experience and interest)</li>
-    <li>Download necessary software</li>
-    <li><b>Frontend:</b> Begin wireframing on Figma</li>
-    <li><b>Backend:</b> Practice user authentication, watch tutorials to gain familiarity</li>
-  </ul>
-</details>
+# 🎯 Stretch Goals 🎯
 
-<details style="margin-bottom: 5px;">
-  <summary><h3 style="display: inline;">Week 2</h3></summary>
-  <ul>
-    <li><b>Frontend:</b>
-      <ul>
-        <li>Finish wireframing</li>
-        <li>Begin coding pages (at least have login/sign-up done so backend can begin integration)</li>
-      </ul>
-    </li>
-    <li><b>Backend:</b>
-      <ul>
-        <li>Practice making API calls</li>
-        <li>Experiment with data storage in Firebase Realtime Database</li>
-      </ul>
-    </li>
-  </ul>
-</details>
+### 1) Team Mode & Collaborative Logging
+- Invite teammates to contribute to the same project’s error logs and setup docs  
+- Assign logs to team members to fix or follow up  
+- Comment threads under logs for collaboration  
 
-<details style="margin-bottom: 5px;">
-  <summary><h3 style="display: inline;">Week 3</h3></summary>
-  <ul>
-    <li><b>Frontend:</b>
-      <ul>
-        <li>Continue coding pages</li>
-        <li>Ensure all pages are routed</li>
-        <li>Aim to have main pages (Home, Reading Tracker, Profile) completed</li>
-      </ul>
-    </li>
-    <li><b>Backend:</b>
-      <ul>
-        <li>Integrate Login/Sign-up/Password management with Firebase</li>
-      </ul>
-    </li>
-  </ul>
-</details>
+### 2) GitHub Integration
+- Sync markdown setup docs to a project’s README or `/docs` folder  
+- View related logs per branch or commit  
 
-<details style="margin-bottom: 5px;">
-  <summary><h3 style="display: inline;">Week 4</h3></summary>
-  <ul>
-    <li><b>Backend:</b>
-      <ul>
-        <li>Begin integrating APIs</li>
-        <li>Fetch, cache, and display books/articles/poems</li>
-      </ul>
-    </li>
-    <li><b>Frontend:</b>
-      <ul>
-        <li>Incorporate data visualization widgets into the application</li>
-      </ul>
-    </li>
-  </ul>
-</details>
+### 3) Package Dependencies Tracker
+- Detect deprecated/outdated dependencies  
+- Summarize recent package updates for visibility  
 
-<details style="margin-bottom: 5px;">
-  <summary><h3 style="display: inline;">Week 5</h3></summary>
-  <ul>
-    <li><b>Backend:</b> Integrate user data with data visualizations</li>
-    <li><b>Frontend:</b> Begin working on presentation and script</li>
-  </ul>
-</details>
+### 4) Error Frequency & Analytics Dashboard
+- Personal stats (most common error types, frameworks, files)  
+- Use trends to surface learning resources or tutorials proactively  
 
-<details style="margin-bottom: 5px;">
-  <summary><h3 style="display: inline;">Week 6</h3></summary>
-  <ul>
-    <li><b>Backend:</b> Buffer week for any roadblocks and allow more time for integration</li>
-    <li><b>Frontend:</b> All pages should be fully coded by now</li>
-  </ul>
-</details>
-
-<details style="margin-bottom: 5px;">
-  <summary><h3 style="display: inline;">Week 7</h3></summary>
-  <ul>
-    <li>Work on stretch goals (if time permits)</li>
-    <li><b>Backend:</b> Refine searching and filtering mechanisms</li>
-    <li><b>Frontend:</b> Finalize presentation and script, begin practicing</li>
-  </ul>
-</details>
-
-<details style="margin-bottom: 5px;">
-  <summary><h3 style="display: inline;">Week 8</h3></summary>
-  <ul>
-    <li>Practice and prepare for presentations</li>
-  </ul>
-</details>
-
-<details style="margin-bottom: 5px;">
-  <summary><h3 style="display: inline;">Week 9</h3></summary>
-  <ul>
-    <li>Polish presentation and gather feedback</li>
-  </ul>
-</details>
+### 5) Keyboard Shortcuts Tracker
+- Save frequently used IDE and OS shortcuts for quick recall
 
 
+---
 
-<h1 align="center">⋆˚.⋆ ⚔️ Competition ⚔️ ⋆˚.⋆</h1>
-<h4>Bookly</h4>
-<li>Including daily reading, bookmarks, and progress tracking but is only limited towards books</li>
-<li>Does not have a pop quiz or trivia feature</li>
-<li>Targeted towards promoting reading but not necessarily towards daily learning </li>
+# 💻 Tech Stack 💻
 
+### Wireframing: Figma
+- Collaborative UI/UX design and prototyping  
+- Visualize components, flows, and interactions
 
-<h4>Headway</h4>
-<li>Includes book summaries for the main ideas of books, microlearning sessions, and self growth challenges but is only limited towards books and quotes</li>
-<li>Does not include the entire book, only has summaries</li>
-<li>Lack of ambient sounds to play while reading</li>
+### IDE: VSCode
+- Extensions for formatting, linting, and Markdown preview
 
-<h4>Mindsnap</h4>
-<li>Includes fun facts, articles of different categories, and educational quizzes but does not include books</li>
-<li>Focuses on learning lessons or improving knowledge on a topic instead of staying up to date with the news and gaining different perspectives</li>
+### MERN Stack
+**Language:** TypeScript (frontend & backend)  
 
+**Frontend:** React + Tailwind CSS  
+- React: component-based UI  
+- Tailwind CSS: utility-first styling with rapid iteration
 
-<h1 align="center">⋆˚.⋆ 📓 Other Resources/Guides 📓 ⋆˚.⋆</h1>
-<h2>Possible APIs:</h2>
-<ul>
-    <li><b>Google Books API</b> - <a href="https://developers.google.com/books" target="_blank">Google Books API Documentation</a></li>
-    <li><b>Open Library API</b> - <a href="https://openlibrary.org/developers/api" target="_blank">Open Library API Documentation</a></li>
-    <li><b>Core API</b> - <a href="https://www.coreapi.org/" target="_blank">Core API Documentation</a></li>
-    <li><b>Semantic Scholar API</b> - <a href="https://www.semanticscholar.org/product/api" target="_blank">Semantic Scholar API Documentation</a></li>
-    <li><b>Poemist API</b> - <a href="https://poemist.github.io/poemist-apidoc/" target="_blank">Poemist API Documentation</a></li>
-    <li><b>PoetryDB API</b> - <a href="https://poetrydb.org/index.html" target="_blank">PoetryDB API Documentation</a></li>
-    <li><b>News API</b> - <a href="https://newsapi.ai/gad_source=1&gclid=CjwKCAiAp4O8BhAkEiwAqv2UqMQZ9VIdF6AsYXiwFHBtvKl9NIGLpDdEk2k1jeE__HkZgZoj20xqGRoCOpQQAvD_BwE" target="_blank">News API Documentation</a></li>
-</ul>
+**Backend:** Node.js + Express  
+- Node.js: JS runtime  
+- Express: routing, HTTP handlers, and APIs
 
-<h2>Learning Resources</h2>
-
-<ul>
-    <li><b>Learning React Native</b> - <a href="https://www.youtube.com/watch?v=sm5Y7Vtuihg" target="_blank">Watch here</a></li>
-    <li><b>React Native in 4 hrs</b> - <a href="https://www.youtube.com/watch?v=ur6I5m2nTvk&list=PL4cUxeGkcC9ixPU-QkScoRBVxtPPzVjrQ" target="_blank">Watch here</a></li>
-    <li><b>React Native Tutorial for Beginners</b> - <a href="https://www.youtube.com/watch?v=wnJh7iMrCLA&list=PLS3Cbnye46msryIoZjQ5AQ57nxENwnJfl" target="_blank">Watch here</a></li>
-    <li><b>MERN Tutorials</b> - <a href="https://www.youtube.com/watch?v=tsvZFNgoXy0" target="_blank">Watch here</a></li>
-    <li><b>React Native + MongoDB</b> - <a href="https://www.youtube.com/watch?v=7CqJlxBYj-M" target="_blank">Watch here</a></li>
-    <li><b>Full Stack Application using Expo</b> - <a href="https://www.youtube.com/watch?v=WXsD0ZgxjRw" target="_blank">Watch here</a></li>
-    <li><b>MERN Stack in 2 hrs</b> - <a href="https://www.youtube.com/watch?v=_VZfBrmunD4" target="_blank">Watch here</a></li>
-</ul>
-
-<h3>Using APIs</h3>
-<ul>
-    <li><b>Intro to APIs</b> - <a href="https://www.youtube.com/watch?v=tsvZFNgoXy0" target="_blank">Watch here</a></li>
-    <li><b>Fetching an API in React Native</b> - <a href="https://www.youtube.com/watch?v=7CqJlxBYj-M" target="_blank">Watch here</a></li>
-</ul>
+**Database:** MongoDB  
+- JSON-like storage; great for logs, tags, and user content
 
 
+---
 
-<h1 align="center">⋆˚.⋆ 👥 Meet the Team 👥 ⋆˚.⋆</h1>
+# 🤖 AI Integration 🤖
 
-<h3>⭐ Project Manager:</h3>
-<ul>
-    <li><b>Tamanna Khurana</b></li>
-</ul>
+### Model APIs
+- **Gemini API**  
+- **OpenAI API**
 
-<h3>⭐ Industry Mentor:</h3>
-<ul>
-    <li><b>Judith Liem</b></li>
-</ul>
+### Developer APIs (Nice to have)
+- **Stack Overflow** (search/Q&A)  
+- **GitHub REST API** (issues, commits, PRs → link to logs)  
+- **Dev.to API** (articles/resources)  
+- **npm Registry API** (package versions & deprecations)  
+- **Piston API** (execute code snippets in browser)
 
-<h3>🪼 Team Members:</h3>
-<ul>
-    <li><b>Jazmin Gutierrez</b></li>
-    <li><b>Alexander Chan</b></li>
-    <li><b>Afra Ibnat</b></li>
-    <li><b>Nathan Sujatno</b></li>
-</ul>
 
-![image](https://drive.google.com/uc?export=view&id=1wTc35fOO5Rad3pl9Yp8AZMnlwDGCacPZ)
+---
+
+# ⚙️ Software to Install ⚙️
+
+- **VSCode:** https://code.visualstudio.com/download  
+- **Git:** https://git-scm.com/book/en/v2/Getting-Started-Installing-Git  
+  - Guide: https://rogerdudler.github.io/git-guide/  
+- **Node.js:** https://nodejs.org/en  
+  - **NVM (optional):** https://github.com/nvm-sh/nvm  
+- **MongoDB:** https://www.mongodb.com/try/download/community  
+- **Postman (API testing):** https://www.postman.com/downloads/
+
+
+---
+
+# 🚧 Roadblocks 🚧
+
+### Uploading Terminal Output to MongoDB
+- Plan A: Node.js CLI to capture output and POST to backend  
+- Plan B: Save output to `.txt` and upload via UI/endpoint
+
+### Log Schema & Classification
+- Keep fields precise and structured for faster AI context parse  
+- Enforce formatting & size constraints at ingestion
+
+### Managing Large Inputs in MongoDB
+- Some fields ~1MB limits → pre-filter or chunk logs  
+- Consider GridFS / S3 for long logs and link by ID
+
+
+---
+
+# 🌱 Inspiration 🌱
+
+We ran into recurring Ngrok issues during ACM. Fixes lived across Stack Overflow, docs, and chats. Our mentor’s tip: **document every error**. Personal notes in OneNote/Notion worked at first, but became cluttered and hard to search.  
+**Dev Diary** centralizes developer-focused logs with tagging, AI guidance, and searchable markdown so you can learn once and reuse forever.
+
+
+---
+
+# ⚔️ Competition ⚔️
+
+**Sentry** — great for production crash monitoring, not personal learning logs  
+**Stack Overflow** — broad Q&A; not personalized or project-scoped  
+**Notion** — general notes; lacks dev-centric tagging/search for errors  
+**DevDocs** — excellent docs browser; no logging or analysis  
+**GeeksforGeeks** — generalized tutorials; no personal environment context
+
+
+---
+
+# 📚 Other Resources / Guides 📚
+
+### Save Terminal Output
+- https://www.youtube.com/watch?v=bo-NjxlB9pE  
+- https://www.youtube.com/watch?v=K5uUU5cSiaQ
+
+### Error Handling (React)
+- https://www.youtube.com/watch?v=DTBta08fXGU
+
+### Node.js & CLI
+- Create a CLI: https://www.youtube.com/watch?v=GupmEQFkDJM  
+- Read command-line args: https://www.youtube.com/watch?v=5D7elTp0-xM
+
+### React & Tailwind
+- Basic Notes App: https://www.youtube.com/watch?v=8KB3DHI-QbM  
+- Tailwind CSS: https://www.youtube.com/watch?v=6biMWgD6_JY&t=1390s
+
+
+---
+
+# 📓 Documentation 📓
+
+- React: https://react.dev/  
+- Tailwind: https://tailwindcss.com/docs  
+- MongoDB: https://www.mongodb.com/docs/
+
+
+---
+
+# 🎥 Tutorials 🎥
+
+- Gemini AI Blog + Dashboard: https://www.youtube.com/watch?v=tUnGudIBBjQ  
+- Markdown Editor (React): https://www.youtube.com/watch?v=tYa0WMR0TGU  
+- Dashboard UI (React): https://www.youtube.com/watch?v=wYpCWwD1oz0  
+- MERN Chatbot (Gemini): https://www.youtube.com/watch?v=5fiXEGdEK10  
+- MERN Chatbot (OpenAI): https://www.youtube.com/watch?v=PX_YOfEdhRg  
+- MERN Blogging Site: https://www.youtube.com/watch?v=J7BGuuuvDDk&list=PLqm86YkewF6QbR7QwqYWcAbl70Zhv0JUE  
+- Learn MERN (FreeCodeCamp): https://www.youtube.com/watch?v=F9gB5b4jgOI  
+- Learn MERN (Net Ninja): https://www.youtube.com/watch?v=98BzS5Oz5E4&t=2s  
+- Intro to APIs: https://www.youtube.com/watch?v=WXsD0ZgxjRw  
+- REST APIs: https://www.youtube.com/watch?v=-0exw-9YJBo
