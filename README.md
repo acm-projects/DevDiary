@@ -10,7 +10,7 @@ Dev Diary is a personal markdown-based logging platform built for developers to 
 ### 1. Markdown Documentation  
 - Error title  
 - Error message  
-- Code snippets  f
+- Code snippets  
 - How the error was fixed  
 - Personal notes  
 - Links/resources (GitHub repo, YouTube, Stack Overflow)  
@@ -196,3 +196,20 @@ Since then, I’ve been in the habit of jotting down error fixes and environment
 - [Learn MERN (Net Ninja)](https://www.youtube.com/watch?v=98BzS5Oz5E4&t=2s)  
 - [Intro to APIs](https://www.youtube.com/watch?v=WXsD0ZgxjRw)  
 - [REST APIs](https://www.youtube.com/watch?v=-0exw-9YJBo)  
+
+# 👥 Meet the Team 
+
+### ⭐ Project Manager
+- **Tamanna Khurana**
+
+### ⭐ Industry Mentor
+- **Suraj Khosla**
+
+### 🪼 Team Members
+- **Tyler Le**  
+- **Jonathan Lewis**  
+- **Zoë Bryant**  
+- **Phuc Trinh**  
+- **Maryam Al-Naami**
+
+
