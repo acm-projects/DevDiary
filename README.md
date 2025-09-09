@@ -1,11 +1,11 @@
-# ˖°.✧📓 Dev Diary 📓✧˖°
+<h1 align="center">˖°.✧📓 Dev Diary 📓✧˖°</h1>
 
-## ✨ Summary  
+<h2 align="center">✨ Summary</h2>
 Dev Diary is a personal markdown-based logging platform built for developers to document bugs, errors, and setup processes across coding projects. It helps you keep track of technical challenges in an organized, personalized way, paired with an AI assistant. With a centralized memory bank and a chatbot that guides you through documentation, error fixes, and helpful tools, creating personal projects feels a little less overwhelming (especially for new developers) while also making the process more reflective and focused on learning.  
 
 ---
 
-## ⚙️ Minimum Viable Product (MVP)  
+<h2 align="center">⚙️ Minimum Viable Product (MVP)</h2>
 
 ### 1. Markdown Documentation  
 - Error title  
@@ -39,7 +39,7 @@ Dev Diary is a personal markdown-based logging platform built for developers to 
 
 ---
 
-## 🗓️ Milestones  
+<h2 align="center">🗓️ Milestones</h2>
 
 **Week 1**  
 - Finalize tech stack, MVPs, and stretch goals  
@@ -80,7 +80,7 @@ Dev Diary is a personal markdown-based logging platform built for developers to 
 
 ---
 
-## 🎯 Stretch Goals  
+<h2 align="center">🎯 Stretch Goals</h2>
 
 - **Team Mode** → invite teammates, assign logs, comment threads  
 - **GitHub Integration** → sync setup docs to repo, view logs by branch/commit  
@@ -90,7 +90,7 @@ Dev Diary is a personal markdown-based logging platform built for developers to 
 
 ---
 
-## 💻 Tech Stack  
+<h2 align="center">💻 Tech Stack</h2>
 
 - **Wireframing:** Figma (collaborative UI/UX prototyping)  
 - **IDE:** VSCode  
@@ -106,7 +106,7 @@ Dev Diary is a personal markdown-based logging platform built for developers to 
 
 ---
 
-## 🤖 AI Integration  
+<h2 align="center">🤖 AI Integration</h2>
 
 - Gemini API  
 - OpenAI API  
@@ -120,7 +120,7 @@ Dev Diary is a personal markdown-based logging platform built for developers to 
 
 ---
 
-## ⚙️ Software to Install  
+<h2 align="center">⚙️ Software to Install</h2>
 
 - [VSCode](https://code.visualstudio.com/download)  
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) → [Quick Guide](https://rogerdudler.github.io/git-guide/)  
@@ -130,7 +130,7 @@ Dev Diary is a personal markdown-based logging platform built for developers to 
 
 ---
 
-## 🚧 Roadblocks  
+<h2 align="center">🚧 Roadblocks</h2>
 
 - **Uploading terminal logs to MongoDB** → likely biggest hurdle (Plan A: Node.js CLI, Plan B: `.txt` upload)  
 - **Log Schema** → needs to be structured for fast AI parsing  
@@ -138,16 +138,15 @@ Dev Diary is a personal markdown-based logging platform built for developers to 
 
 ---
 
-## 🌱 Inspiration  
+<h2 align="center">🌱 Inspiration</h2>
 
 Last semester during ACM, my team kept running into the same recurring issue with Ngrok. Every time, we’d have to dig through Stack Overflow posts, external docs, or ask chatgpt for the right terminal commands to fix it. Our industry mentor gave us a helpful tip that she uses on the job: document every error we encounter in a Google Doc or notes app so we can refer back to it if it happens again.
 
 Since then, I’ve been in the habit of jotting down error fixes and environment setup instructions in OneNote for my personal projects. When I switched from Java to Python for LeetCode, I also used Notion to keep track of syntax differences and helpful patterns. But over time, my notes became really cluttered and hard to navigate. That got me thinking: what if there were a more centralized, organized platform where developers could store these logs and revisit them easily, with a clean, user friendly interface?
 
-
 ---
 
-## ⚔️ Competition  
+<h2 align="center">⚔️ Competition</h2>
 
 - **Sentry** → error tracking for production apps, not personal learning logs  
 - **Stack Overflow** → huge Q&A base but not personal/project-specific  
@@ -157,7 +156,7 @@ Since then, I’ve been in the habit of jotting down error fixes and environment
 
 ---
 
-## 📚 Other Resources / Guides  
+<h2 align="center">📚 Other Resources / Guides</h2>
 
 **Terminal Output**  
 - [Video 1](https://www.youtube.com/watch?v=bo-NjxlB9pE)  
@@ -176,7 +175,7 @@ Since then, I’ve been in the habit of jotting down error fixes and environment
 
 ---
 
-## 📓 Documentation  
+<h2 align="center">📓 Documentation</h2>
 
 - [React Docs](https://react.dev/)  
 - [Tailwind Docs](https://tailwindcss.com/docs)  
@@ -184,7 +183,7 @@ Since then, I’ve been in the habit of jotting down error fixes and environment
 
 ---
 
-## 🎥 Tutorials  
+<h2 align="center">🎥 Tutorials</h2>
 
 - [Gemini AI Blog + Dashboard](https://www.youtube.com/watch?v=tUnGudIBBjQ)  
 - [Markdown Editor in React](https://www.youtube.com/watch?v=tYa0WMR0TGU)  
@@ -197,7 +196,9 @@ Since then, I’ve been in the habit of jotting down error fixes and environment
 - [Intro to APIs](https://www.youtube.com/watch?v=WXsD0ZgxjRw)  
 - [REST APIs](https://www.youtube.com/watch?v=-0exw-9YJBo)  
 
-# 👥 Meet the Team 
+---
+
+<h1 align="center">👥 Meet the Team</h1>
 
 ### ⭐ Project Manager
 - **Tamanna Khurana**
@@ -205,11 +206,9 @@ Since then, I’ve been in the habit of jotting down error fixes and environment
 ### ⭐ Industry Mentor
 - **Suraj Khosla**
 
-### 🪼 Team Members
+### ⭐ Team Members
 - **Tyler Le**  
 - **Jonathan Lewis**  
 - **Zoë Bryant**  
 - **Phuc Trinh**  
 - **Maryam Al-Naami**
-
-
