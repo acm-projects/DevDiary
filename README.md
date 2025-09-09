@@ -10,7 +10,7 @@ Dev Diary is a personal markdown-based logging platform built for developers to 
 ### 1. Markdown Documentation  
 - Error title  
 - Error message  
-- Code snippets  
+- Code snippets  f
 - How the error was fixed  
 - Personal notes  
 - Links/resources (GitHub repo, YouTube, Stack Overflow)  
@@ -140,9 +140,10 @@ Dev Diary is a personal markdown-based logging platform built for developers to 
 
 ## 🌱 Inspiration  
 
-During ACM, our team kept running into recurring Ngrok issues. Every time, we’d search Stack Overflow or ask ChatGPT for fixes. Our mentor suggested: *document everything*.  
+Last semester during ACM, my team kept running into the same recurring issue with Ngrok. Every time, we’d have to dig through Stack Overflow posts, external docs, or ask chatgpt for the right terminal commands to fix it. Our industry mentor gave us a helpful tip that she uses on the job: document every error we encounter in a Google Doc or notes app so we can refer back to it if it happens again.
 
-I started keeping setup notes and fixes in OneNote/Notion, but they got cluttered fast. That’s when I thought — why not create a developer-focused, centralized logging platform that’s searchable, AI-powered, and clean?  
+Since then, I’ve been in the habit of jotting down error fixes and environment setup instructions in OneNote for my personal projects. When I switched from Java to Python for LeetCode, I also used Notion to keep track of syntax differences and helpful patterns. But over time, my notes became really cluttered and hard to navigate. That got me thinking: what if there were a more centralized, organized platform where developers could store these logs and revisit them easily, with a clean, user friendly interface?
+
 
 ---
 
