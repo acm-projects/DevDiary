@@ -1,7 +1,8 @@
 <h1 align="center">˖°.✧📓 Dev Diary 📓✧˖°</h1>
 
 
-<img src="[https://media.tenor.com/…/ghostedvpn-hacker-cat.gif](https://media1.tenor.com/m/PLIr_VkF6ywAAAAC/ghostedvpn-hacker-cat.gif)" width="200px" alt="GhostedVPN Hacker Cat">
+<img src="https://media1.tenor.com/…/ghostedvpn-hacker-cat.gif" alt="Hacker Cat">
+
 
 <h2 align="center">✨ Summary</h2>
 Dev Diary is a personal markdown-based logging platform built for developers to document bugs, errors, and setup processes across coding projects. It helps you keep track of technical challenges in an organized, personalized way, paired with an AI assistant. With a centralized memory bank and a chatbot that guides you through documentation, error fixes, and helpful tools, creating personal projects feels a little less overwhelming (especially for new developers) while also making the process more reflective and focused on learning.  
