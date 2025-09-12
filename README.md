@@ -1,6 +1,7 @@
 <h1 align="center">˖°.✧📓 Dev Diary 📓✧˖°</h1>
 
-![GhostedVPN Hacker Cat](https://media.tenor.com/…/ghostedvpn-hacker-cat.gif)
+<img src="https://media.tenor.com/…/ghostedvpn-hacker-cat.gif" width="200px" alt="GhostedVPN Hacker Cat">
+
 
 
 <h2 align="center">✨ Summary</h2>
