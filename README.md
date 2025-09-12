@@ -209,6 +209,5 @@ Since then, I’ve been in the habit of jotting down error fixes and environment
 ### ⭐ Team Members
 - **Tyler Le**  
 - **Jonathan Lewis**  
-- **Zoë Bryant**  
 - **Phuc Trinh**  
 - **Maryam Al-Naami**
