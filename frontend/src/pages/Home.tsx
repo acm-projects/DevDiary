@@ -1,4 +1,4 @@
-import '../styles/App.css'
+import '/src/styles/App.css'
 import {Link} from 'react-router-dom';
 
 function Home() {
