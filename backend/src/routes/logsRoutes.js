@@ -1,9 +1,11 @@
 import express from 'express';
-import { createLog, deleteLog, getAllLogs, updateLog } from '../controllers/logsController.js';
+import { createLog, deleteLog, getAllLogs, getLogById, updateLog } from '../controllers/logsController.js';
+import { get } from 'mongoose';
 
 const router = express.Router();
 
 router.get("/", getAllLogs);
+router.get("/:id", getLogById);
 
 router.post("/", createLog);
 
