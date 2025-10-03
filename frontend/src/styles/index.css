@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+
+#root { 
+  /* max-width: 1280px; */ 
+  margin: 0 auto; 
+  /* padding: 2rem; */ 
+  text-align: center; 
+  display: flex;
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -67,4 +76,13 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+/* New styles */
+.bg-gradient-to-b {
+  background: linear-gradient(to bottom, #ff9a9e, #fad0c4, #fad0c4);
+}
+
+.bg-gradient-to-r {
+  background: linear-gradient(to right, #a1c4fd, #c2e9fb);
 }

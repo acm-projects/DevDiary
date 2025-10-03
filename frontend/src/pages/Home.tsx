@@ -1,4 +1,4 @@
-import '../styles/App.css'
+
 import {Link} from 'react-router-dom';
 
 function Home() {
@@ -9,7 +9,7 @@ function Home() {
       <nav>
         <Link to="/">Home</Link> |{" "}
         <Link to="/new-project">Create New Project</Link> |{" "}
-        <Link to="/DefaultReactApp">Default React App</Link>
+        <Link to="/new-log">New Log</Link>
       </nav>
     </div>
   )  
