@@ -1,4 +1,4 @@
-import ArrowIcon from "../assets/sideArrow.png"; // adjust path if needed
+import ArrowIcon from "../assets/icons/sideArrow.png"; // adjust path if needed
 
 function LogSideNavbar() {
   return (
