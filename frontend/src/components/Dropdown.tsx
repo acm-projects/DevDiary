@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ArrowIcon from "../assets/icons/sideArrow.png";
+
 interface DropdownProps {
   label: string;         // label for the dropdown
   options: string[];     // array of strings for menu items

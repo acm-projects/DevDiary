@@ -2,28 +2,46 @@ import AiSideNavBar from '../components/AiSideNavBar';
 import Editor from '../components/Editor';
 import LogSideNavbar from '../components/LogSideNavBar';
 import Dropdown from '../components/Dropdown';
-import '../styles/index.css'
+import '../styles/index.css';
+import Cancel from '../components/Cancel';
+import Save from '../components/Save';
+import Profile from '../components/Profile';
+import Logo from '../components/Logo';
 
 function NewLog() {
 
     return (
         <>
-            <div className="relative w-screen h-screen bg-center bg-cover bg-[#120F2C] bg-[url(src/assets/gradient2.png)]"> {/*bg-[url(src/assets/gradientBackground1.png)]"*/}
+            <div className="relative w-screen h-screen bg-center bg-cover bg-[#120F2C] bg-[url(src/assets/gradient2.png)]">
 
                 <LogSideNavbar />
                 <Editor />
                 <AiSideNavBar />
 
                 {/* Logo */}
-                <div className="fixed top-[0vh] left-[1.5vw] [font-family:'DM-Mono',Helvetica] text-[1rem] flex items-center">
-                    <span className="text-[#80ffdbbf]">&lt;/&gt;</span>
-                    <span className="ml-1 text-white">devDiary</span>
+                <div className="fixed top-[1.5vh] left-[1vw]">
+                    <Logo />
                 </div>
 
                 {/* Project Name */}
                 <p className="fixed top-[6vh] left-[3.5vw] [font-family:'Inter-SemiBold', Helvetica] text-[1.6rem] text-white">
                     Project Name
                 </p>
+
+                {/* Cancel Button */}
+                <div className="fixed top-[4.5vh] right-[17.5vw]">
+                    <Cancel />
+                </div>
+
+                {/* Save Button */}
+                <div className="fixed top-[4.5vh] right-[10vw]">
+                    <Save />
+                </div>
+
+                {/* Profile Icon */}
+                <div className="fixed top-[1.5vh] right-[1vw]">
+                    <Profile />
+                </div>
 
                 {/* Log Meta Data */}
                 <div className="fixed top-[23vh] left-[6vw] w-[88vw] max-w-[1200px] flex flex-wrap gap-[2vw]">
@@ -55,30 +73,30 @@ function NewLog() {
                         />
                     </div>
 
-                    {/* Project Name, also dropdown menu */}
-                    <p className="fixed left-[12vw] top-[22.5vh]">Project</p>
-                    <div className="fixed left-[12vw] top-[25.5vh] w-[22%] h-[5%] bg-[#1E3249] rounded-[10px] border-[1px] border-[#6A7278]/45"> {/* log-box */}
-                        <textarea
-                            className="w-full h-full p-2 bg-transparent text-white text-[14px] leading-6 resize-none outline-none"
-                            placeholder="Project: In Progress"
+                    {/* Project dropdown menu */}
+                    <div className="absolute left-[6vw] top-[-0.65vh] w-[26.75%] h-[5%]">
+                        <Dropdown
+                            label="Project"
+                            options={["Project A", "Project B", "Project C", "Project D"]}
+                            defaultValue="Project A"
                         />
                     </div>
 
                     {/* Type, also dropdown menu */}
-                    <p className="fixed left-[34.75vw] top-[22.5vh]">Type</p>
-                    <div className="fixed left-[34.75vw] top-[25.5vh] w-[20%] h-[5%] bg-[#1E3249] rounded-[10px] border-[1px] border-[#6A7278]/45">
-                        <textarea
-                            className="w-full h-full p-2 bg-transparent text-white text-[14px] leading-6 resize-none outline-none"
-                            placeholder="Type: In Progress"
+                    <div className="absolute left-[28.75vw] top-[-0.65vh] w-[24.5%] h-[5%]">
+                        <Dropdown
+                            label="Type"
+                            options={["Feature", "Improvement", "Research", "Meeting", "Idea", "Bug", "Refactor", "Documentation", "Testing"]}
+                            defaultValue="Feature"
                         />
                     </div>
 
                     {/* Tags */}
-                    <p className="fixed left-[55.5vw] top-[22.5vh]">Tags</p>
-                    <div className="fixed left-[55.5vw] top-[25.5vh] w-[29.5%] h-[5%] bg-[#1E3249] rounded-[10px] border-[1px] border-[#6A7278]/45">
-                        <textarea
-                            className="w-full h-full p-2 bg-transparent text-white text-[14px] leading-6 resize-none outline-none"
-                            placeholder="Tags: In Progress"
+                    <div className="absolute left-[49.5vw] top-[-0.65vh] w-[35.5%] h-[5%]">
+                        <Dropdown
+                            label="Tags"
+                            options={["Error", "Syntax", "Typescript", "Environment", "React", "Tailwind", "Node", "Express", "MongoDB", "Mongoose", "API", "Frontend", "Backend"]}
+                            defaultValue="Error"
                         />
                     </div>
 
