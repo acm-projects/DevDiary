@@ -1,0 +1,14 @@
+@import "tailwindcss";
+ 
+.background{
+
+background-color: #011522;
+background-size: cover;
+  height: 100vh;
+  width: 100vh;
+}
+
+.background-image{
+  background-image: url("Desktop - 7/Variant5.png");
+  position: center center, left bottom;
+}
