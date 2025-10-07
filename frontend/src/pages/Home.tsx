@@ -9,7 +9,8 @@ function Home() {
       <nav>
         <Link to="/">Home</Link> |{" "}
         <Link to="/new-project">Create New Project</Link> |{" "}
-        <Link to="/DefaultReactApp">Default React App</Link>
+        <Link to="/DefaultReactApp">Default React App</Link> |{" "}
+        <Link to="/search-results">Search Results</Link>
       </nav>
     </div>
   )  

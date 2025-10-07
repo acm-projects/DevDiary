@@ -3,8 +3,6 @@
 // Update colors as needed
 
 
-
-
 import '/src/styles/App.css'
 import { useState } from "react";
 import Dropdown from "../components/Dropdown.tsx"
@@ -23,7 +21,7 @@ function CreateNewProject() {
 <div className="flex items-center justify-center w-screen h-screen bg-center bg-cover bg-[url(src/assets/background.png)]">
 
   <div className="fixed top-[1.5vh] left-[1vw]">
-      <Logo />
+    <Logo />
   </div>
   
   <div className="w-full max-w-xlg max-h-xlg px-30 py-5">
@@ -50,46 +48,22 @@ function CreateNewProject() {
         ></textarea>
       </div>
 
-      
-      
       <div className="flex justify-start-safe">
-        {/* <div className="basis-1/12"></div> */}
         <div className="pr-5 font-headvig">
           <Dropdown label="Select folder" options={folder_options} onSelect={setSelected} />
         </div>
 
         <div className="px-5">
-        <label className="font-headvig flex justify-start-safe text-sm">Select Tags</label>
-        <TagSearch options={tag_options}/>
+          <label className="font-headvig flex justify-start-safe text-sm">Select Tags</label>
+          <TagSearch options={tag_options}/>
+        </div>
       </div>
-      </div>
-
-      {/* <div>
-        <label htmlFor="project-folder" className="block text-sm font-medium text-gray-700">Folder</label>
-        <input 
-          type="email" 
-          id="project-folder" 
-          name="email" 
-          defaultValue="Enter your email"
-          className="mt-1 w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-        />
-      </div>
-
-      <div>
-        <label htmlFor="project-description" className="block text-sm font-medium text-gray-700">Project Description</label>
-        <input 
-          type="password" 
-          id="project-description" 
-          name="password" 
-          defaultValue="Enter your password"
-          className="mt-1 w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-        />
-      </div> */}
 
       <div className="flex justify-center items-center mx-4 my-12">
         <div className="mx-2">
-                    <Cancel />
-                </div>
+          <Cancel />
+        </div>
+        {/* TODO: route to new log page */}
         <button 
           type="submit" 
           className="mx-2 py-3 px-4 bg-[#011522] text-white font-dm-mono rounded-lg shadow-md hover:bg-[#1E3249] focus:ring-2 focus:ring-blue-500"
@@ -99,9 +73,8 @@ function CreateNewProject() {
       </div>
     </form>
   </div>
-
 </div>
-  )  
+)  
 }
 
 export default CreateNewProject

@@ -10,7 +10,7 @@ function Logo() {
 
     return (
         <button onClick={() => goToHome()} 
-         className="[font-family:'DM-Mono',Helvetica] text-[1rem] cursor-pointer flex items-center">
+        className="[font-family:'DM-Mono',Helvetica] text-[1rem] cursor-pointer flex items-center">
                     <span className="text-[#80ffdbbf]">&lt;/&gt;</span>
                     <span className="ml-1 text-white">devDiary</span>
         </button>
