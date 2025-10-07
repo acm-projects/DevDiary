@@ -10,20 +10,20 @@ const Nav = () => {
         <span className="h-115">
           <button className="bg-[#244F51] bg-opacity-65 w-[195px] h-[38px] ml-1.5 mb-6 mr-1.5 rounded-xl">
             <span className=" flex items-center justify-center text-[#4BDEB4] hover:scale-105 ease-in-out duration-200">
-              <img src="public\Lightning Bolt.png" alt="" />
+              <img src="/Lightning Bolt.png" alt="" />
               Quick Log
             </span>
           </button>
           <a
             href=""
             className=" flex items-left justify-left hover:scale-105 ease-in-out duration-200 text-l mb-4 ml-2">
-            <img src="public\Calendar.png" alt="" className="mr-2" />
+            <img src="/Calendar.png" alt="" className="mr-2" />
             Calendar
           </a>
           <a
             href=""
             className=" flex items-left justify-left  hover:scale-105 ease-in-out duration-200 text-l mb-6 ml-2">
-            <img src="public\Folder.png" alt="" className="mr-2" />
+            <img src="/Folder.png" alt="" className="mr-2" />
             All Projects
           </a>
           <div className="flex justify-center mb-5">
@@ -39,7 +39,7 @@ const Nav = () => {
         <a
           href=""
           className="flex items-center justify-center  hover:scale-105 ease-in-out duration-200 text-l">
-          <img src="public\Profile.png" alt="" />
+          <img src="/Profile.png" alt="" />
           Account
         </a>
       </div>

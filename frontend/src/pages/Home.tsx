@@ -1,7 +1,7 @@
 import React from "react";
-import "/src/Pages/Home/Home.css";
-import Nav from "/src/component/NavBar/Nav.tsx";
-import ContentContainer from "/src/component/Container/ContentContainer.tsx";
+import "/src/styles/Home.css";
+import Nav from "../components/NavBar/Nav.tsx";
+import ContentContainer from "../components/Container/ContentContainer.tsx";
 const Home = () => {
   return (
     <>
