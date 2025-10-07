@@ -17,12 +17,12 @@ function SearchResultList({ queryString }: SearchResultListProps) {
     id: 1,
     projectName: "Project 2",
     projectDescription: "description...",
-    tagList: ["Tag 1", "Tag 2", "Tag 3"],
+    tagList: ["Tag 1", "Tag 2", "Tag 3", "Tag 4"],
   }, {
     id: 2,
     projectName: "Project 3",
     projectDescription: "description...",
-    tagList: ["Tag 1", "Tag 2", "Tag 3"],
+    tagList: ["Tag 1", "Tag 2"],
   }, {
     id: 3,
     projectName: "Project 4",
