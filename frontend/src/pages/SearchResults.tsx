@@ -1,6 +1,6 @@
 import '/src/styles/App.css'
-import SearchBar from "../components/SearchBar.tsx"
-import SearchResultList from "../components/SearchResultList.tsx"
+import SearchBar from "../components/Search/SearchBar.tsx"
+import SearchResultList from "../components/Search/SearchResultList.tsx"
 import Logo from "../components/Logo.tsx"
 import { useLocation } from 'react-router-dom';
 
