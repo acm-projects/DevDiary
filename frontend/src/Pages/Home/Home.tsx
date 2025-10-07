@@ -1,14 +1,14 @@
 import React from "react";
 import "/src/Pages/Home/Home.css";
 import Nav from "/src/component/NavBar/Nav.tsx";
-
+import ContentContainer from "/src/component/Container/ContentContainer.tsx";
 const Home = () => {
   return (
     <>
-      <div className=" fixed inset-0 bg-[#011522] max-h-screen">
+      <div className=" absolute inset-0 bg-[#011522] max-h-screen">
         <div className=" absolute inset-0 -10 bg-[url('/Variant5.png')] bg-no-repeat bg-center bg-cover flex">
           {/* nav bar */}
-
+          <Nav />
           <div className=" w-fit flex text-2xl ml-[2.5%] mt-[1.5%] text-white inset-0  ">
             Welcome Back, User!
           </div>
@@ -43,6 +43,7 @@ const Home = () => {
               />
             </div>
           </form>
+          <ContentContainer />
         </div>
       </div>
     </>
