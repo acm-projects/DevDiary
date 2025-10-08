@@ -1,3 +1,6 @@
+//Should the search return projects or logs within projects or both
+//both would be like projects then a sublist of the logs
+
 import '/src/styles/App.css'
 import SearchBar from "../components/Search/SearchBar.tsx"
 import SearchResultList from "../components/Search/SearchResultList.tsx"
@@ -11,21 +14,18 @@ function SearchResults() {
   const searchString = params.get('search');
 
   return (
-    <div className="flex items-center justify-center w-screen h-screen bg-center bg-cover bg-[url(src/assets/background.png)]">
+    <div className="flex items-center justify-center w-screen h-screen bg-center bg-cover bg-[url(src/assets/gradient2.png)]">
       <div className="fixed top-[1.5vh] left-[1vw]">
         <Logo/>
       </div>
-      <div>
-        <h2 className="font-dm-mono text-4xl font-bold text-white text-center m-5">Search Results</h2>
+      <div className="w-full">
+        <div className="w-1/2 mx-auto">
+          <SearchBar/>
+        </div>
 
-
-        <div className="px-30 py-5 space-y-5">
-          <div className="w-xl">
-            <SearchBar/>
-          </div>
-          <div className="w-xl">
-            <SearchResultList queryString={searchString}/>
-          </div>
+        <div className="w-4/5 mx-auto">
+          <h2 className="font-dm-mono text-m font-bold text-white text-left pt-10 pb-5">Search Results:</h2>
+          <SearchResultList queryString={searchString}/>
         </div>
       </div>
     </div>
