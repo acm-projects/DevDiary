@@ -1,3 +1,6 @@
+//Page to view all logs within project
+//TODO: Add sidebar to display project info
+
 import '/src/styles/App.css'
 import Logo from "../components/Logo.tsx"
 import LogList from "../components/LogListView/LogList.tsx"
@@ -33,14 +36,12 @@ function AllLogs() {
       <div className="fixed top-[1.5vh] left-[1vw]">
         <Logo/>
       </div>
-      <div>
+      <div className="w-full">
         <h2 className="font-dm-mono text-4xl font-bold text-white text-center m-5">Log List</h2>
 
 
-        <div className="px-30 py-5 space-y-5">
-          <div className="w-xl">
+        <div className="w-4/5 mx-auto">
             <LogList logList={logList}/>
-          </div>
         </div>
       </div>
     </div>
