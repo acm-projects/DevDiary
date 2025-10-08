@@ -1,0 +1,50 @@
+import '/src/styles/App.css'
+import Logo from "../components/Logo.tsx"
+import LogList from "../components/LogListView/LogList.tsx"
+
+function AllLogs() {
+
+  //TODO: Get list of logs within project from backend
+  const logList = [{
+    id: 0,
+    name: "Log 1",
+    description: "description...",
+    tags: ["Tag 1", "Tag 2", "Tag 3"],
+  }, {
+    id: 1,
+    name: "Log 2",
+    description: "description...",
+    tags: ["Tag 1", "Tag 2", "Tag 3", "Tag 4"],
+  }, {
+    id: 2,
+    name: "Log 3",
+    description: "description...",
+    tags: ["Tag 1", "Tag 2"],
+  }, {
+    id: 3,
+    name: "Log 4",
+    description: "description...",
+    tags: ["Tag 1", "Tag 2", "Tag 3"],
+  }]
+
+
+  return (
+    <div className="flex items-center justify-center w-screen h-screen bg-center bg-cover bg-[url(src/assets/background.png)]">
+      <div className="fixed top-[1.5vh] left-[1vw]">
+        <Logo/>
+      </div>
+      <div>
+        <h2 className="font-dm-mono text-4xl font-bold text-white text-center m-5">Log List</h2>
+
+
+        <div className="px-30 py-5 space-y-5">
+          <div className="w-xl">
+            <LogList logList={logList}/>
+          </div>
+        </div>
+      </div>
+    </div>
+  )  
+}
+
+export default AllLogs
