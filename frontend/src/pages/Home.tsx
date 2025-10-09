@@ -1,8 +1,20 @@
-import React from "react";
+import React, {type FormEvent, useState} from "react";
+import { useNavigate } from 'react-router-dom';
 import "/src/styles/Home.css";
 import Nav from "../components/NavBar/Nav.tsx";
 import ContentContainer from "../components/Container/ContentContainer.tsx";
 const Home = () => {
+
+  const navigate = useNavigate();
+  const [query, setQuery] = useState<string>('');
+
+  function handleSubmit(event: FormEvent) {
+    event.preventDefault()
+    console.log(query);
+    navigate('/search?search='); 
+  }
+
+
   return (
     <>
       <div className=" absolute inset-0 bg-[#011522] max-h-screen">
@@ -13,7 +25,8 @@ const Home = () => {
             Welcome Back, User!
           </div>
           {/* search bar */}
-          <form className="max-w-md mt-[7.5%]">
+          <form className="max-w-md mt-[7.5%]"
+            onSubmit={handleSubmit}>
             {/*     <label className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">
               Search
             </label> */}
@@ -39,6 +52,8 @@ const Home = () => {
                 id="default-search"
                 className="block w-[250%] p-2.75 ps-10 text-sm opacity-75 rounded-xl bg-[#011522] dark:placeholder-gray-400 dark:text-white  "
                 placeholder="Search"
+                value={query}
+                onChange= {(e) => setQuery(e.target.value)}                
                 required
               />
             </div>

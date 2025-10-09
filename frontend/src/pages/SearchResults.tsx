@@ -24,8 +24,8 @@ function SearchResults() {
         </div>
 
         <div className="w-4/5 mx-auto">
-          <h2 className="font-dm-mono text-m font-bold text-white text-left pt-10 pb-5">Search Results:</h2>
-          <SearchResultList queryString={searchString}/>
+          <h2 className="font-dm-mono text-xl font-bold text-white text-left pt-10 pb-5">Search Results:</h2>
+          <SearchResultList query={searchString}/>
         </div>
       </div>
     </div>
