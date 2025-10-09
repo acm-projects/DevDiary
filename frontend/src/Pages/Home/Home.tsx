@@ -5,7 +5,7 @@ import ContentContainer from "/src/component/Container/ContentContainer.tsx";
 const Home = () => {
   return (
     <>
-      <div className=" absolute inset-0 bg-[#011522] max-h-screen">
+      <div className=" absolute flex inset-0 bg-[#011522] max-h-screen">
         <div className=" absolute inset-0 -10 bg-[url('/Variant5.png')] bg-no-repeat bg-center bg-cover flex">
           {/* nav bar */}
           <Nav />
@@ -14,9 +14,6 @@ const Home = () => {
           </div>
           {/* search bar */}
           <form className="max-w-md mt-[7.5%]">
-            {/*     <label className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">
-              Search
-            </label> */}
             <div className="relative ml-[-30%] mt-[-5%]">
               <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                 <svg
@@ -43,7 +40,18 @@ const Home = () => {
               />
             </div>
           </form>
-          <ContentContainer />
+
+          {/* The plan for this. keep everything the same but create a div that will act as a box to contain all the containers. Then have the containers overflow on the y axis and then allow users to scroll through that.  */}
+          <div className="flex flex-col justify-between align-left <ContentContainer/> ml-3 mt-[12%] ">
+            <span>
+              Jump Back In
+              <ContentContainer />{" "}
+            </span>
+
+            {/*  <span className="text-xl">Jump Back In </span>
+   <span className="text-xl">Jump Back In </span>
+   <span className="text-xl">Jump Back In </span> */}
+          </div>
         </div>
       </div>
     </>
