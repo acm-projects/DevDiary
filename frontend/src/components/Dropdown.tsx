@@ -30,7 +30,7 @@ function Dropdown({ label, options, defaultValue }: DropdownProps) {
 
             <button onClick={ () => setIsOpen(!isOpen) } 
                 type="button"
-                className="font-headvig w-full px-2 py-1 text-white text-[14px] text-left cursor-pointer hover:border-white/50 leading-6 bg-[#011522] rounded-[10px] border-[1px] border-[#6A7278]/45">
+                className="font-headvig w-full px-2 py-1 text-white text-[14px] text-center cursor-pointer hover:border-white/50 leading-6 bg-[#011522] rounded-[10px] border-[1px] border-[#6A7278]/45">
                 {selected} {/* Show selected option */}
                 <img 
                     src={ArrowIcon} 
