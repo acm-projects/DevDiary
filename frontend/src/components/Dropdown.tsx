@@ -14,7 +14,7 @@ function Dropdown({ label, options, defaultValue }: DropdownProps) {
   return (
     <div className="relative w-full">
         {/* Label above the dropdown */}
-        {label && <p className="flex justify-start-safe">{label}</p>} 
+        {label && <p className="mb-0 text-shadow-md text-gray-400 text-[16px] text-left">{label}</p>} 
 
         <button onClick={ () => setIsOpen(!isOpen) } 
             className="w-full h-5% p-2 text-white text-[14px] text-left cursor-pointer hover:border-white/50 leading-6 bg-[#1E3249] rounded-[10px] border-[1px] border-[#6A7278]/45">
