@@ -1,4 +1,8 @@
-import { Home, CreateNewProject, NewLog, Settings, Login, SignUp, SearchResults, AllLogs} from "./pages";
+import type { Component } from "react";
+import {
+  Home, CreateNewProject, NewLog, Settings, Login, SignUp, SearchResults, AllLogs
+} from "./pages";
+import LandingPage from "pages/LandingPage";
 
 export const routes = [
   { path: "/", element: <Home /> },
