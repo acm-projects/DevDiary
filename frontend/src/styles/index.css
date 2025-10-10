@@ -1,4 +1,14 @@
+@import "@fontsource/dm-mono";
 @import "tailwindcss";
+
+
+#root { 
+  /* max-width: 1280px; */ 
+  margin: 0 auto; 
+  /* padding: 2rem; */ 
+  text-align: center; 
+  display: flex;
+}
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -37,25 +47,6 @@ h1 {
   line-height: 1.1;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -64,7 +55,21 @@ button:focus-visible {
   a:hover {
     color: #747bff;
   }
-  button {
-    background-color: #f9f9f9;
-  }
+}
+
+@theme {
+  --font-dm-mono: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Noto Sans Mono", monospace;
+}
+
+@theme {
+  --font-headvig: "Headvig Letter Sans", ui-monospace;
+}
+
+/* New styles */
+.bg-gradient-to-b {
+  background: linear-gradient(to bottom, #ff9a9e, #fad0c4, #fad0c4);
+}
+
+.bg-gradient-to-r {
+  background: linear-gradient(to right, #a1c4fd, #c2e9fb);
 }
