@@ -1,3 +1,4 @@
+@import "@fontsource/dm-mono";
 @import "tailwindcss";
 
 
@@ -56,9 +57,14 @@ button:hover {
   a:hover {
     color: #747bff;
   }
-  button {
-    background-color: #f9f9f9;
-  }
+}
+
+@theme {
+  --font-dm-mono: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Noto Sans Mono", monospace;
+}
+
+@theme {
+  --font-headvig: "Headvig Letter Sans", ui-monospace;
 }
 
 /* New styles */
