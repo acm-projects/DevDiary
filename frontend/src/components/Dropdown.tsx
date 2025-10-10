@@ -6,7 +6,7 @@ interface DropdownProps {
     label: string;
     options: string[];
     defaultValue?: string; // optional default selected value
-    onSelect: (option: string) => void;
+    onSelect?: (option: string) => void;
 }
 
 function Dropdown({ label, options, defaultValue }: DropdownProps) {

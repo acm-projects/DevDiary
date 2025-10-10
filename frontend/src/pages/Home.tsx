@@ -30,7 +30,7 @@ const Home = () => {
             {/* search Bar */}
             <div className="row-start-2 col-start-4 col-span-9 ">
               {" "}
-              <form className="w-full"     onSubmit={handleSubmit}>>
+              <form className="w-full"     onSubmit={handleSubmit}>
                 
                 <div className="relative">
                   <div className="absolute inset-y-0 start-0 flex items-center ps-3 ">
@@ -58,7 +58,7 @@ const Home = () => {
                       onChange= {(e) => setQuery(e.target.value)}                
                       required
                     />
-                  />
+                
                 </div>
               </form>
             </div>
