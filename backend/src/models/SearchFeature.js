@@ -7,7 +7,7 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-export async function generateStuffWithLogs(title, content) {
+export async function search(title, content) {
   try {
     const logs = await Log.find().sort({ createdAt: -1 });
 
@@ -15,10 +15,8 @@ export async function generateStuffWithLogs(title, content) {
     his code sucks and is not working. 
     Given an error message (and optional code), then identify the core ideas.
     Return JSON with:
-    - "core_tags": 3 short tags (comma separated)
-    - "summary": one short sentence summarizing it
-    - "explanation": a short one-sentence explanation of possible directions.
-    - "similar_logs": Get the 3 ids from the most similar logs (comma separated)
+    - "similar_ids": Get the 3 ids from the most similar logs (comma separated)
+
     This is what you are given:
     Title: ${title}
     Error/Code: ${content}

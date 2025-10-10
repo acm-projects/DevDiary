@@ -63,7 +63,7 @@ export async function createLogWithContext(req, res) {
     try {
         const { title, content } = req.body;
 
-        let tagsData = { core_tags: [], summary: "", explanation: "" };
+        let tagsData = { core_tags: [], summary: "", explanation: "", similar_logs: [] };
 
         try {
           tagsData = await generateStuffWithLogs(title, content);
@@ -74,7 +74,8 @@ export async function createLogWithContext(req, res) {
             content, 
             tags: tagsData.core_tags || [],
             summary: tagsData.summary || "",
-            explanation: tagsData.explanation || "" });
+            explanation: tagsData.explanation || "",
+            similar_logs: tagsData.similar_logs || []});
 
         const savedLog = await log.save();
         res.status(201).json(savedLog);
@@ -84,6 +85,7 @@ export async function createLogWithContext(req, res) {
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
+
 
 export async function updateLog(req, res) {
     try {

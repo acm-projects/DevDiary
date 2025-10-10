@@ -26,6 +26,10 @@ const logSchema = new mongoose.Schema(
             type: String,
             required: false
         },
+        similar_logs: { 
+            type: [{ type: String }],
+            required: false
+        },
 
     },
     { timestamps: true } // createdAt, updatedAt
