@@ -31,7 +31,7 @@ function CreateNewProject() {
 
     {/* Create New Project Header */}
     <div className="my-5 space-y-0.5 pl-15">
-      <h2 className="font-dm-mono text-3xl text-shadow-lg font-bold text-white text-left">
+      <h2 className="font-dm-mono text-4xl text-shadow-lg font-bold text-white text-left">
         Create New Project
       </h2>
       <p className="font-headvig text-m text-shadow-lg text-white text-left">
@@ -49,7 +49,7 @@ function CreateNewProject() {
           1. 
         </div>
         <div className="basis-full">
-          <div className="text-left text-2xl text-shadow-lg font-dm-mono pb-2 pt-3">
+          <div className="text-left text-3xl text-shadow-lg font-dm-mono pb-2 pt-3">
             General
           </div>
           <div className="space-y-2">
@@ -87,7 +87,7 @@ function CreateNewProject() {
           2. 
         </div>
         <div className="basis-full">
-          <div className="text-left text-2xl text-shadow-lg font-dm-mono pb-2 pt-3">
+          <div className="text-left text-3xl text-shadow-lg font-dm-mono pb-2 pt-3">
             Configuration
           </div>
           <div className="space-y-3">
@@ -118,7 +118,7 @@ function CreateNewProject() {
       </div>      
 
       <div className="flex justify-end items-center space-x-3 pt-5">
-        <div className="mx-2">
+        <div className="mx-2 font-dm-mono">
           <Cancel />
         </div>
         {/* TODO: route to new log page */}
