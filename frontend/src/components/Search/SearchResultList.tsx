@@ -2,10 +2,10 @@ import '/src/styles/App.css'
 import LogList from "../LogListView/LogList.tsx"
 
 interface SearchResultListProps {
-    queryString: string|null
+    query: string|null
 }
 
-function SearchResultList({ queryString }: SearchResultListProps) {
+function SearchResultList({ query }: SearchResultListProps) {
 
   //TODO: get search results from backend
   //      implement tags as components

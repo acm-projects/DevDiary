@@ -1,19 +1,16 @@
 import type { Component } from "react";
 import {
-  Home,
-  CreateNewProject,
-  NewLog,
-  Settings,
-  SearchResults,
-  AllLogs,
+  Home, CreateNewProject, NewLog, Settings, Login, SignUp, SearchResults, AllLogs
 } from "./pages";
 import LandingPage from "pages/LandingPage";
 
 export const routes = [
   { path: "/", element: <Home /> },
   { path: "/new-project", element: <CreateNewProject /> },
-  { path: "/search-results", element: <SearchResults /> },
+  { path: "/search", element: <SearchResults /> },
   { path: "/new-log", element: <NewLog /> },
   { path: "/settings", element: <Settings /> },
+  { path: "/login", element: <Login /> },
+  { path: "/sign-up", element: <SignUp /> },
   { path: "/all-logs", element: <AllLogs /> },
 ];

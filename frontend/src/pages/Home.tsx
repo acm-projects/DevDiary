@@ -1,8 +1,20 @@
-import React from "react";
+import React, {type FormEvent, useState} from "react";
+import { useNavigate } from 'react-router-dom';
 import "/src/styles/Home.css";
 import Nav from "../components/NavBar/Nav.tsx";
 import ContentContainer from "../components/Container/ContentContainer.tsx";
 const Home = () => {
+
+  const navigate = useNavigate();
+  const [query, setQuery] = useState<string>('');
+
+  function handleSubmit(event: FormEvent) {
+    event.preventDefault()
+    console.log(query);
+    navigate('/search?search='); 
+  }
+
+
   return (
     <>
       <div className=" grid grid-cols-[200px_auto] bg-[#011522] h-screen">
@@ -14,11 +26,12 @@ const Home = () => {
           <div className=" w-full min-h-screen grid grid-cols-15 grid-rows-15">
             <div className=" col-start-1 col-span-4 text-2xl text-white justify-self-start ml-5 mt-3">
               Welcome Back, User!
-            </div>
+            </div> 
             {/* search Bar */}
             <div className="row-start-2 col-start-4 col-span-9 ">
               {" "}
-              <form className="w-full">
+              <form className="w-full"     onSubmit={handleSubmit}>>
+                
                 <div className="relative">
                   <div className="absolute inset-y-0 start-0 flex items-center ps-3 ">
                     <svg
@@ -36,12 +49,15 @@ const Home = () => {
                       />
                     </svg>
                   </div>
-                  <input
-                    type="search"
-                    id="default-search"
-                    className="block w-full p-2.5 ps-10 text-sm opacity-75 rounded-xl bg-[#011522] dark:placeholder-gray-400 dark:text-white"
-                    placeholder="Search"
-                    required
+                    <input
+                      type="search"
+                      id="default-search"
+                      className="block w-[250%] p-2.75 ps-10 text-sm opacity-75 rounded-xl bg-[#011522] dark:placeholder-gray-400 dark:text-white  "
+                      placeholder="Search"
+                      value={query}
+                      onChange= {(e) => setQuery(e.target.value)}                
+                      required
+                    />
                   />
                 </div>
               </form>

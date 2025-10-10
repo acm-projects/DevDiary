@@ -5,14 +5,15 @@ import ProfilePhoto from '../assets/icons/profile.png';
 function Profile() {
     const navigate = useNavigate();
 
-    const goToHome = () => {
+    const goToSettings = () => {
         navigate('/settings'); 
     };
+    
     return (
-        <button onClick={() => goToHome()}>
+        <button onClick={() => goToSettings()}>
             <img src={ProfilePhoto}
                 alt="Profile"
-                className="w-[3vw] h-auto m-5 cursor-pointer mr-10 mt-4"   
+                className="flex w-[30px] lg:w-[40px] cursor-pointer hover:opacity-80 transition-opacity duration-300"   
              />
         
         </button>
