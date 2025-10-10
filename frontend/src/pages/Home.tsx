@@ -11,7 +11,7 @@ const Home = () => {
   function handleSubmit(event: FormEvent) {
     event.preventDefault()
     console.log(query);
-    navigate('/search?search='); 
+    navigate('/search?search='+query); 
   }
 
 
@@ -28,7 +28,7 @@ const Home = () => {
               Welcome Back, User!
             </div> 
             {/* search Bar */}
-            <div className="row-start-2 col-start-4 col-span-9 ">
+            <div className="row-start-2 col-start-3 col-end-7">
               {" "}
               <form className="w-full"     onSubmit={handleSubmit}>
                 
