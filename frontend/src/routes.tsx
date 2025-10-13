@@ -1,6 +1,6 @@
 import type { Component } from "react";
 import {
-  Home, CreateNewProject, NewLog, Settings, Login, SignUp, SearchResults, AllLogs
+  Home, CreateNewProject, NewLog, Settings, Login, SignUp, SearchResults, AllLogs, Projects
 } from "./pages";
 import LandingPage from "pages/LandingPage";
 
@@ -13,4 +13,5 @@ export const routes = [
   { path: "/login", element: <Login /> },
   { path: "/sign-up", element: <SignUp /> },
   { path: "/all-logs", element: <AllLogs /> },
+  { path: "/projects", element: <Projects /> },
 ];

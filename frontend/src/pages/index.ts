@@ -6,3 +6,4 @@ export { default as Settings } from "./Settings.tsx";
 export { default as Login } from "./Login.tsx";
 export { default as SignUp } from "./SignUp.tsx";
 export { default as AllLogs } from "./AllLogs.tsx";
+export { default as Projects } from "./Projects.tsx";
