@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Dropdown from '../components/Dropdown';
 import Header from '../components/Header';
 import '../styles/index.css'
+import AnimatedPage from 'components/AnimatedPages';
 
 
 interface FormStepProps {
@@ -53,7 +54,8 @@ function LogMetaData() {
     };
 
     return (
-        // Screen Container
+        <AnimatedPage> {/* Wrap the page content with AnimatedPage for transitions */}
+        {/* Screen Container */}
         <div className="w-screen h-screen bg-center bg-cover bg-[url(src/assets/Variant7.png)] bg-[#011522] text-white flex flex-col font-sans">            
             
             {/* Header */}
@@ -129,6 +131,7 @@ function LogMetaData() {
             </div>
             </main>
         </div>
+        </AnimatedPage>
     );
 };
 

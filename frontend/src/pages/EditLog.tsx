@@ -4,8 +4,11 @@ import Save from '../components/Save';
 import Profile from '../components/Profile';
 import Header from '../components/Header';
 import AiSideNavBar from '../components/AiSideNavBar';
-import type React from 'react';
+import React from 'react';
 import { useState } from 'react';
+import TypeTag from 'components/TypeTag';
+import StatusTag from 'components/StatusTag';
+import AnimatedPage from 'components/AnimatedPages';
 
 // Log data structure
 interface LogData {
@@ -13,6 +16,7 @@ interface LogData {
     project: string;
     tags: string;
     status: string;
+    type: string;
     sections: {
         error: string;
         code: string;
@@ -26,23 +30,6 @@ interface LogData {
     };
     creationDate: string;
 }
-
-// Status tag component with different colors based on status
-const StatusTag: React.FC<{ status: string }> = ({ status }) => {
-    const statusStyles: { [key: string]: string } = {
-        'In Progress': 'bg-amber-200/20 text-yellow-300 border border-amber-300',
-        'Completed': 'bg-green-500/20 text-green-300 border border-green-400',
-        'On Hold': 'bg-gray-500/20 text-gray-300 border border-gray-400',
-    };
-
-    const style = statusStyles[status] || statusStyles['On Hold'];
-
-    return (
-        <span className={`px-3 py-1 text-xs font-medium rounded-full ${style}`}>
-            {status}
-        </span>
-    );
-};
 
 // Section component for each editable section
 const Section: React.FC<{
@@ -88,6 +75,7 @@ function EditLog() {
         project: 'Untitled Project',
         tags: '',
         status: 'In Progress',
+        type: 'Feature',
         sections: { error: '', code: '', solution: '', resources: '', comments: '' },
         author: { initials: 'JD', name: 'John Doe' }, // Hardcoded author (for now, until we connect to user auth/database)
         creationDate: new Date().toISOString(), // Capture creation time
@@ -133,6 +121,7 @@ function EditLog() {
     const tagsArray = initialLogData.tags.split(',').map(tag => tag.trim()).filter(Boolean);
 
     return (
+        <AnimatedPage>
         <div className="w-screen h-screen bg-[#011522] text-white overflow-hidden flex flex-grow flex-col font-sans">
 
             {/* Header */}
@@ -160,7 +149,7 @@ function EditLog() {
                 {/* Main Area for the Editor */}
                 <main className="flex-grow flex-1 overflow-hidden bg-[#011522] bg-[url(src/assets/Variant6.svg)] rounded-xl border border-gray-700 p-6 flex flex-col">
                     <div className="mb-4">
-                        <div className="flex justify-center gap-2 mb-2">
+                        <div className="flex justify-center gap-2 items-center mb-2">
                             {isEditingTitle ? (
                                 <input
                                     type="text"
@@ -184,6 +173,8 @@ function EditLog() {
                                     {title}
                                 </p>
                             )}
+                            {/* Status Tag */}
+                            <StatusTag status={initialLogData.status} />
                         </div>
 
                         {/* Author and Date Info */}
@@ -193,11 +184,11 @@ function EditLog() {
                             <span>{creationDate.toLocaleTimeString()}</span>
                         </div>
 
-                        {/* Status Tag */}
+                        
                         <div className="flex flex-wrap justify-center gap-2 mt-2">
-
-                            <StatusTag status={initialLogData.status} />
-
+                            {/* Type Tag */}
+                            <TypeTag type = {initialLogData.type} />
+                            <span className="text-gray-400">|</span>
                             {tagsArray.map((tag, index) => (
                                 <span key={index} className="px-3 py-1 text-xs font-medium bg-cyan-500/20 text-cyan-300 rounded-full border border-cyan-400">
                                     {tag}
@@ -236,6 +227,7 @@ function EditLog() {
                 </main>
             </div>
         </div>
+    </AnimatedPage>
     );
 };
 

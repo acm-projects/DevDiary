@@ -1,6 +1,4 @@
-import type { Component } from "react";
 import {Home, CreateNewProject, NewLog, Settings, Login, SignUp, SearchResults, AllLogs, ViewLog, LogMetaData, EditLog} from "./pages";
-import LandingPage from "pages/LandingPage";
 
 export const routes = [
   { path: "/", element: <Home /> },

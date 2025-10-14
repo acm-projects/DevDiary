@@ -9,8 +9,8 @@ const Save: React.FC<SaveProps> = ({ onClick }) => {
     return (
         <button 
             onClick={onClick} 
-            className=" px-4 py-2 rounded-md transition-colors text-sm font-semibold flex items-center bg-[#1d6852] hover:bg-[#4575a0] border border-[#6A7278]/45 cursor-pointer"
-        >
+            className=" px-4 py-2 rounded-md transition-colors text-sm flex items-center bg-[#1d6852] hover:bg-[#4575a0] border border-[#6A7278]/45 cursor-pointer"
+        > 
             <img 
                 src={SaveIcon} 
                 alt="Save" 
