@@ -7,9 +7,10 @@ interface DropdownProps {
     options: string[];
     defaultValue?: string; // optional default selected value
     onSelect?: (option: string) => void;
+    onChange?: (selectedValue: string) => void;
 }
 
-function Dropdown({ label, options, defaultValue }: DropdownProps) {
+function Dropdown({ label, options, defaultValue, onChange }: DropdownProps) {
     const [isOpen, setIsOpen] = useState(false);                          // track if dropdown is open
     const [selected, setSelected] = useState(defaultValue || options[0]); // default to first option if no defaultValue
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -24,31 +25,36 @@ function Dropdown({ label, options, defaultValue }: DropdownProps) {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
+     const handleSelect = (option: string) => {
+        setSelected(option);
+        setIsOpen(false);
+        if (onChange) {
+            onChange(option);
+        }
+    };
+
     return (
         <div className="relative w-full" ref={dropdownRef}>
-            {label && <p className="font-headvig text-sm flex justify-start-safe">{label}</p>} 
+            {label && <p className="font-sans text-sm flex justify-start-safe">{label}</p>} 
 
             <button onClick={ () => setIsOpen(!isOpen) } 
                 type="button"
-                className="font-headvig w-full px-2 py-1 text-white text-[14px] text-center cursor-pointer hover:border-white/50 leading-6 bg-[#011522] rounded-[10px] border-[1px] border-[#6A7278]/45">
+                className="font-sans w-2xl px-2 py-4 text-white text-[20px] text-center cursor-pointer hover:border-white/50 leading-6 bg-[#011522]/20 rounded-[30px] border-[1px] border-[#6A7278]/50">
                 {selected} {/* Show selected option */}
                 <img 
                     src={ArrowIcon} 
                     alt="arrow" 
-                    className="w-[1vw] cursor-pointer rotate-90 float-right mt-1.5 mr-0.5" 
+                    className={`w-[1vw] cursor-pointer rotate-90 float-right mt-1.5 mr-0.5 ${isOpen ? 'rotate-270': ''}`}
                 />  {/* Down arrow icon */}
                 
             </button>
 
             {isOpen && (
-                <ul className="font-headvig absolute left-0 mt-1 w-full bg-[#1E3249] border border-[#6A7278]/45 rounded-[10px] max-h-40 overflow-y-auto shadow-lg z-10">
+                <ul className="font-sans w-2xl px-2 py-4 absolute left-0 mt-1 bg-[#1E3249] border border-[#6A7278]/25 rounded-[30px] max-h-40 overflow-y-auto shadow-lg z-10">
                     {options.map((option, idx) => (     // Map over options to create list items
                         <li 
                             key={idx}
-                            onClick= { () => {
-                                setSelected(option); // Update selected option
-                                setIsOpen(false);    // Close dropdown
-                            }}
+                            onClick={() => handleSelect(option)}
                             className="p-2 leading-6 hover:bg-[#4bddb433]/50 cursor-pointer text-white text-[14px]"> {/* List items styling */}
                             {option}        {/* Display option text */}
                         </li>

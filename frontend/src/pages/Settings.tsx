@@ -26,7 +26,7 @@ function Settings() {
         <div className="flex justify-between items-center py-4 border-b border-gray-400/50">
             <div className="flex flex-wrap justify-start">
                 <h3 className="font-semibold text-white">{label}</h3>
-                <div className="w-full flex-none"></div>  {/* break to new line */}
+                <div className="w-full flex-none"></div> {/* forces description to be on a new line */}
                 <p className="text-sm text-gray-300">{description}</p>
             </div>
             <div>
@@ -46,10 +46,10 @@ function Settings() {
     );
 
     return (
-        <div className="w-screen h-screen bg-center bg-cover bg-[#120F2C] bg-[url(src/assets/Variant6.svg)] text-white overflow-hidden flex flex-col">
+        <div className="w-screen h-screen bg-[#011522] text-white overflow-hidden flex flex-grow flex-col font-sans">
             
-            {/* HEADER */}
-            <div className="w-screen border-b border-solid border-[#ffffff33]/80 bg-center bg-cover bg-[#120F2C] bg-[url(src/assets/Variant6.svg)] text-white overflow-hidden flex flex-col">
+            {/* Header */}
+            <div className="border-b py-1 border-solid border-[#ffffff33]/30 bg-cover bg-[#011522] bg-[url(src/assets/Variant6.svg)] text-white overflow-hidden">
             <Header>
                 <div className="flex items-center gap-4">
                     <p className="font-semibold text-xl">Settings</p>
@@ -60,11 +60,11 @@ function Settings() {
             </Header>
             </div>
 
-            {/* MAIN CONTENT */}
-            <div className="flex flex-col md:flex-row flex-1 max-w-7xl w-full mx-auto p-4 md:p-8 gap-0 overflow-hidden">
+            {/* Main */}
+            <div className="flex flex-col md:flex-row flex-1 max-w-7xl w-full mx-auto p-4 md:p-8 gap-0 overflow-hidden md:gap-6">
 
-                {/* NAVIGATION SIDEBAR */}
-                <nav className="w-full md:w-1/4 lg:w-1/5 p-4 bg-white/5 bg-cover bg-[url(src/assets/Variant6.svg)] rounded-lg border border-r-0 border-solid border-white/20 h-full">
+                {/* Nav SideBar */}
+                <nav className="w-full md:w-1/4 lg:w-1/5 p-4 bg-cover bg-white/5 rounded-lg border border-r-0 border-solid border-white/20 h-full bg-[url(src/assets/Variant7.png)] ">
                     <ul className="space-y-2 text-white">
                        {navLinks.map((link) => (
 
@@ -85,14 +85,13 @@ function Settings() {
                 
 
 
-                {/* SETTINGS CONTENT */}
-                <main className="flex-1 bg-white/5 bg-cover bg-[url(src/assets/Variant6.svg)] rounded-lg border border-l-[1px] border-solid border-white/20 p-6 md:p-8 overflow-y-auto">
-                    {/* Page Header with Action Buttons */}
+                {/* Settings Content */}
+                <main className="flex-1 bg-white/5 bg-cover rounded-lg border border-l-[1px] border-solid border-white/20 p-6 md:p-8 overflow-y-auto bg-[url(src/assets/Variant7.png)]">
                      <div className="flex justify-between items-center mb-6">
                         <h1 className="font-semibold text-[30px]">General Settings</h1>
                         <div className="flex items-center gap-4">
                             <Cancel />
-                            <Save />
+                            <Save onClick={() => { /* handles save action */ }} />
                         </div>
                     </div>
 
