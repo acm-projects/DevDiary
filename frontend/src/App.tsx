@@ -1,18 +1,26 @@
-import { useState } from "react";
 import "./styles/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { routes } from "./routes.tsx";
+import { AnimatePresence } from 'framer-motion';  //  Added page transition animations
 
-import Home from "./pages/Home.tsx";
-import ContentContainer from "./components/Container/ContentContainer.tsx";
-function App() {
+function AnimatedRoutes() {
+  const location = useLocation();
+
   return (
-    <BrowserRouter>
-      <Routes>
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
         {routes.map((r, i) => (
           <Route key={i} path={r.path} element={r.element} />
         ))}
       </Routes>
+    </AnimatePresence>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AnimatedRoutes />
     </BrowserRouter>
   );
 }

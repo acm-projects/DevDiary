@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 const Nav = () => {
   const navigate = useNavigate();
   const handleNewLog = () => {
-    navigate("/new-log");
+    navigate("/log-meta-data");
   };
   const handleNewProject = () => {
     navigate("/new-project");

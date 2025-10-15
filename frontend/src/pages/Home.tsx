@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import "/src/styles/Home.css";
 import Nav from "../components/NavBar/Nav.tsx";
 import ContentContainer from "../components/Container/ContentContainer.tsx";
+import { Link } from "react-router-dom";
+
 const Home = () => {
 
   const navigate = useNavigate();
@@ -14,7 +16,6 @@ const Home = () => {
     navigate('/search?search='+query); 
   }
 
-
   return (
     <>
       <div className=" grid grid-cols-[200px_auto] bg-[#011522] h-screen">
@@ -22,11 +23,14 @@ const Home = () => {
         <div className="sticky top-0 h-screen">
           <Nav />
         </div>
-        <div className=" relative overflow-y-auto bg-[url('/Variant5.png')] bg-center bg-cover">
+        <div className=" relative overflow-y-auto bg-[url('src/assets/Variant5.png')] bg-center bg-cover">
           <div className=" w-full min-h-screen grid grid-cols-15 grid-rows-15">
             <div className=" col-start-1 col-span-4 text-2xl text-white justify-self-start ml-5 mt-3">
               Welcome Back, User!
             </div> 
+            
+            <Link to="/view-log">View</Link> |{" "}
+
             {/* search Bar */}
             <div className="row-start-2 col-start-3 col-end-7">
               {" "}

@@ -1,8 +1,4 @@
-import type { Component } from "react";
-import {
-  Home, CreateNewProject, NewLog, Settings, Login, SignUp, SearchResults, AllLogs
-} from "./pages";
-import LandingPage from "pages/LandingPage";
+import {Home, CreateNewProject, NewLog, Settings, Login, SignUp, SearchResults, AllLogs, ViewLog, LogMetaData, EditLog} from "./pages";
 
 export const routes = [
   { path: "/", element: <Home /> },
@@ -13,4 +9,7 @@ export const routes = [
   { path: "/login", element: <Login /> },
   { path: "/sign-up", element: <SignUp /> },
   { path: "/all-logs", element: <AllLogs /> },
+  { path: "/view-log", element: <ViewLog /> },
+  { path: "/log-meta-data", element: <LogMetaData /> },
+  { path: "/edit-log", element: <EditLog /> },
 ];
