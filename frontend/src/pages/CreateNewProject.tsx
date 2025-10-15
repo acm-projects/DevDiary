@@ -7,7 +7,7 @@ import '/src/styles/App.css'
 import '/src/styles/CreateNewProject.css'
 import { useState } from "react";
 import Dropdown from "../components/Dropdown.tsx"
-import TagSearch from "../components/TagSearch.tsx"
+import TagSearch from "../components/Tags/TagSearch.tsx"
 import Logo from "../components/Logo.tsx"
 import Cancel from "../components/Cancel.tsx"
 function CreateNewProject() {

@@ -7,9 +7,10 @@ interface DropdownProps {
     options: string[];
     defaultValue?: string; // optional default selected value
     onSelect?: (option: string) => void;
+    sendDataToParent: (data: string) => void; 
 }
 
-function Dropdown({ label, options, defaultValue }: DropdownProps) {
+function Dropdown({ label, options, defaultValue, sendDataToParent }: DropdownProps) {
     const [isOpen, setIsOpen] = useState(false);                          // track if dropdown is open
     const [selected, setSelected] = useState(defaultValue || options[0]); // default to first option if no defaultValue
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -47,6 +48,7 @@ function Dropdown({ label, options, defaultValue }: DropdownProps) {
                             key={idx}
                             onClick= { () => {
                                 setSelected(option); // Update selected option
+                                sendDataToParent(option);
                                 setIsOpen(false);    // Close dropdown
                             }}
                             className="p-2 leading-6 hover:bg-[#4bddb433]/50 cursor-pointer text-white text-[14px]"> {/* List items styling */}

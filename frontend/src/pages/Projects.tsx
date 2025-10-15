@@ -46,10 +46,19 @@ const Projects = () => {
         <div className=" relative overflow-y-auto bg-[url('/Variant5.png')] bg-center bg-cover w-full">
           <div className=" ">
             {/* search Bar */}
-            <div className="w-4/5 pt-10 mx-auto">
+            <div className="w-3/5 pt-10 mx-auto">
               <SearchBar/>
             </div>
             <div className="grid grid-cols-4 gap-4 p-10 text-white text-2xl justify-items-center space-y-10">
+              
+              <div className="w-2/3 aspect-[4/3]">
+                <Project 
+                  id = {-1} 
+                  name = "New Project"
+                  description = "Create a New Project" 
+                  tags={[]}
+                />
+              </div>
               
               {projectList.map(project => 
                 <div className="w-2/3 aspect-[4/3]">
@@ -61,18 +70,7 @@ const Projects = () => {
                   />
                 </div>
               )}
-
-              <div className="w-2/3 aspect-[4/3]">
-                <Project 
-                  id = {-1} 
-                  name = "New Project"
-                  description = "Create a New Project" 
-                  tags={[]}
-                />
-              </div>
-
             </div>
-            
           </div>
         </div>
       </div>
