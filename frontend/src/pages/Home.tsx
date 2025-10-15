@@ -13,7 +13,7 @@ const Home = () => {
   function handleSubmit(event: FormEvent) {
     event.preventDefault()
     console.log(query);
-    navigate('/search?search='); 
+    navigate('/search?search='+query); 
   }
 
   return (
@@ -32,7 +32,7 @@ const Home = () => {
             <Link to="/view-log">View</Link> |{" "}
 
             {/* search Bar */}
-            <div className="row-start-2 col-start-3 col-end-7 ">
+            <div className="row-start-2 col-start-3 col-end-7">
               {" "}
               <form className="w-full"     onSubmit={handleSubmit}>
                 
