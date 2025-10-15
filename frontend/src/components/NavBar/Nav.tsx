@@ -11,7 +11,7 @@ const Nav = () => {
   };
   return (
     <>
-      <div className="h-full flex justify-left  flex-col items-center justify-between relative bg-[#011522] text-white ">
+      <div className="h-full flex justify-left opacity-90 flex-col items-center justify-between relative bg-[#011522] text-white ">
         <div className="text-xl mt-3 mr-1.5 ">
           <span className="text-[#80FFDB]">{"</>"}</span> DevDiary{" "}
         </div>
