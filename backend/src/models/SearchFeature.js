@@ -28,7 +28,7 @@ export async function search(searchContent) {
 
     similarities.sort((a, b) => b.similarity - a.similarity);
     const similar_logs = similarities.slice(0, 3).map((s) => s.id);
-
+    console.log("Similar logs found:", similar_logs);
     return { similar_logs };
   } catch (err) {
     console.error("Search error:", err);
