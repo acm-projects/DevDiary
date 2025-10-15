@@ -1,7 +1,7 @@
 import "./styles/App.css";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { routes } from "./routes.tsx";
-import { AnimatePresence } from 'framer-motion';  //  Added page transition animations
+import { AnimatePresence } from "framer-motion"; //  Added page transition animations
 
 function AnimatedRoutes() {
   const location = useLocation();

@@ -13,7 +13,11 @@ function Profile() {
         <button onClick={() => goToSettings()}>
             <img src={ProfilePhoto}
                 alt="Profile"
+<<<<<<< HEAD
                 className="flex w-[15px] h-[15px] lg:w-[25px] lg:h-[25px] cursor-pointer hover:opacity-80 transition-opacity duration-300"   
+=======
+                className="flex w-[30px] lg:w-[40px] cursor-pointer hover:opacity-80 transition-opacity duration-300"   
+>>>>>>> Updated_Home
              />
         
         </button>
