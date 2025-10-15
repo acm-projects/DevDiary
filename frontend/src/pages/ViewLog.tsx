@@ -48,6 +48,7 @@ function ViewLog(){
         project: 'Default Project',
         status: 'On Hold',
         tags: 'default',
+        type: 'Bug',
         sections: { error: '', code: '', solution: '', resources: '', comments: '' },
         author: { initials: 'N/A', name: 'No Author' },  // Default author info for now, until we can connect to user auth/database
         creationDate: new Date().toISOString(),

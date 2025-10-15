@@ -8,7 +8,7 @@ function SignUp(){
     const navigate = useNavigate();
 
     const goToHome = () => {
-        navigate('/'); 
+        navigate('/home'); 
     };
     
     return (
