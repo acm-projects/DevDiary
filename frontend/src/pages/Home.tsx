@@ -65,7 +65,7 @@ const Home = () => {
         <div className="relative snap-y snap-mandatory h-screen overflow-y-scroll overflow-x-hidden ">
           {/* Section 1 */}
           <div className="snap-always snap-center flex  text-white">
-            <div className=" h-lvh flex flex-col w-screen  grid grid-cols-15 grid-rows-15">
+            <div className=" h-lvh flex flex-col w-screen grid grid-cols-15 grid-rows-15">
               <div className="bg-[#011522] text-white rounded-2xl  h-full w-full row-start-3 row-span-4 col-start-2 col-span-13 flex items-center border border-teal-500/30 backdrop-blur-sm ">
                 <div className="bg-[url('/Variant5.png')] rounded-2xl  h-full w-full row-start-3 row-span-4 col-start-2 col-end-15 flex items-center justify-around bg-no-repeat bg-cover shadow-[0px_30px_100px_-40px_#41cca6] ">
                   {/*shadow-[0px_0px_50px_5px_#41cca6] */}
