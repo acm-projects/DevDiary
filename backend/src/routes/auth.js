@@ -7,16 +7,16 @@ import User from '../models/User.js';
 import config  from '../config/config.js';
 
 // Register Route
-router.post('/register', async (req, res) => {
-    const { username, password } = req.body;
-
+export async function registerUser(req, res) {
+    console.log('running server.js');
+    const { username, email, password } = req.body;
     try {
-        let user = await User.findOne({ username });
+        let user = await User.findOne({ email });
         if (user) {
             return res.status(400).json({ msg: 'User already exists' });
         }
 
-        user = new User({ username, password });
+        user = new User({ username, email, password });
 
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(password, salt);
@@ -34,11 +34,11 @@ router.post('/register', async (req, res) => {
         });
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Server Error');
+        res.status(500).send('Server Error A');
     }
-});
+};
 
-router.post('/login', async (req, res) => {
+export async function loginUser(req, res) {
     const { username, password } = req.body;
 
     try {
@@ -70,6 +70,6 @@ router.post('/login', async (req, res) => {
         console.error(err.message);
         res.status(500).send('Server Error');
     }
-});
+};
 
 export default router;

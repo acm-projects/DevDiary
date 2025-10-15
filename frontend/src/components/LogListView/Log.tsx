@@ -4,18 +4,18 @@
 
 import '/src/styles/App.css'
 export interface LogProps {
-    id: number;
-    name: string;
-    description: string;
+    _id: number;
+    title: string;
+    summary: string;
     tags: string[];
 }
 
-function Log({ id, name, description, tags }: LogProps) {
+function Log({ _id, title, summary, tags }: LogProps) {
     return (
-        
-        <li key={id} className="bg-[#011522]/50 px-3 py-5 h-full text-white text-lg w-full rounded-lg border-white">
+
+        <li key={_id} className="bg-[#011522]/50 px-3 py-5 h-full text-white text-lg w-full rounded-lg border-white">
           <div className="text-left flex">
-            <h2 className="font-dm-mono">{name}</h2>
+            <h2 className="font-dm-mono">{title}</h2>
             <div className="flex mx-1">
               {/* TODO: Refactor Tags into components */}
               {tags.map((tag) => (
@@ -31,7 +31,7 @@ function Log({ id, name, description, tags }: LogProps) {
             </div>
           </div>
         <div className="text-left font-headvig">
-          {description}
+          {summary}
         </div>
       </li>
     );
@@ -39,3 +39,36 @@ function Log({ id, name, description, tags }: LogProps) {
 
 
 export default Log
+
+// {
+//         title: {
+//             type: String,
+//             required: true
+//         },
+//         content: {
+//             type: String,
+//             required: true
+//         },
+//         tags: {
+//             type: [{ type: String }],
+//             required: false
+//         },
+//         summary: { 
+//             type: String,
+//             required: false
+//         },
+//         explanation: { 
+//             type: String,
+//             required: false
+//         },
+//         similar_logs: { 
+//             type: [{ type: String }],
+//             required: false
+//         },
+//         embedding: { 
+//             type: [Number],
+//             required: false, 
+//             default: []
+//         }
+
+//     },

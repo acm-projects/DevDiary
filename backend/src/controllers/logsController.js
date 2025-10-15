@@ -2,6 +2,9 @@ import Log from "../models/Log.js";
 import mongoose from "mongoose";
 import { generateTags } from "../models/AutoTagger.js";
 import { generateStuffWithLogs } from "../models/CompareWithDataBase.js";
+import OpenAI from "openai";
+
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export async function getAllLogs(_, res) {
     try {
@@ -49,7 +52,17 @@ export async function createLog(req, res) {
             tags: tagsData.core_tags || [],
             summary: tagsData.summary || "",
             explanation: tagsData.explanation || "" });
-
+        
+        try {
+        const embeddingRes = await openai.embeddings.create({
+            model: "text-embedding-3-small",
+            input: `${title} ${content}`,
+        });
+        log.embedding = embeddingRes.data[0].embedding;
+        } catch (err) {
+            console.error("Failed to generate embedding:", err.message);
+        }
+        
         const savedLog = await log.save();
         res.status(201).json(savedLog);
     }
@@ -76,6 +89,16 @@ export async function createLogWithContext(req, res) {
             summary: tagsData.summary || "",
             explanation: tagsData.explanation || "",
             similar_logs: tagsData.similar_logs || []});
+        
+            try {
+                const embeddingRes = await openai.embeddings.create({
+                model: "text-embedding-3-small",
+                input: `${title} ${content}`,
+            });
+                log.embedding = embeddingRes.data[0].embedding;
+            } catch (err) {
+                console.error("Failed to generate embedding:", err.message);
+            }
 
         const savedLog = await log.save();
         res.status(201).json(savedLog);

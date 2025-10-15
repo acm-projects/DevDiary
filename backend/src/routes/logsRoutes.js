@@ -2,6 +2,8 @@ import express from 'express';
 import { createLog, createLogWithContext, deleteLog, getAllLogs, getLogById, updateLog } from '../controllers/logsController.js';
 import { get } from 'mongoose';
 
+console.log('running logsRoutes.js');
+
 const router = express.Router();
 
 router.get("/", getAllLogs);

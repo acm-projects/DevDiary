@@ -2,10 +2,56 @@ import Logo from '../components/Logo';
 import { useNavigate } from 'react-router-dom';
 import '../styles/index.css';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 function Login () {
 
     const navigate = useNavigate();
+
+    
+      const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+      });
+    
+      const { email, password } = formData;
+    
+      // handle input changes
+      const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.id]: e.target.value });
+      };
+    
+      // handle form submission
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+
+    
+        try {
+          const res = await fetch("http://localhost:5000/api/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              username: name,
+              email: email,   
+              password: password,
+            }),
+          });
+    
+          const data = await res.json();
+    
+          if (!res.ok) {
+            alert(data.msg || "Registration failed");
+            return;
+          }
+    
+          localStorage.setItem("token", data.token);
+    
+          navigate("/");
+        } catch (err) {
+          console.error("Error:", err);
+          alert("Server error");
+        }
+        };
 
     const goToHome = () => {
         navigate('/'); 
@@ -19,12 +65,14 @@ function Login () {
 
             <div className="bg-[#1E293B] p-10 rounded-xl shadow-lg w-full max-w-md">
                 <h2 className="text-3xl font-bold text-center mb-8">Login</h2>
-                <form className="space-y-6">
+                <form className="space-y-6" onSubmit={handleSubmit}>
                     <div>
                         <label htmlFor="email" className="text-left block text-sm font-medium mb-2">Email</label>
                         <input
                             type="email"
                             id="email"
+                            value={email}
+                            onChange={handleChange}
                             className="w-full p-3 bg-[#2D3748] rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
                         />
                     </div>
@@ -33,13 +81,15 @@ function Login () {
                         <input
                             type="password"
                             id="password"
+                            value={password}
+                            onChange={handleChange}
                             className="w-full p-3 bg-[#2D3748] rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
                         />
                     </div>
                     <button
                         type="submit"
                         className="w-full py-3 bg-[#43B5A8] rounded-md font-semibold hover:opacity-90 transition-opacity"
-                        onClick={() => goToHome()}
+                        //onClick={() => goToHome()}
                     >
                         Login
                     </button>

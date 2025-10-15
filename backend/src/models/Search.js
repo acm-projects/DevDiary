@@ -6,12 +6,12 @@ import mongoose from "mongoose";
 
 const searchSchema = new mongoose.Schema(
     {
-        content: {
+        searchContent: {
             type: String,
             required: true
         },
-        logs: {
-            type: [{ type: Log }],
+        logID: {
+            type: [{ type: String }],
             required: false
         }
     },

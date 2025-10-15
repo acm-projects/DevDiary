@@ -2,15 +2,63 @@ import Logo from "../components/Logo";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import '../styles/index.css';
+import { useState } from "react";
+import axios from 'axios';
+
 
 function SignUp(){
-
     const navigate = useNavigate();
 
-    const goToHome = () => {
-        navigate('/'); 
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const { name, email, password, confirmPassword } = formData;
+
+  // handle input changes
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  // handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: name,
+          email: email,   
+          password: password,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.msg || "Registration failed");
+        return;
+      }
+
+      localStorage.setItem("token", data.token);
+
+      navigate("/");
+    } catch (err) {
+      console.error("Error:", err);
+      alert("Server error");
+    }
     };
-    
+
     return (
         <div className="w-screen h-screen bg-center bg-cover bg-[#0F172A] bg-[url(src/assets/Variant6.svg)] text-white flex flex-col items-center justify-center font-sans">
             <div className="absolute top-8 left-8 text-2xl">
@@ -18,7 +66,7 @@ function SignUp(){
             </div>
             <div className="bg-[#1E293B] px-10 py-2 rounded-xl shadow-lg w-full max-w-md overflow-y-auto">
                 <h2 className="text-3xl font-bold text-center mb-8">Sign up</h2>
-                <form className="space-y-6">
+                <form className="space-y-6" onSubmit={handleSubmit}>
 
                     {/* Name field */}
                     <div>
@@ -26,6 +74,8 @@ function SignUp(){
                         <input
                             type="text"
                             id="name"
+                            value={name}
+                            onChange={handleChange}
                             className="w-full p-3 bg-[#2D3748] rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
                         />
                     </div>
@@ -36,6 +86,8 @@ function SignUp(){
                         <input
                             type="email"
                             id="email"
+                            value={email}
+                            onChange={handleChange}
                             className="w-full p-3 bg-[#2D3748] rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
                         />
                     </div>
@@ -46,25 +98,28 @@ function SignUp(){
                         <input
                             type="password"
                             id="password"
+                            value={password}
+                            onChange={handleChange}
                             className="w-full p-3 bg-[#2D3748] rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
                         />
                     </div>
 
                     {/* Confirm Password field */}
                      <div>
-                        <label htmlFor="confirm-password" className="block text-left text-sm font-medium mb-2">Confirm Password</label>
+                        <label htmlFor="confirmPassword" className="block text-left text-sm font-medium mb-2">Confirm Password</label>
                         <input
                             type="password"
-                            id="confirm-password"
+                            id="confirmPassword"
+                            value={confirmPassword} // Added missing value attribute
+                            onChange={handleChange}
                             className="w-full p-3 bg-[#2D3748] rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
                         />
                     </div>
 
                     {/* Submit button */}
-                    <button
-                        type="submit"
+                    <button type="submit"
                         className="w-full py-3 bg-[#43B5A8] rounded-md font-semibold hover:opacity-90 transition-opacity"
-                        onClick={() => goToHome()}
+                        //onClick={() => handleSubmit()}
                     >
                         Get Started
                     </button>

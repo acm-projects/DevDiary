@@ -4,32 +4,31 @@
 import '/src/styles/App.css'
 import Logo from "../components/Logo.tsx"
 import LogList from "../components/LogListView/LogList.tsx"
+import { useState, useEffect } from 'react'
 
 function AllLogs() {
 
   //TODO: Get list of logs within project from backend
-  const logList = [{
-    id: 0,
-    name: "Log 1",
-    description: "description...",
-    tags: ["Tag 1", "Tag 2", "Tag 3"],
-  }, {
-    id: 1,
-    name: "Log 2",
-    description: "description...",
-    tags: ["Tag 1", "Tag 2", "Tag 3", "Tag 4"],
-  }, {
-    id: 2,
-    name: "Log 3",
-    description: "description...",
-    tags: ["Tag 1", "Tag 2"],
-  }, {
-    id: 3,
-    name: "Log 4",
-    description: "description...",
-    tags: ["Tag 1", "Tag 2", "Tag 3"],
-  }]
+  const [logList, setLogList] = useState([
+    {
+      id: 0,
+      name: "Log 1",
+      description: "description...",
+      tags: ["Tag 1", "Tag 2", "Tag 3"],
+    }
+  ]);
 
+  useEffect(() => {
+    fetch('http://localhost:5000/api/logs')
+      .then(response => response.json())
+      .then(data => {
+        setLogList(data); 
+        console.log("Fetched logs:", data);
+      })
+      .catch(error => {
+        console.error("Error fetching logs:", error);
+      });
+  }, []);
 
   return (
     <div className="flex items-center justify-center w-screen h-screen bg-center bg-cover bg-[url(src/assets/background.png)]">

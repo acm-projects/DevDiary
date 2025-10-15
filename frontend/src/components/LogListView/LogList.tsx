@@ -16,9 +16,9 @@ function LogList({ logList }: LogListProps) {
       <ul className="space-y-5">
         {logList.map(log => 
           <Log 
-            id = {log.id} 
-            name={log.name} 
-            description={log.description} 
+            _id = {log._id} 
+            title={log.title} 
+            summary={log.summary} 
             tags={log.tags}
           />
         )}
@@ -28,3 +28,36 @@ function LogList({ logList }: LogListProps) {
 }
 
 export default LogList
+
+// {
+//         title: {
+//             type: String,
+//             required: true
+//         },
+//         content: {
+//             type: String,
+//             required: true
+//         },
+//         tags: {
+//             type: [{ type: String }],
+//             required: false
+//         },
+//         summary: { 
+//             type: String,
+//             required: false
+//         },
+//         explanation: { 
+//             type: String,
+//             required: false
+//         },
+//         similar_logs: { 
+//             type: [{ type: String }],
+//             required: false
+//         },
+//         embedding: { 
+//             type: [Number],
+//             required: false, 
+//             default: []
+//         }
+
+//     },

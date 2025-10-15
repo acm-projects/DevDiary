@@ -30,6 +30,11 @@ const logSchema = new mongoose.Schema(
             type: [{ type: String }],
             required: false
         },
+        embedding: { 
+            type: [Number],
+            required: false, 
+            default: []
+        }
 
     },
     { timestamps: true } // createdAt, updatedAt
