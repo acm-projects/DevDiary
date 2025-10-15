@@ -1,5 +1,0 @@
-config.ini
-.env
-secrets/
-*.local
-    
