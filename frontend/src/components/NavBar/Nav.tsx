@@ -31,15 +31,23 @@ const Nav = () => {
             <img src="/Calendar.png" alt="" className="mr-2" />
             Calendar
           </Link>
-          {/* 
-         All Projects 
+          
+         {/* All Projects  */}
           <Link
-            to=""
-            className=" flex items-left justify-left  hover:scale-105 ease-in-out duration-200 text-l mb-6 ml-2">
+            to="/projects"
+            className=" flex  !text-white visited:text-white  items-left justify-left hover:scale-105 ease-in-out duration-200 text-l mb-4 ml-2  ">
             <img src="/Folder.png" alt="" className="mr-2" />
             All Projects
           </Link>
- */}
+
+          {/* Search Page */}
+          <Link
+            to="/search"
+            className=" flex  !text-white visited:text-white  items-left justify-left hover:scale-105 ease-in-out duration-200 text-l mb-4 ml-2  ">
+            <img src="/src/assets/icons/search.png" alt="" className="mr-2" />
+            Search
+          </Link>
+
           {/* New Log */}
           {/*bg-gradient-to-r from-[#43B5A8] to-[#318CB1] */}
           <div className="flex justify-center mb-5">
@@ -63,7 +71,7 @@ const Nav = () => {
         <Link
           to={"/settings"}
           className="flex mb-2 items-center hover:scale-105 ease-in-out duration-200 text-l  !text-white visited:text-white  ">
-          <img src="public\Profile.png" alt="" />
+          <img src="Profile.png" alt="" />
           Account
         </Link>
       </div>

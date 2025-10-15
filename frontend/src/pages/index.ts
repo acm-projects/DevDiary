@@ -9,3 +9,4 @@ export { default as ViewLog } from "./ViewLog.tsx";
 export { default as LogMetaData } from "./LogMetaData.tsx";
 export { default as EditLog } from "./EditLog.tsx";
 export { default as LandingPage } from "./LandingPage.tsx";
+export { default as Projects } from "./Projects.tsx";
