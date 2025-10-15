@@ -5,7 +5,7 @@ function Logo() {
     const navigate = useNavigate();
 
     const goToHome = () => {
-        navigate('/'); 
+        navigate('/home'); 
     };
 
     return (

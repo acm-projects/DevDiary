@@ -1,4 +1,4 @@
-import React, {type FormEvent, useState} from "react";
+import React, { type FormEvent, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "/src/styles/Home.css";
 import Nav from "../components/NavBar/Nav.tsx";
@@ -6,7 +6,6 @@ import ContentContainer from "../components/Container/ContentContainer.tsx";
 import SearchResultList from "components/Search/SearchResultList.tsx";
 import SearchBar from "components/Search/SearchBar.tsx";
 import LogList from "components/LogListView/LogList.tsx";
-
 const Home = () => {
   const navigate = useNavigate();
   const [query, setQuery] = useState<string>("");
@@ -63,35 +62,21 @@ const Home = () => {
         <div className="sticky top-0 h-screen">
           <Nav />
         </div>
-        <div className=" relative overflow-y-auto bg-[url('src/assets/Variant5.png')] bg-center bg-cover">
-          <div className=" w-full min-h-screen grid grid-cols-15 grid-rows-15">
-            <div className=" col-start-1 col-span-4 text-2xl text-white justify-self-start ml-5 mt-3">
-              Welcome Back, User!
-            </div> 
-            
-            <Link to="/view-log">View</Link> |{" "}
-
-            {/* search Bar */}
-            <div className="row-start-2 col-start-3 col-end-7">
-              {" "}
-              <form className="w-full"     onSubmit={handleSubmit}>
-                
-                <div className="relative">
-                  <div className="absolute inset-y-0 start-0 flex items-center ps-3 ">
-                    <svg
-                      className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 20 20">
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                      />
-                    </svg>
+        <div className="relative snap-y snap-mandatory h-screen overflow-y-scroll overflow-x-hidden ">
+          {/* Section 1 */}
+          <div className="snap-always snap-center flex  text-white">
+            <div className=" h-lvh flex-col w-screen grid grid-cols-15 grid-rows-15">
+              <div className="bg-[#011522] text-white rounded-2xl  h-full w-full row-start-3 row-span-4 col-start-2 col-span-13 flex items-center border border-teal-500/30 backdrop-blur-sm ">
+                <div className="bg-[url('/Variant5.png')] rounded-2xl  h-full w-full row-start-3 row-span-4 col-start-2 col-end-15 flex items-center justify-around bg-no-repeat bg-cover shadow-[0px_30px_100px_-40px_#41cca6] ">
+                  {/*shadow-[0px_0px_50px_5px_#41cca6] */}
+                  <span className="md:text-4xl">Welcome Back, User!</span>
+                  <div className="flex">
+                    <button
+                      onClick={handleNewLog}
+                      className=" text-[#4BDEB4] bg-gradient-to-r from-teal-400 to-cyan-600  bg-opacity-60 md:w-[120px] md:h-[30px] lg:w-[130px] lg:h-[30px] xl:w-[140px] xl:h-[45px] 2xl:w-[160px] 2xl:h-[55px] rounded-xl flex justify-center items-center mb hover:scale-105 ease-in-out duration-200">
+                      <span className="text-3xl mb-1">+ </span>
+                      <span className="text-l ml-1 "> New Log</span>
+                    </button>
                   </div>
                 </div>
               </div>
