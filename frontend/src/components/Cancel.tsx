@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 function Cancel() {
     const navigate = useNavigate();
     const handleClick = () => {
-      navigate('/');  // Go back to home page
+      navigate('/home');  // Go back to home page
     }
 
   return (

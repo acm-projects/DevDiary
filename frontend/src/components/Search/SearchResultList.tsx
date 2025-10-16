@@ -15,7 +15,7 @@ function SearchResultList({ query, projectFilter, tagFilter }: SearchResultListP
     id: 0,
     name: "Log 1",
     project: "Project 1",
-    description: "description...",
+    description: "rfggfdfghgfdsdfghgfdsdfghgfdsadfghgfdsasdfghgfdsasdfghgdsdfghgfds...",
     tags: [{
       name: "Tag 1",
       color: "#FF0000",

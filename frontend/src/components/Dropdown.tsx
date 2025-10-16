@@ -8,7 +8,7 @@ interface DropdownProps {
     defaultValue?: string; // optional default selected value
     onSelect?: (option: string) => void;
     onChange?: (selectedValue: string) => void;
-    sendDataToParent: (data: string) => void; 
+    sendDataToParent?: (data: string) => void; 
 }
 
 function Dropdown({ label, options, defaultValue, onChange, sendDataToParent}: DropdownProps) {
@@ -58,7 +58,9 @@ function Dropdown({ label, options, defaultValue, onChange, sendDataToParent}: D
                             key={idx}
                             onClick= { () => {
                                 setSelected(option); // Update selected option
+                                if (sendDataToParent) {
                                 sendDataToParent(option);
+                                }
                                 setIsOpen(false);    // Close dropdown
                                 handleSelect(option);
                             }}

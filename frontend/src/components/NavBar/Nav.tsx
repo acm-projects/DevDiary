@@ -1,3 +1,4 @@
+import Logo from "components/Logo";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -13,7 +14,9 @@ const Nav = () => {
     <>
       <div className="h-full flex justify-left  flex-col items-center justify-between relative bg-[#011522] text-white ">
         <div className="text-xl mt-3 mr-1.5 ">
-          <span className="text-[#80FFDB]">{"</>"}</span> DevDiary{" "}
+          <span className="text-[#80FFDB]">
+            <Logo />
+            </span> 
         </div>
         <span className="mb-65">
           {/* Quick Log */}
@@ -53,7 +56,7 @@ const Nav = () => {
           <div className="flex justify-center mb-5">
             <button
               onClick={handleNewLog}
-              className=" text-[#4BDEB4] bg-gradient-to-r from-teal-300 via-teal-500 to-cyan-500 bg-opacity-60 w-[155px] h-[35px] rounded-xl flex justify-center items-center mb-2 hover:scale-105 ease-in-out duration-200">
+              className=" text-teal-300 bg-teal-500/20 border border-teal-500/30 bg-opacity-60 w-[155px] h-[35px] rounded-xl flex justify-center items-center mb-2 hover:scale-105 ease-in-out duration-200">
               <span className="text-3xl mb-1">+ </span>
               <span className="text-l ml-1 "> New Log</span>
             </button>

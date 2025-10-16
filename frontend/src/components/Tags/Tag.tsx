@@ -8,6 +8,7 @@ export interface TagProps {
 
 const Project = ({name, color, selected}: TagProps) => {
 
+  color="4BDEB4";
   if(selected == 1) {   //selected
     return (
       <>

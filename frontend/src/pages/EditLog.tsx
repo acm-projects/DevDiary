@@ -178,7 +178,7 @@ function EditLog() {
                         </div>
 
                         {/* Author and Date Info */}
-                        <div className="flex justify-center mb-5 items-center gap-x-4 gap-y-2 text-sm text-gray-400">
+                        <div className="flex justify-center mb-5 items-center gap-x-4 gap-y-2 text-sm text-white">
                             <span><strong>JD</strong> John Doe</span>
                             <span>{creationDate.toLocaleDateString()}</span> 
                             <span>{creationDate.toLocaleTimeString()}</span>
