@@ -21,7 +21,6 @@ export async function performSearch(req, res) {
 
         const logs = await Log.find({ _id: { $in: logIDs } });
 
-
         const newSearch = new Search({ searchContent, logID: logIDs });
 
         const savedSearch = await newSearch.save();

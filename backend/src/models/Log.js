@@ -27,7 +27,7 @@ const logSchema = new mongoose.Schema(
             required: false
         },
         similar_logs: { 
-            type: [{ type: String }],
+            type: [mongoose.Schema.Types.ObjectId],
             required: false
         },
         embedding: { 

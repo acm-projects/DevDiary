@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import { generateTags } from "../models/AutoTagger.js";
 import { generateStuffWithLogs } from "../models/CompareWithDataBase.js";
 import OpenAI from "openai";
+import { search } from '../models/SearchFeature.js';
+import Search from '../models/Search.js';
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -38,18 +40,22 @@ export async function getLogById(req, res) {
 
 export async function createLog(req, res) {
     try {
-        const { title, content } = req.body;
+        const { title, content, tagsManuallyAdded } = req.body;
 
-        let tagsData = { core_tags: [], summary: "", explanation: "" };
+        let tagsData = { core_tags: "", summary: "", explanation: "" };
 
         try {
           tagsData = await generateTags(title, content);
         } catch (err) {
             console.error("Failed:", err.message);
         }
+        
+        const tagsAIArray = tagsData.core_tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
+        const combinedArray = tagsAIArray.concat(tagsManuallyAdded);
+
         const log = new Log({ title, 
             content, 
-            tags: tagsData.core_tags || [],
+            tags: combinedArray || tagsManuallyAdded,
             summary: tagsData.summary || "",
             explanation: tagsData.explanation || "" });
         
@@ -74,21 +80,63 @@ export async function createLog(req, res) {
 
 export async function createLogWithContext(req, res) {
     try {
-        const { title, content } = req.body;
+        const { title, content, tagsManuallyAdded } = req.body;
 
         let tagsData = { core_tags: [], summary: "", explanation: "", similar_logs: [] };
-
+        let similar_logIDS = { similar_logs: [] };
         try {
           tagsData = await generateStuffWithLogs(title, content);
+          try {
+            similar_logIDS = await search(content);
+            console.log("Similar logs found in logs:", similar_logIDS.similar_logs);
+          } catch (err) {
+            console.error("Failed search:", err.message);
+          }
         } catch (err) {
             console.error("Failed:", err.message);
         }
+
+        const tagsAIArray = tagsData.core_tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
+        const combinedArray = tagsAIArray.concat(tagsManuallyAdded);
+        const logIDs = (similar_logIDS.similar_logs || []).filter(id =>mongoose.Types.ObjectId.isValid(id));
+
+        if (logIDs.length === 0) {
+             return res.status(200).json([]); // no results found
+         }
+        
+    //     try {
+    //     const { searchContent } = req.body;
+    //     let tagsData = { similar_logs: [] };
+    //     try {
+    //         tagsData = await search(searchContent);
+    //     } catch (err) {
+    //         console.error("Failed:", err.message);
+    //     }
+
+    //     const logIDs = (tagsData.similar_logs || []).filter(id =>mongoose.Types.ObjectId.isValid(id));
+
+    //     if (logIDs.length === 0) {
+    //         return res.status(200).json([]); // no results found
+    //     }
+
+    //     const logs = await Log.find({ _id: { $in: logIDs } });
+
+    //     const newSearch = new Search({ searchContent, logID: logIDs });
+
+    //     const savedSearch = await newSearch.save();
+    //     res.status(201).json(logs);
+    // }
+    // catch (error) {
+    //     console.error("Error creating search:", error);
+    //     res.status(500).json({ message: "Internal Server Error" });
+    // }
+
         const log = new Log({ title, 
             content, 
-            tags: tagsData.core_tags || [],
+            tags: combinedArray || [],
             summary: tagsData.summary || "",
             explanation: tagsData.explanation || "",
-            similar_logs: tagsData.similar_logs || []});
+            similar_logs: logIDs || []});
         
             try {
                 const embeddingRes = await openai.embeddings.create({
