@@ -126,7 +126,7 @@ const RecentLogsCarousel: React.FC<{ logs: any[] }> = ({ logs }) => {
 
   return (
     <div className="w-full max-w-4xl mx-auto relative group ">
-      <div className="relative h-[280px] w-full bg-[#1E293B]/80 border border-teal-500/20 rounded-2xl p-6 flex flex-col justify-between backdrop-blur-sm shadow-lg shadow-teal-500/10 hover:shadow-teal-500/20 transition-all duration-300">
+      <div className="relative h-[280px] w-full bg-[#1E293B]/80 border border-white/25 bg-cover bg-[url(src/assets/Variant4.svg)] rounded-2xl p-6 flex flex-col justify-between backdrop-blur-sm shadow-lg shadow-teal-500/10 hover:shadow-[0px_20px_80px_-30px_#41cca6] hover:h-[320px] transition-all duration-300">
         {/* Top Section */}
         <div >
           <div className="flex justify-between items-start">
@@ -205,8 +205,8 @@ const Home = () => {
   ];
 
   return (
-    <div className="relative snap-y snap-mandatory h-screen overflow-y-scroll overflow-x-hidden">
-      <div className="grid grid-cols-[200px_auto] bg-[#0d0b1e] bg-[url(src/assets/Variant8.png)] bg-cover h-screen w-screen text-white font-sans">
+    <div className="relative snap-y snap-mandatory h-screen overflow-y-scroll">
+      <div className="grid grid-cols-[200px_auto] bg-[#0F172A] bg-[url(src/assets/Variant6.svg)] bg-cover h-screen w-screen text-white font-sans">
         <div className="sticky top-0 h-screen">
           <Nav />
         </div>
@@ -216,15 +216,17 @@ const Home = () => {
           <section className="h-screen w-full flex flex-col items-center justify-center p-8 space-y-12">
 
             {/* Search Bar */}
-        
+
             <form className="w-full max-w-2xl" onSubmit={handleSubmit}>
-              <div className="relative ">
-                <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none ">
+              <div className="relative bg-[#011522]/80 border border-teal-500/30 rounded-full backdrop-blur-sm transition-colors duration-300 focus-within:border-teal-400 focus-within:shadow-[0px_20px_80px_-20px_#41cca6]">
+
+                <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
                   <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                 </div>
+
                 <input
                   type="search"
-                  className="block w-full p-4 pl-12 text-lg bg-[#011522]/80 border border-teal-500/30 rounded-full focus:ring-teal-400 focus:border-teal-400 outline-none transition"
+                  className="block w-full p-4 pl-12 text-lg bg-transparent rounded-full focus:ring-0 focus:outline-none text-white placeholder-gray-400"
                   placeholder="Search logs..."
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
@@ -232,11 +234,11 @@ const Home = () => {
                 />
               </div>
             </form>
-           
+
 
             {/* Welcome Banner */}
-            
-            <div className=" bg-[url('/Variant5.png')] w-full max-w-4xl bg-[#1E293B]/60 border border-teal-500/20 rounded-2xl p-8 flex items-center justify-between backdrop-blur-sm shadow-[0px_30px_100px_-40px_#41cca6]">
+
+            <div className=" bg-[#0F172A] bg-[url(src/assets/Variant6.svg)] bg-cover w-full max-w-4xl border border-white/30 rounded-2xl p-8 flex items-center justify-between shadow-lg shadow-teal-500/10 hover:shadow-teal-500/20 transition-all duration-300">
               <span className="text-3xl font-semibold">Welcome Back, User!</span>
               <button
                 onClick={handleNewLog}
@@ -257,14 +259,14 @@ const Home = () => {
               Unresolved Logs:
 
             </h2>
-        
+
 
             <div className="overflow-y-scroll ">
 
               <LogList logList={logList} />
 
             </div>
-            
+
           </div>
         </div>
       </div>
