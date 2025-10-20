@@ -41,7 +41,7 @@ function Dropdown({ label, options, defaultValue, onChange, sendDataToParent}: D
 
             <button onClick={ () => setIsOpen(!isOpen) } 
                 type="button"
-                className="font-sans w-2xl px-2 py-4 text-white text-[20px] text-center cursor-pointer hover:border-white/50 leading-6 bg-[#011522]/20 rounded-[30px] border-[1px] border-[#6A7278]/50">
+                className="font-sans bg-[#011522]/80 border border-teal-500/30 rounded-lg focus:ring-teal-400 focus:border-teal-400 outline-none transition w-full p-2 text-white text-[15px] text-center cursor-pointer hover:border-white/50 leading-6 flex justify-between items-center">
                 {selected} {/* Show selected option */}
                 <img 
                     src={ArrowIcon} 
@@ -52,7 +52,7 @@ function Dropdown({ label, options, defaultValue, onChange, sendDataToParent}: D
             </button>
 
             {isOpen && (
-                <ul className="font-sans w-2xl px-2 py-4 absolute left-0 mt-1 bg-[#1E3249] border border-[#6A7278]/25 rounded-[30px] max-h-40 overflow-y-auto shadow-lg z-10">
+                <ul className="font-sans bg-[#011522] border border-teal-500/30 rounded-lg focus:ring-teal-400 focus:border-teal-400 outline-none transition w-full p-2 absolute left-0 mt-1  max-h-40 overflow-y-auto shadow-lg z-10">
                     {options.map((option, idx) => (     // Map over options to create list items
                         <li 
                             key={idx}
@@ -64,7 +64,7 @@ function Dropdown({ label, options, defaultValue, onChange, sendDataToParent}: D
                                 setIsOpen(false);    // Close dropdown
                                 handleSelect(option);
                             }}
-                            className="p-2 leading-6 hover:bg-[#4bddb433]/50 cursor-pointer text-white text-[14px]"> {/* List items styling */}
+                            className="p-2 leading-6 hover:bg-[#4bddb433]/50  cursor-pointer text-white text-[14px]"> {/* List items styling */}
                             {option}        {/* Display option text */}
                         </li>
                     ))}

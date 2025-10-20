@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Nav from "../components/NavBar/Nav.tsx";
 import LogList from "components/LogListView/LogList.tsx";
 import StatusTag from "components/StatusTag.tsx";
-
+//import RobotCanvas from "../components/Robot.jsx";
 
 const logList = [{
 
@@ -140,6 +140,7 @@ const RecentLogsCarousel: React.FC<{ logs: any[] }> = ({ logs }) => {
           </div>
         </div>
 
+        {/*<RobotCanvas />}
         {/* Code Snippet */}
         <div className="bg-black/50 p-3 rounded-lg border border-gray-700 font-mono text-teal-300 text-sm">
           <code>{currentLog.sections.code}</code>

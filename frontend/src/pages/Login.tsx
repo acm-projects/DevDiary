@@ -26,6 +26,7 @@ function Login () {
                             type="email"
                             id="email"
                             className="w-full p-3 bg-[#2D3748] rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                            required
                         />
                     </div>
                     <div>
@@ -34,6 +35,7 @@ function Login () {
                             type="password"
                             id="password"
                             className="w-full p-3 bg-[#2D3748] rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                            required
                         />
                     </div>
                     <button

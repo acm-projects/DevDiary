@@ -5,57 +5,57 @@ import '../styles/index.css';
 import { useState } from "react";
 
 
-function SignUp(){
+function SignUp() {
     const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+    });
 
-  const { name, email, password, confirmPassword } = formData;
+    const { name, email, password, confirmPassword } = formData;
 
-  // handle input changes
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
-  };
+    // handle input changes
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.id]: e.target.value });
+    };
 
-  // handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    // handle form submission
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-    if (password !== confirmPassword) {
-      alert("Passwords do not match!");
-      return;
-    }
+        if (password !== confirmPassword) {
+            alert("Passwords do not match!");
+            return;
+        }
 
-    try {
-      const res = await fetch("http://localhost:5000/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: name,
-          email: email,   
-          password: password,
-        }),
-      });
-      const data = await res.json();
+        try {
+            const res = await fetch("http://localhost:5000/api/auth/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    username: name,
+                    email: email,
+                    password: password,
+                }),
+            });
+            const data = await res.json();
 
-      if (!res.ok) {
-        console.log("Error:", data.msg);
-        alert(data.msg || "Registration failed");
-        return;
-      }
+            if (!res.ok) {
+                console.log("Error:", data.msg);
+                alert(data.msg || "Registration failed");
+                return;
+            }
 
-      localStorage.setItem("token", data.token);
+            localStorage.setItem("token", data.token);
 
 
-      navigate("/");
-    } catch (err) {
-      alert("Server error");
-    }
+            navigate("/");
+        } catch (err) {
+            alert("Server error");
+        }
     };
 
     return (
@@ -76,6 +76,7 @@ function SignUp(){
                             value={name}
                             onChange={handleChange}
                             className="w-full p-3 bg-[#2D3748] rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                            required
                         />
                     </div>
 
@@ -88,6 +89,7 @@ function SignUp(){
                             value={email}
                             onChange={handleChange}
                             className="w-full p-3 bg-[#2D3748] rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                            required
                         />
                     </div>
 
@@ -100,11 +102,12 @@ function SignUp(){
                             value={password}
                             onChange={handleChange}
                             className="w-full p-3 bg-[#2D3748] rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                            required
                         />
                     </div>
 
                     {/* Confirm Password field */}
-                     <div>
+                    <div>
                         <label htmlFor="confirmPassword" className="block text-left text-sm font-medium mb-2">Confirm Password</label>
                         <input
                             type="password"
@@ -112,17 +115,17 @@ function SignUp(){
                             value={confirmPassword} // Added missing value attribute
                             onChange={handleChange}
                             className="w-full p-3 bg-[#2D3748] rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                            required
                         />
                     </div>
-
-                    {/* Submit button */}
-                    <button type="submit"
-                        className="w-full py-3 bg-[#43B5A8] rounded-md font-semibold hover:opacity-90 transition-opacity"
-                        //onClick={() => handleSubmit()}
-                    >
-                        Get Started
-                    </button>
                 </form>
+                {/* Submit button */}
+                <button type="submit"
+                    className="w-full py-3 bg-[#43B5A8] rounded-md font-semibold hover:opacity-90 transition-opacity"
+                //onClick={() => handleSubmit()}
+                >
+                    Get Started
+                </button>
 
                 {/* Other sign up options */}
                 <div className="flex items-center my-6">
@@ -145,7 +148,7 @@ function SignUp(){
 
                 {/* Login instead */}
                 <p className="text-center text-sm text-gray-400 mt-3 mb-2">
-                    Already have an account? 
+                    Already have an account?
                     <Link to="/login" className="text-teal-400 hover:underline fade-in">
                         Login here!
                     </Link>
