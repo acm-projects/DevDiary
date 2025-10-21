@@ -32,6 +32,7 @@ function SignUp() {
         }
 
         try {
+            console.log("before fetch") ;
             const res = await fetch("http://localhost:5000/api/auth/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -41,6 +42,8 @@ function SignUp() {
                     password: password,
                 }),
             });
+
+             console.log("Submitting:", { name, email, password });
             const data = await res.json();
 
             if (!res.ok) {
@@ -102,7 +105,7 @@ function SignUp() {
                             value={password}
                             onChange={handleChange}
                             className="w-full p-3 bg-[#2D3748] rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
-                            required
+                            
                         />
                     </div>
 
@@ -115,17 +118,18 @@ function SignUp() {
                             value={confirmPassword} // Added missing value attribute
                             onChange={handleChange}
                             className="w-full p-3 bg-[#2D3748] rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
-                            required
+                            
                         />
                     </div>
-                </form>
-                {/* Submit button */}
+                    
+                    {/* Submit button */}
                 <button type="submit"
                     className="w-full py-3 bg-[#43B5A8] rounded-md font-semibold hover:opacity-90 transition-opacity"
                 //onClick={() => handleSubmit()}
                 >
                     Get Started
                 </button>
+                </form>
 
                 {/* Other sign up options */}
                 <div className="flex items-center my-6">
