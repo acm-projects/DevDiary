@@ -55,7 +55,7 @@ function SignUp() {
             localStorage.setItem("token", data.token);
 
 
-            navigate("/");
+            navigate("/home");
         } catch (err) {
             alert("Server error");
         }
