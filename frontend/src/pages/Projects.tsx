@@ -5,35 +5,91 @@ import Nav from "../components/NavBar/Nav.tsx";
 import ContentContainer from "../components/Container/ContentContainer.tsx";
 import SearchBar from "../components/Search/SearchBar.tsx";
 import Project from "../components/Projects/Project.tsx";
+import { useLocation } from 'react-router-dom';
 const Projects = () => {
 
   const navigate = useNavigate();
   const [query, setQuery] = useState<string>('');
-
+  // const location = useLocation();
+  // const params = new URLSearchParams(location);
+  // const searchString = params.get('search');
   const projectList = [{
     id: 0,
     name: "Project 1",
     description: "description...",
-    tags: ["Tag 1", "Tag 2", "Tag 3"],
+    tags: [{
+      name: "Tag 1",
+    }, {
+      name: "Tag 2",
+    }, {
+      name: "Tag 3",
+    }, {
+      name: "Tag 4",
+    }],
+    status: "In Progress",
   }, {
     id: 1,
     name: "Project 2",
     description: "description...",
-    tags: ["Tag 1", "Tag 2", "Tag 3", "Tag 4"],
+    tags: [{
+      name: "Tag 1",
+    }, {
+      name: "Tag 2",
+    }, {
+      name: "Tag 3",
+    }, {
+      name: "Tag 4",
+    }],
+    status: "Completed",
+
   }, {
     id: 2,
     name: "Project 3",
     description: "description...",
-    tags: ["Tag 1", "Tag 2"],
+    tags: [{
+      name: "Tag 1",
+    }, {
+      name: "Tag 2",
+    }, {
+      name: "Tag 3",
+    }, {
+      name: "Tag 4",
+    }],
+    status: "On Hold",
+
   }, {
     id: 3,
     name: "Project 4",
     description: "description...",
-    tags: ["Tag 1", "Tag 2", "Tag 3"],
+    tags: [{
+      name: "Tag 1",
+    }, {
+      name: "Tag 2",
+    }, {
+      name: "Tag 3",
+    }, {
+      name: "Tag 4",
+    }, {
+      name: "Tag 1",
+    }, {
+      name: "Tag 1",
+    }],
+        status: "In Progress",
+
   }, {id: 4,
     name: "Project 5",
     description: "description...",
-    tags: ["Tag 1", "Tag 2", "Tag 3"],
+    tags: [{
+      name: "Tag 1",
+    }, {
+      name: "Tag 2",
+    }, {
+      name: "Tag 3",
+    }, {
+      name: "Tag 4",
+    }],
+        status: "In Progress",
+
   }]
 
   return (
@@ -50,23 +106,14 @@ const Projects = () => {
               <SearchBar/>
             </div>
             <div className="grid grid-cols-4 gap-4 p-10 text-white text-2xl justify-items-center space-y-10">
-              
-              <div className="w-2/3 aspect-[4/3]">
-                <Project 
-                  id = {-1} 
-                  name = "New Project"
-                  description = "Create a New Project" 
-                  tags={[]}
-                />
-              </div>
-              
               {projectList.map(project => 
-                <div className="w-2/3 aspect-[4/3]">
+                <div className="w-full aspect-[5/6]">
                   <Project 
                     id = {project.id} 
                     name={project.name} 
                     description={project.description} 
                     tags={project.tags}
+                    status={project.status}
                   />
                 </div>
               )}

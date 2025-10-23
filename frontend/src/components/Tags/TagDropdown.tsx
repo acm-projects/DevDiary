@@ -92,7 +92,6 @@ function Dropdown({ label, tags, defaultValue, sendDataToParent }: TagDropdownPr
                         > {/* List items styling */}
                             <Tag 
                                 name={tag.name}
-                                color={tag.color}
                                 selected={selectedMap[tag.name] ?? 0}
                             />        {/* Display option text */}
                         </li>

@@ -8,6 +8,7 @@ import Logo from "../components/Logo.tsx"
 import Dropdown from "../components/Dropdown.tsx"
 import TagDropdown from "../components/Tags/TagDropdown.tsx"
 import { useLocation } from 'react-router-dom';
+import Nav from "../components/NavBar/Nav.tsx"
 
 function SearchResults() {
 
@@ -51,9 +52,9 @@ function SearchResults() {
 
   return (
     <div className="flex items-center justify-center w-screen h-screen bg-center bg-cover bg-[url(src/assets/gradient2.png)]">
-      <div className="fixed top-[1.5vh] left-[1vw]">
-        <Logo/>
-      </div>
+      <div className="sticky top-0 h-screen">
+          <Nav />
+        </div>
       <div className="w-full">
         <div className="w-1/2 mx-auto">
           {/* Search Bar */}
@@ -67,7 +68,6 @@ function SearchResults() {
                 sendDataToParent={handleProjectFilterData}
                 options={["No Project", ...projectNameList]}
               />
-              <p>{projectFilter}</p>
             </div>
             <div className="">
               <TagDropdown
@@ -76,7 +76,6 @@ function SearchResults() {
                 tags={tagList}
                 defaultValue=""
               />
-              <p>{tagFilter}</p>
             </div>
           </div>
         </div>
