@@ -40,7 +40,7 @@ export async function getLogById(req, res) {
 
 export async function createLog(req, res) {
     try {
-        const { title, content, tagsManuallyAdded } = req.body;
+        const { title, content, tagsManuallyAdded, project } = req.body;
 
         let tagsData = { core_tags: "", summary: "", explanation: "" };
 
@@ -54,10 +54,12 @@ export async function createLog(req, res) {
         const combinedArray = tagsAIArray.concat(tagsManuallyAdded);
 
         const log = new Log({ title, 
-            content, 
+            content,
+            project,
             tags: combinedArray || tagsManuallyAdded,
             summary: tagsData.summary || "",
-            explanation: tagsData.explanation || "" });
+            explanation: tagsData.explanation || "",
+            });
         
         try {
         const embeddingRes = await openai.embeddings.create({

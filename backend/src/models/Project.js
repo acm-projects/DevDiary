@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import FormData from "form-data";
+import Log from "./Log.js";
 
 
 // 1. Create a schema
@@ -15,7 +17,15 @@ const projectSchema = new mongoose.Schema(
             required: true
         },
         logs: {
-            type: [{ type: Log }],
+            type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Log' }],
+            required: false
+        },
+        tags: {
+            type: [String],
+            required: false, 
+        },
+        FormData: {
+            type: Object,
             required: false
         }
     },
