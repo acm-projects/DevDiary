@@ -34,6 +34,7 @@ app.use(cors(corsOptions));
 app.use(express.json()); // Parse JSON request bodies
 // app.use(rateLimiter);
 
+// define routes
 app.use("/api/logs", logsRoutes);
 app.use("/api/search", searchRoutes);
 app.use('/api/auth', authRoutes);

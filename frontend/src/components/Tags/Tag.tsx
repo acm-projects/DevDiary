@@ -2,13 +2,12 @@ import React from "react";
 
 export interface TagProps {
     name: string;
-    color: string;
     selected?: number;
 }
 
-const Project = ({name, color, selected}: TagProps) => {
+const Project = ({name, selected}: TagProps) => {
 
-  color="4BDEB4";
+  const color="4BDEB4";
   if(selected == 1) {   //selected
     return (
       <>

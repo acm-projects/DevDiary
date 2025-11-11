@@ -29,7 +29,7 @@ const Nav = () => {
 
           {/* Calendar */}
           <Link
-            to=""
+            to="/calendar"
             className=" flex  !text-white visited:text-white  items-left justify-left hover:scale-105 ease-in-out duration-200 text-l mb-4 ml-2  ">
             <img src="/Calendar.png" alt="" className="mr-2" />
             Calendar

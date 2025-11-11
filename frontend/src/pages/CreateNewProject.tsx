@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Nav from "../components/NavBar/Nav";
 import Dropdown from "../components/Dropdown";
 import Cancel from "../components/Cancel";
-import TagSearch from "../components/Tags/TagSearch"; // Assuming you have this component
+import TagSearch from "../components/Tags/TagSearch"; 
 
 const CreateNewProject: React.FC = () => {
   const [selectedFolder, setSelectedFolder] = useState<string>("");
@@ -35,7 +35,7 @@ const CreateNewProject: React.FC = () => {
               <h2 className="text-2xl font-semibold mb-6 text-teal-300">General Information</h2>
               <div className="space-y-6">
                 <div>
-                  <label htmlFor="project-name" className="block text-md font-medium text-gray-300 mb-2">Project Name*</label>
+                  <label htmlFor="project-name" className="flex justify-start text-md font-medium text-gray-300 mb-2">Project Name*</label>
                   <input
                     type="text"
                     id="project-name"
@@ -46,7 +46,7 @@ const CreateNewProject: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="project-description" className="block text-md font-medium text-gray-300 mb-2">Project Description</label>
+                  <label htmlFor="project-description" className="flex justify-start text-md font-medium text-gray-300 mb-2">Project Description</label>
                   <textarea
                     id="project-description"
                     name="project-description"
@@ -64,7 +64,7 @@ const CreateNewProject: React.FC = () => {
               <div className="space-y-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-lg font-medium">Select Folder</p>
+                    <p className="flex justify-start text-lg font-medium">Select Folder</p>
                     <p className="text-sm text-gray-400">Organize your projects with folders.</p>
                   </div>
                   <div className="w-1/3">
@@ -73,7 +73,7 @@ const CreateNewProject: React.FC = () => {
                 </div>
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-lg font-medium">Select Tags</p>
+                    <p className="flex justify-start text-lg font-medium">Select Tags</p>
                     <p className="text-sm text-gray-400">Categorize with languages and tools.</p>
                   </div>
                   <div className="w-1/3">

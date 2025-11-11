@@ -1,4 +1,4 @@
-import React, {type FormEvent, useState} from "react";
+import { type FormEvent, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import '/src/styles/App.css'
 
@@ -11,36 +11,26 @@ function SearchBar() {
     event.preventDefault()
     console.log(query);
     setQuery("")
-    navigate('/search?search='+query); 
+    navigate('/search?search=' + query);
   }
   return (
     <div className="w-full">
-      <form className="flex justify-end items-center relative" onSubmit={handleSubmit}>
-        <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-          <svg
-            className="w-4 h-4 text-gray-500 dark:text-gray-400"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 20 20">
-            <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-          /></svg>
-        </div>
+      <form className="w-full max-w-2xl" onSubmit={handleSubmit}>
+        <div className="relative bg-[#011522]/80 border border-teal-500/30 rounded-full backdrop-blur-sm transition-colors duration-300 focus-within:border-teal-400 focus-within:shadow-[0px_20px_80px_-20px_#41cca6]">
 
-        <input
-          className="bg-[#011522] px-3 py-1 placeholder-gray-400 placeholder:font-headvig font-headvig text-white text-lg w-full rounded-lg border-white pl-10"
-          type="text" 
-          id="search" 
-          name="search" 
-          placeholder="Search..."
-          value={query}
-          onChange= {(e) => setQuery(e.target.value)}
-        />
+          <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+            <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          </div>
+
+          <input
+            type="search"
+            className="block w-full p-4 pl-12 text-lg bg-transparent rounded-full focus:ring-0 focus:outline-none text-white placeholder-gray-400"
+            placeholder="Search logs..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            required
+          />
+        </div>
       </form>
     </div>
   );

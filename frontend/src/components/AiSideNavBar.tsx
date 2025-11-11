@@ -11,7 +11,7 @@ function AiSideBar(){
     );
 
     return (
-    <div className={`h-full bg-[#0c384973]  bg-[url(src/assets/Variant7.png)] border-solid rounded-xl border border-gray-700 p-4 transition-all duration-300 ease-in-out ${isOpen ? 'w-64' : 'w-20'}`}>
+    <div className={`h-full bg-[#1E293B]/80 border border-white/25 bg-cover border-solid rounded-xl p-4 transition-all duration-300 ease-in-out ${isOpen ? 'w-64' : 'w-20'}`}>
         <button onClick={() => setIsOpen(!isOpen)} className="mb-4">
             <img 
                 src={ArrowIcon} 
