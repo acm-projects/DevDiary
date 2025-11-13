@@ -12,7 +12,7 @@ export async function generateTags(title, content) {
     his code sucks and is not working. 
     Given an error message (and optional code), then identify the core ideas.
     Return JSON with:
-    - "core_tags": 3 short tags (comma separated)
+    - "core_tags": 3 tags each 11 characters or shorter (comma separated)
     - "summary": one short sentence summarizing it
     - "explanation": a short one-sentence explanation of possible directions.
     This is what you are given:

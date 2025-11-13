@@ -4,10 +4,10 @@ import { generateTags } from "../models/AutoTagger.js";
 import { generateStuffWithLogs } from "../models/CompareWithDataBase.js";
 import OpenAI from "openai";
 import { search } from '../models/SearchFeature.js';
+import Project from "../models/Project.js";
+//import projController from "./projController.js";
 import Search from '../models/Search.js';
-
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-
 export async function getAllLogs(_, res) {
     try {
         console.log("Fetching logs...");
@@ -16,20 +16,15 @@ export async function getAllLogs(_, res) {
     }
     catch (error) {
         console.error("Error fetching logs:", error);
-
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
-
 export async function getLogById(req, res) {
     try {
-
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
             return res.status(404).json({ message: "Log not found" });
         }
-
         const log = await Log.findById(req.params.id);
-
         res.status(200).json(log);
     }
     catch (error) {
@@ -37,39 +32,51 @@ export async function getLogById(req, res) {
         res.status(500).json({ message: "Internal Server Error" });
     }
 }
-
 export async function createLog(req, res) {
+    console.log(req)
+    console.log(req.body)
     try {
-        const { title, content, tagsManuallyAdded } = req.body;
-
+        const { title, content, tagsManuallyAdded, project_id } = req.body;
+        console.log("project id:",project_id)
         let tagsData = { core_tags: "", summary: "", explanation: "" };
-
         try {
           tagsData = await generateTags(title, content);
         } catch (err) {
             console.error("Failed:", err.message);
         }
-        
         const tagsAIArray = tagsData.core_tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
-        const combinedArray = tagsAIArray.concat(tagsManuallyAdded);
-
-        const log = new Log({ title, 
-            content, 
+        const combinedArray = tagsAIArray;
+        if (tagsManuallyAdded) combinedArray = tagsAIArray.concat(tagsManuallyAdded);
+        const log = new Log({ title,
+            content,
             tags: combinedArray || tagsManuallyAdded,
             summary: tagsData.summary || "",
-            explanation: tagsData.explanation || "" });
-        
+            explanation: tagsData.explanation || "",
+            });
         try {
         const embeddingRes = await openai.embeddings.create({
             model: "text-embedding-3-small",
             input: `${title} ${content}`,
+            dimensions: 24
         });
         log.embedding = embeddingRes.data[0].embedding;
         } catch (err) {
             console.error("Failed to generate embedding:", err.message);
         }
-        
         const savedLog = await log.save();
+        if (project_id && mongoose.Types.ObjectId.isValid(project_id))
+        {
+            const project = await Project.findById(project_id);
+            if (project) {
+                project.logs.push(savedLog._id);
+                console.log("project tags",project.tags);
+                console.log(typeof(project.tags));
+                console.log("log tags",log.tags);
+                console.log(typeof(log.tags));
+                project.tags.push(...log.tags);
+                await project.save();
+            }
+        }
         res.status(201).json(savedLog);
     }
     catch (error) {
@@ -77,11 +84,9 @@ export async function createLog(req, res) {
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
-
 export async function createLogWithContext(req, res) {
     try {
         const { title, content, tagsManuallyAdded } = req.body;
-
         let tagsData = { core_tags: [], summary: "", explanation: "", similar_logs: [] };
         let similar_logIDS = { similar_logs: [] };
         try {
@@ -95,15 +100,12 @@ export async function createLogWithContext(req, res) {
         } catch (err) {
             console.error("Failed:", err.message);
         }
-
         const tagsAIArray = tagsData.core_tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
         const combinedArray = tagsAIArray.concat(tagsManuallyAdded);
         const logIDs = (similar_logIDS.similar_logs || []).filter(id =>mongoose.Types.ObjectId.isValid(id));
-
         if (logIDs.length === 0) {
              return res.status(200).json([]); // no results found
          }
-        
     //     try {
     //     const { searchContent } = req.body;
     //     let tagsData = { similar_logs: [] };
@@ -112,17 +114,12 @@ export async function createLogWithContext(req, res) {
     //     } catch (err) {
     //         console.error("Failed:", err.message);
     //     }
-
     //     const logIDs = (tagsData.similar_logs || []).filter(id =>mongoose.Types.ObjectId.isValid(id));
-
     //     if (logIDs.length === 0) {
     //         return res.status(200).json([]); // no results found
     //     }
-
     //     const logs = await Log.find({ _id: { $in: logIDs } });
-
     //     const newSearch = new Search({ searchContent, logID: logIDs });
-
     //     const savedSearch = await newSearch.save();
     //     res.status(201).json(logs);
     // }
@@ -130,14 +127,12 @@ export async function createLogWithContext(req, res) {
     //     console.error("Error creating search:", error);
     //     res.status(500).json({ message: "Internal Server Error" });
     // }
-
-        const log = new Log({ title, 
-            content, 
+        const log = new Log({ title,
+            content,
             tags: combinedArray || [],
             summary: tagsData.summary || "",
             explanation: tagsData.explanation || "",
             similar_logs: logIDs || []});
-        
             try {
                 const embeddingRes = await openai.embeddings.create({
                 model: "text-embedding-3-small",
@@ -147,7 +142,6 @@ export async function createLogWithContext(req, res) {
             } catch (err) {
                 console.error("Failed to generate embedding:", err.message);
             }
-
         const savedLog = await log.save();
         res.status(201).json(savedLog);
     }
@@ -156,25 +150,20 @@ export async function createLogWithContext(req, res) {
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
-
-
 export async function updateLog(req, res) {
     try {
-
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
             return res.status(404).json({ message: "Log not found" });
         }
-
         const { title, content, tags } = req.body;
         const updatedLog = await Log.findByIdAndUpdate(
             req.params.id,
             { title, content, tags },
-            { 
-                new: true, 
+            {
+                new: true,
                 runValidators: true
             }
     );
-
         res.status(200).json({ message: "Log updated successfully", log: updatedLog });
     }
     catch (error) {
@@ -182,16 +171,12 @@ export async function updateLog(req, res) {
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
-
 export async function deleteLog(req, res) {
     try {
-
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
             return res.status(404).json({ message: "Log not found" });
         }
-
         const deletedLog = await Log.findByIdAndDelete(req.params.id);
-
         res.status(200).json({ message: "Log deleted successfully", log: deletedLog });
     }
     catch (error) {

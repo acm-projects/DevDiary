@@ -1,18 +1,7 @@
-import "styles/App.css";
-import LogList from "../LogListView/LogList.tsx";
-
-interface Tag {
-  name: string;
-}
-
-type LogProps = {
-  id: number;
-  name: string;
-  project: string;
-  description: string;
-  status: string;
-  tags: Tag[];
-}
+import '/src/styles/App.css'
+import LogList from "../LogListView/LogList.tsx"
+import type { LogProps } from "../LogListView/Log.tsx"
+import { useEffect, useState } from "react";
 
 interface SearchResultListProps {
   query: string | null;
@@ -20,87 +9,65 @@ interface SearchResultListProps {
   tagFilter: string[];
 }
 
+// type logSchema = {
+//         _id: string,
+//         title: string,
+//         content: string,
+//         tags: string[],
+//         summary: string,
+//         explanation: string,
+//         similar_logs: number,
+//         embedding: number[],
+//         timestamps: true  // createdAt, updatedAt
+//     }
+
 function SearchResultList({ query, projectFilter, tagFilter }: SearchResultListProps) {
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  
+  useEffect(() => {
+    if (!query) return;
 
-  //TODO: get search results from backend
-  const searchResults = [{
-    id: 0,
-    name: "Log 1",
-    project: "Project 1",
-    description: "rfggf...",
-    status: "In Progress",
-    tags: [{
-      name: "Tag 1",
-    }, {
-      name: "Tag 2",
-    }, {
-      name: "Tag 3",
-    }]
-  }, {
-    id: 1,
-    name: "Log 2",
-    project: "Project 2",
-    description: "description...",
-    status: "Completed",
+    setLoading(true);
+    setError(null);
 
-    tags: [{
-      name: "Tag 1",
-    }, {
-      name: "Tag 2",
-    }, {
-      name: "Tag 3",
-    }]
-  }, {
-    id: 2,
-    name: "Log 3",
-    project: "Project 3",
-    description: "description...",
-    status: "In Progress",
+    fetch("http://localhost:5000/api/search", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ searchContent: query }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setSearchResults(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching search results:", error);
+        setError("Error fetching search results");
+        setLoading(false);
+      });
+  }, [query]);
 
-    tags: [{
-      name: "Tag 1",
-    }, {
-      name: "Tag 2",
-    }, {
-      name: "Tag 3",
-    }]
-  }, {
-    id: 3,
-    name: "Log 4",
-    project: "Project 4",
-    description: "description...",
-    status: "In Progress",
+  const simplifiedSearchResults = searchResults.map(({ _id, title, project, summary, tags }) => ({
+    id: _id,
+    project: project,
+    name: title,
+    description: summary,
+    tags: tags.map((tag: any) => ({ name: tag })),
+  }));
 
-    tags: [{
-      name: "Tag 1",
-    }, {
-      name: "Tag 2",
-    }, {
-      name: "Tag 3",
-    }, {
-      name: "Tag 4",
-    }]
-  }, {
-    id: 4,
-    name: "Log 5",
-    project: "Project 5",
-    description: "description...",
-    status: "Completed",
 
-    tags: [{
-      name: "Tag 1",
-    }, {
-      name: "Tag 2",
-    }, {
-      name: "Tag 3",
-    }]
-  },];
+  const filteredSearchResults = simplifiedSearchResults.filter(result => {
+    const projectMatches = result.project === projectFilter || projectFilter == "" || projectFilter == "No Project";
 
-  const filteredSearchResults = searchResults.filter(result => {
-    const projectMatches = result.project === projectFilter || projectFilter === "" || projectFilter === "No Project";
-
-    const tagMatches = result.tags.some(tag =>
-      tagFilter.includes(tag.name) || tagFilter.length === 0
+    const tagMatches = result.tags.some((tag: any) => 
+      tagFilter.includes(tag.name) || tagFilter.length == 0
     );
 
     return projectMatches && tagMatches;

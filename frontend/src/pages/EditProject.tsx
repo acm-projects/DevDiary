@@ -1,12 +1,12 @@
-import React, { useState, type ChangeEvent } from "react";
+import React, { useState, type ChangeEvent, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import Nav from "../components/NavBar/Nav";
 import Dropdown from "../components/Dropdown";
 import Cancel from "../components/Cancel";
 import { useNavigate } from "react-router-dom"
 import EmojiPicker from 'emoji-picker-react';
-import { Theme } from 'emoji-picker-react';
-import EmojiText from '../components/EmojiText.tsx'
-const CreateNewProject: React.FC = () => {
+
+const EditProject: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<File|null>(null);
   const [selectedImageName, setSelectedImageName] = useState<String>("No Image");
   const [tags, setTags] = useState(String);
@@ -15,6 +15,28 @@ const CreateNewProject: React.FC = () => {
   const [emojiPickerOpen, setEmojiPickerOpen] = useState(false);
   const [selectedEmoji, setSelectedEmoji] = useState(String);
   const navigate = useNavigate();
+  const { projectId } = useParams<{ projectId: string }>();
+
+  useEffect(() => {
+      fetch("http://localhost:5000/api/projects/"+projectId, {
+        method: "GET",
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setTags(data.tags);
+          setProjectName(data.title);
+          setProjectDescription(data.description);
+          setSelectedEmoji(data.emoji);
+        })
+        .catch((error) => {
+          console.error("Error fetching search results:", error);
+        });
+    }, []);
 
   const handleSubmit = async (e:any) => {
     e.preventDefault();
@@ -23,12 +45,15 @@ const CreateNewProject: React.FC = () => {
     const formData = new FormData();
     formData.append("title", projectName);
     formData.append("description", projectDescription);
-    tags.split(",").map(tag => tag.trim()).filter(tag => tag.length > 0).forEach(tag => formData.append("tags", tag));
+    tags.toString().split(",").map(tag => tag.trim()).filter(tag => tag.length > 0).forEach(tag => formData.append("tags", tag));
     formData.append("emoji", selectedEmoji);
 
     console.log(formData);
-    const res = await fetch("http://localhost:5000/api/projects", {
-      method: "POST",
+    console.log(projectName);
+    console.log(formData.get("title"));
+    
+    const res = await fetch("http://localhost:5000/api/projects/"+projectId, {
+      method: "PUT",
       body: formData,
     }).then((response) => {
         if (!response.ok) {
@@ -40,8 +65,6 @@ const CreateNewProject: React.FC = () => {
       .catch((error) => {
         console.error("Error fetching search results:", error);
       });;
-
-    
   }
 
   return (
@@ -56,7 +79,7 @@ const CreateNewProject: React.FC = () => {
         <div className="w-full max-w-4xl mx-auto">
           {/* Header */}
           <div className="mb-10">
-            <h1 className="text-4xl font-bold text-white">Create New Project</h1>
+            <h1 className="text-4xl font-bold text-white">Edit Project</h1>
             <p className="text-lg text-gray-400 mt-2">
               Organize your development process by creating a new project.
             </p>
@@ -68,12 +91,12 @@ const CreateNewProject: React.FC = () => {
               <h2 className="text-2xl font-semibold mb-6 text-teal-300">General Information</h2>
               <div className="space-y-6">
                 <div>
-                  <label htmlFor="project-name" className="flex justify-start text-md font-medium text-gray-300 mb-2">Project Name*</label>
+                  <label htmlFor="project-name" className="block text-md font-medium text-gray-300 mb-2">Project Name*</label>
                   <input
                     type="text"
                     id="project-name"
                     name="project-name"
-                    placeholder="e.g., My Awesome App"
+                    value={projectName}
                     className="block w-full p-3 bg-[#011522]/80 border border-teal-500/30 rounded-lg focus:ring-teal-400 focus:border-teal-400 outline-none transition"
                     onChange={(e) => setProjectName(e.target.value)}
                     required
@@ -84,7 +107,7 @@ const CreateNewProject: React.FC = () => {
                   <textarea
                     id="project-description"
                     name="project-description"
-                    placeholder="A brief description of what this project is about."
+                    value={projectDescription}
                     rows={3}
                     className="block w-full p-3 bg-[#011522]/80 border border-teal-500/30 rounded-lg focus:ring-teal-400 focus:border-teal-400 outline-none transition resize-none"
                     onChange={(e) => setProjectDescription(e.target.value)}
@@ -149,13 +172,13 @@ const CreateNewProject: React.FC = () => {
                 </div>
                 {/* <div className="flex items-center justify-between">
                   <div>
-                    <p className="flex justify-start text-lg font-medium">Select Tags</p>
+                    <p className="text-lg font-medium">Select Tags</p>
                     <p className="text-sm text-gray-400">Categorize with languages and tools.</p>
                   </div>
                   <div className="w-1/3">
                     <input
                       type="text"
-                      placeholder="e.g., react, typescript, bug"
+                      value={tags}
                       onChange={(e) => setTags(e.target.value)}
                       className="block w-full p-3 bg-[#011522]/80 border border-teal-500/30 rounded-lg focus:ring-teal-400 focus:border-teal-400 outline-none transition resize-none"
                     />
@@ -171,7 +194,7 @@ const CreateNewProject: React.FC = () => {
                 type="submit"
                 className="px-6 py-3 bg-teal-500 text-white font-semibold rounded-lg hover:bg-teal-600 transition-colors"
               >
-                Create Project
+                Update Project
               </button>
             </div>
           </form>
@@ -181,5 +204,5 @@ const CreateNewProject: React.FC = () => {
   );
 };
 
-export default CreateNewProject;
+export default EditProject;
 

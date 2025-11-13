@@ -1,6 +1,7 @@
 import express from 'express';
 import logsRoutes from './routes/logsRoutes.js';
 import searchRoutes from './routes/searchRoutes.js';
+import projectRoutes from './routes/projectRoutes.js';
 import { connectDB } from './config/db.js';
 import dotenv from 'dotenv';
 import rateLimiter from './middleware/rateLimiter.js';
@@ -38,6 +39,7 @@ app.use(express.json()); // Parse JSON request bodies
 app.use("/api/logs", logsRoutes);
 app.use("/api/search", searchRoutes);
 app.use('/api/auth', authRoutes);
+app.use("/api/projects", projectRoutes);
 
 // Server Startup
 const startServer = async () => {
