@@ -1,14 +1,15 @@
-import { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react'; // --- Highlight: Added React and useEffect
 import { useNavigate } from 'react-router-dom';
-import AnimatedPage from '../components/AnimatedPages';
+// --- Highlight: Removed AnimatedPage ---
 import Nav from 'components/NavBar/Nav';
 import StatusTag from 'components/StatusTag';
 
+// --- Highlight: Updated interface to match your real log model ---
 interface Log {
     _id: string;
     title: string;
     status: string;
-    creationDate: string;
+    createdAt: string; // --- Highlight: Use createdAt from your schema ---
     project: string;
     tags: string[];
     type: string;
@@ -25,52 +26,7 @@ interface Log {
     };
 }
 
-const hardcodedLogs: Log[] = [
-    {
-        _id: "1",
-        title: "Fixed CSS Grid on Firefox",
-        status: "Completed",
-        creationDate: "2025-10-31T10:30:00Z", // Today
-        project: "Company Website",
-        tags: ["css", "firefox", "bug"],
-        type: "Bug",
-        sections: { error: "Grid was misaligned", code: "display: grid;", solution: "Used a prefix", resources: "", comments: "" },
-        author: { initials: "JD", name: "John Doe" }
-    },
-    {
-        _id: "2",
-        title: "Database connection timeout",
-        status: "In Progress",
-        creationDate: "2025-10-28T14:00:00Z", // A few days ago
-        project: "Backend API",
-        tags: ["database", "mongo", "timeout"],
-        type: "Bug",
-        sections: { error: "Server can't reach DB", code: "mongoose.connect()", solution: "Check firewall rules", resources: "", comments: "" },
-        author: { initials: "JD", name: "John Doe" }
-    },
-    {
-        _id: "3",
-        title: "Set up new React components",
-        status: "Completed",
-        creationDate: "2025-10-28T16:00:00Z", // Same day
-        project: "Frontend Dashboard",
-        tags: ["react", "feature"],
-        type: "Feature",
-        sections: { error: "", code: "export default Component", solution: "Created new files", resources: "", comments: "" },
-        author: { initials: "JD", name: "John Doe" }
-    },
-    {
-        _id: "4D",
-        title: "Plan new auth flow",
-        status: "On Hold",
-        creationDate: "2025-10-15T09:00:00Z", // Earlier this month
-        project: "Mobile App",
-        tags: ["auth", "planning"],
-        type: "Feature",
-        sections: { error: "", code: "", solution: "", resources: "jwt.io", comments: "Need to discuss with team" },
-        author: { initials: "JD", name: "John Doe" }
-    }
-];
+// --- Highlight: Removed hardcodedLogs array ---
 
 // Helper to generate the days for the current month
 const getDaysInMonth = (year: number, month: number) => {
@@ -88,10 +44,38 @@ const getFirstDayOfMonth = (year: number, month: number) => {
     return new Date(year, month, 1).getDay();
 };
 
-function Calendar() {
-    const [currentDate, setCurrentDate] = useState(new Date("2025-10-31T12:00:00Z")); // Set to the app's date
+// --- Highlight: Renamed to CalendarPage to match file/exports ---
+const Calendar: React.FC = () => {
+    // --- Highlight: Set default date to today ---
+    const [currentDate, setCurrentDate] = useState(new Date()); 
     const [selectedDayLogs, setSelectedDayLogs] = useState<Log[]>([]);
     const navigate = useNavigate();
+
+    // --- Highlight: Added state for loading and fetched logs ---
+    const [allLogs, setAllLogs] = useState<Log[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    // --- Highlight: useEffect to fetch logs from the database ---
+    useEffect(() => {
+        const fetchLogs = async () => {
+            setIsLoading(true);
+            try {
+                const res = await fetch('/api/logs'); // Fetches all logs
+                if (!res.ok) {
+                    throw new Error('Failed to fetch logs');
+                }
+                const data: Log[] = await res.json();
+                setAllLogs(data);
+            } catch (err) {
+                console.error("Error fetching logs:", err);
+                // You could set an error state here
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchLogs();
+    }, []); // Runs once when the page loads
 
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
@@ -102,16 +86,17 @@ function Calendar() {
     // Group logs by their creation date
     const logsByDate = useMemo(() => {
         const map = new Map<string, Log[]>();
-        // Using the hardcoded logs array (for now)
-        hardcodedLogs.forEach(log => {
-            const date = new Date(log.creationDate).toDateString();
+        // --- Highlight: Use the fetched `allLogs` array ---
+        allLogs.forEach(log => {
+            // --- Highlight: Use `log.createdAt` from your schema ---
+            const date = new Date(log.createdAt).toDateString();
             if (!map.has(date)) {
                 map.set(date, []);
             }
             map.get(date)?.push(log);
         });
         return map;
-    }, []); 
+    }, [allLogs]); // --- Highlight: Re-runs when allLogs changes ---
 
     const handlePrevMonth = () => {
         setCurrentDate(new Date(year, month - 1, 1));
@@ -131,8 +116,7 @@ function Calendar() {
     const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
     return (
-        <AnimatedPage>
-            <div className="grid grid-cols-[200px_auto] bg-[#0F172A] bg-[url(src/assets/Variant6.svg)]  bg-cover h-screen w-screen text-white font-sans">
+            <div className="grid grid-cols-[200px_auto] bg-[#0F172A] bg-[url(src/assets/Variant6.svg)] bg-cover h-screen w-screen text-white font-sans">
                 {/* Navigation Sidebar */}
                 <div className="sticky top-0 h-screen">
                     <Nav />
@@ -168,7 +152,8 @@ function Calendar() {
                                 {daysInMonth.map(day => {
                                     const dayString = day.toDateString();
                                     const logsForThisDay = logsByDate.get(dayString) || [];
-                                    const isSelected = selectedDayLogs.length > 0 && dayString === new Date(selectedDayLogs[0].creationDate).toDateString();
+                                    // --- Highlight: Updated logic to use createdAt ---
+                                    const isSelected = selectedDayLogs.length > 0 && dayString === new Date(selectedDayLogs[0].createdAt).toDateString();
                                     
                                     return (
                                         <div 
@@ -200,10 +185,14 @@ function Calendar() {
                     <div className="w-80 flex-shrink-0 mt-[88px]"> 
                         <div className="bg-[#1E293B]/60 border border-teal-500/20 rounded-2xl p-6 backdrop-blur-sm shadow-lg shadow-teal-500/10 h-full">
                             <h2 className="text-xl font-semibold mb-4">
-                                {selectedDayLogs.length > 0 ? `Logs for ${new Date(selectedDayLogs[0].creationDate).toLocaleDateString()}` : 'Select a Day'}
+                                {/* --- Highlight: Updated logic to use createdAt --- */}
+                                {selectedDayLogs.length > 0 ? `Logs for ${new Date(selectedDayLogs[0].createdAt).toLocaleDateString()}` : 'Select a Day'}
                             </h2>
                             <div className="space-y-3 overflow-y-auto max-h-[calc(100%-40px)]">
-                                {selectedDayLogs.length > 0 ? (
+                                {/* --- Highlight: Added loading state --- */}
+                                {isLoading ? (
+                                    <p className="text-gray-400">Loading logs...</p>
+                                ) : selectedDayLogs.length > 0 ? (
                                     selectedDayLogs.map(log => (
                                         <div 
                                             key={log._id} 
@@ -225,9 +214,7 @@ function Calendar() {
                     </div>
                 </main>
             </div>
-        </AnimatedPage>
     );
 };
 
 export default Calendar;
-

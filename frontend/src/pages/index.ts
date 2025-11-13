@@ -11,4 +11,6 @@ export { default as EditLog } from "./EditLog.tsx";
 export { default as LandingPage } from "./LandingPage.tsx";
 export { default as Projects } from "./Projects.tsx";
 export { default as Calendar } from "./Calendar.tsx";
+export { default as QuickLog } from "./QuickLog.tsx";
+
 

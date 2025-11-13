@@ -1,4 +1,4 @@
-import {Home, CreateNewProject, Settings, Login, SignUp, SearchResults, AllLogs, ViewLog, LogMetaData, EditLog, LandingPage, Projects, Calendar} from "./pages";
+import {Home, CreateNewProject, Settings, Login, SignUp, SearchResults, AllLogs, ViewLog, LogMetaData, EditLog, LandingPage, Projects, Calendar, QuickLog} from "./pages";
 
 export const routes = [
   {path: "/", element: <LandingPage /> },
@@ -14,4 +14,5 @@ export const routes = [
   { path: "/edit-log", element: <EditLog /> },
   { path: "/projects", element: <Projects /> },
   { path: "/calendar", element: <Calendar /> },
+  { path: "/quick-log", element: <QuickLog /> },
 ];
