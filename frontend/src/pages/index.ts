@@ -10,3 +10,5 @@ export { default as LogMetaData } from "./LogMetaData.tsx";
 export { default as EditLog } from "./EditLog.tsx";
 export { default as LandingPage } from "./LandingPage.tsx";
 export { default as Projects } from "./Projects.tsx";
+export { default as AllLogsInProject } from "./AllLogsInProject.tsx";
+export { default as EditProject } from "./EditProject.tsx";

@@ -8,6 +8,7 @@ export async function search(searchContent) {
     const embeddingRes = await openai.embeddings.create({
       model: "text-embedding-3-small",
       input: searchContent,
+      //dimensions: 24,
     });
     const queryEmbedding = embeddingRes.data[0].embedding;
 

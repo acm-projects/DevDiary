@@ -7,7 +7,7 @@ import type { TagProps } from "../Tags/Tag.tsx"
 export interface LogProps {
   id: number;
   name: string;
-  project: string;
+  project?: string;
   description: string;
   tags: TagProps[];
 }

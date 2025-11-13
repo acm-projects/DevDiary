@@ -1,107 +1,9 @@
-import React, { useState, type FormEvent } from "react";
+import React, { useEffect, useState, type FormEvent } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Nav from "../components/NavBar/Nav.tsx";
 import LogList from "components/LogListView/LogList.tsx";
 import StatusTag from "components/StatusTag.tsx";
 //import RobotCanvas from "../components/Robot.jsx";
-
-const logList = [{
-
-  id: 0,
-
-  name: "Log 1",
-
-  project: "Project 1",
-
-  description: "description...",
-
-  tags: [{
-
-    name: "Tag 1",
-
-    color: "#FF0000",
-
-  }, {
-
-    name: "Tag 2",
-
-    color: "#00FF00",
-
-  }, {
-
-    name: "Tag 3",
-
-    color: "#0000FF",
-
-  }]
-
-}, {
-
-  id: 1,
-  name: "Log 2",
-  project: "Project 2",
-  description: "description...",
-  tags: [{
-    name: "Tag 1",
-    color: "#FF0000",
-  }, {
-    name: "Tag 2",
-    color: "#00FF00",
-  }, {
-    name: "Tag 3",
-    color: "#0000FF",
-  }]
-}, {
-  id: 2,
-  name: "Log 3",
-  project: "Project 3",
-  description: "description...",
-  tags: [{
-    name: "Tag 1",
-    color: "#FF0000",
-  }, {
-    name: "Tag 2",
-    color: "#00FF00",
-  }, {
-    name: "Tag 3",
-    color: "#0000FF",
-  }]
-}, {
-  id: 3,
-  name: "Log 4",
-  project: "Project 4",
-  description: "description...",
-  tags: [{
-    name: "Tag 1",
-    color: "#FF0000",
-  }, {
-    name: "Tag 2",
-    color: "#00FF00",
-  }, {
-    name: "Tag 3",
-    color: "#0000FF",
-  }, {
-    name: "Tag 4",
-    color: "#df09e7",
-  }]
-}, {
-  id: 4,
-  name: "Log 5",
-  project: "Project 5",
-  description: "description...",
-  tags: [{
-    name: "Tag 1",
-    color: "#FF0000",
-  }, {
-    name: "Tag 2",
-    color: "#00FF00",
-  }, {
-    name: "Tag 3",
-    color: "#0000FF",
-  }]
-},];
-
-
 
 // Carousel Component 
 const RecentLogsCarousel: React.FC<{ logs: any[] }> = ({ logs }) => {
@@ -120,10 +22,22 @@ const RecentLogsCarousel: React.FC<{ logs: any[] }> = ({ logs }) => {
   };
 
   // Get the current log based on the index
-  const currentLog = logs[currentIndex];
-  const tagsArray = currentLog.tags.split(',').map((tag: string) => tag.trim()).filter(Boolean);
-
-
+  let currentLog;
+  if(logs.length != 0) {
+    currentLog = logs[currentIndex];
+  } else {
+    currentLog = {
+      id: "_id",
+      project: "project",
+      title: "title",
+      status: "status",
+      description: "summary",
+      tags: ["tags"],
+      sections: { code: `const [user, setUser] = useState(null)`, error: '', solution: '', resources: '', comments: '' },
+      updatedAt: "updatedAt",
+    };
+  }
+  // const tagsArray = currentLog.tags.split(',').map((tag: string) => tag.trim()).filter(Boolean);
   return (
     <div className="w-full max-w-4xl mx-auto relative group ">
       <div className="relative h-[280px] w-full bg-[#1E293B]/80 border border-white/25 bg-cover bg-[url(src/assets/Variant4.svg)] rounded-2xl p-6 flex flex-col justify-between backdrop-blur-sm shadow-lg shadow-teal-500/10 hover:shadow-[0px_20px_80px_-30px_#41cca6] hover:h-[320px] transition-all duration-300">
@@ -149,7 +63,7 @@ const RecentLogsCarousel: React.FC<{ logs: any[] }> = ({ logs }) => {
         {/* Bottom Section */}
         <div className="flex items-center justify-between">
           <div className="flex flex-wrap gap-2">
-            {tagsArray.map((tag: string, index: number) => (
+            {currentLog.tags.map((tag: string, index: number) => (
               <span key={index} className="px-3 py-1 text-xs font-medium bg-cyan-500/20 text-cyan-300 rounded-full border border-cyan-400/50">
                 {tag}
               </span>
@@ -197,13 +111,65 @@ const Home = () => {
   };
 
   // Hardcoded data for the carousel and list (for now, ideally it comes from backend)
-  const recentLogs = [
-    { title: 'CORS policy blocking API requests', project: 'WebApp V2', status: 'In Progress', tags: 'cors,api,express', sections: { code: `fetch("https://api.example.com/data")`, error: '', solution: '', resources: '', comments: '' } },
-    { title: 'Database connection timeout', project: 'Backend API', status: 'On Hold', tags: 'database,mongo,timeout', sections: { code: `mongoose.connect(process.env.DB_URI)`, error: '', solution: '', resources: '', comments: '' } },
-    { title: 'React component not re-rendering', project: 'Frontend Dashboard', status: 'Completed', tags: 'react,state,hooks', sections: { code: `const [user, setUser] = useState(null)`, error: '', solution: '', resources: '', comments: '' } },
-    { title: 'CSS Grid alignment issue on Firefox', project: 'Company Website', status: 'In Progress', tags: 'css,grid,firefox', sections: { code: `display: grid; place-items: center;`, error: '', solution: '', resources: '', comments: '' } },
-    { title: 'Authentication token expiring early', project: 'Mobile App', status: 'In Progress', tags: 'jwt,auth,security', sections: { code: `jwt.sign({ id }, SECRET, { expiresIn: '1h' })`, error: '', solution: '', resources: '', comments: '' } },
-  ];
+  // const recentLogs = [
+  //   { title: 'CORS policy blocking API requests', project: 'WebApp V2', status: 'In Progress', tags: 'cors,api,express', sections: { code: `fetch("https://api.example.com/data")`, error: '', solution: '', resources: '', comments: '' } },
+  //   { title: 'Database connection timeout', project: 'Backend API', status: 'On Hold', tags: 'database,mongo,timeout', sections: { code: `mongoose.connect(process.env.DB_URI)`, error: '', solution: '', resources: '', comments: '' } },
+  //   { title: 'React component not re-rendering', project: 'Frontend Dashboard', status: 'Completed', tags: 'react,state,hooks', sections: { code: `const [user, setUser] = useState(null)`, error: '', solution: '', resources: '', comments: '' } },
+  //   { title: 'CSS Grid alignment issue on Firefox', project: 'Company Website', status: 'In Progress', tags: 'css,grid,firefox', sections: { code: `display: grid; place-items: center;`, error: '', solution: '', resources: '', comments: '' } },
+  //   { title: 'Authentication token expiring early', project: 'Mobile App', status: 'In Progress', tags: 'jwt,auth,security', sections: { code: `jwt.sign({ id }, SECRET, { expiresIn: '1h' })`, error: '', solution: '', resources: '', comments: '' } },
+  // ];
+
+  const [allLogs, setAllLogs] = useState<any[]>([]);
+  const [loadingRecentLogs, setLoadingRecentLogs] = useState<boolean>(true);
+  const [errorRecentLogs, setErrorRecentLogs] = useState<string | null>(null);
+  
+  useEffect(() => {
+
+    setLoadingRecentLogs(true);
+    setErrorRecentLogs(null);
+
+    fetch("http://localhost:5000/api/logs", {
+      method: "GET",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setAllLogs(data);
+        setLoadingRecentLogs(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching search results:", error);
+        setErrorRecentLogs("Error fetching search results");
+        setLoadingRecentLogs(false);
+      });
+  }, []);
+
+  const simplifiedAllLogs = allLogs.map(({ _id, title, project, summary, tags, updatedAt }) => ({
+    id: _id,
+    project: project,
+    title: title,
+    status: "test",
+    description: summary,
+    tags: tags,
+    sections: { code: `const [user, setUser] = useState(null)`, error: '', solution: '', resources: '', comments: '' },
+    updatedAt: updatedAt,
+  }));
+
+  const recentLogs = simplifiedAllLogs.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()).slice(0,5);
+
+  const logList = allLogs.map(({ _id, title, project, summary, tags }) => ({
+      id: _id,
+      project: project,
+      name: title,
+      status: "test",
+      description: summary,
+      tags: tags.map((tag: any) => ({name: tag})),
+      
+    }));
 
   return (
     <div className="relative snap-y snap-mandatory h-screen overflow-y-scroll">
