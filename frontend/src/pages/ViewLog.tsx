@@ -7,7 +7,6 @@ import StatusTag from 'components/StatusTag';
 import TypeTag from 'components/TypeTag';
 import AnimatedPage from 'components/AnimatedPages';
 
-
 interface LogData {
     title: string;
     project: string;
@@ -33,7 +32,7 @@ const SectionView: React.FC<{ title: string, content: string, colorClassName: st
         <h2 className={`text-xl font-semibold mb-2 ${colorClassName}`}>{title}</h2>
         <div className="w-full flex-none"></div> {/* forces content to be on a new line */}
         <pre className="flex flex-wrap justify-start p-2 text-gray-300 text-sm whitespace-pre-wrap font-sans border-b border-gray-700 w-full">
-            <p className='mt-10 mb-15'>{content || `No content provided for ${title}.`}</p>
+            <p className='mt-4 mb-6'>{content || `No content provided for ${title}.`}</p>
         </pre>
     </div>
 );
@@ -54,15 +53,14 @@ function ViewLog(){
         creationDate: new Date().toISOString(),
     };
 
-    const tagsArray = logData.tags.split(',').map(tag => tag.trim()).filter(Boolean);
+    const tagsArray = (logData.tags || '').split(',').map(tag => tag.trim()).filter(Boolean);
     const creationDate = new Date(logData.creationDate);
 
     return (
-        <AnimatedPage> {/* Wraps the page content with AnimatedPages for transitions */}
-        <div className="w-screen h-screen bg-[#011522] text-white overflow-hidden flex flex-col font-sans">
+        <AnimatedPage> 
+        <div className="w-screen h-screen bg-[#0d0b1e] bg-[url(src/assets/Variant8.png)] text-white overflow-hidden flex flex-col font-sans">
 
             {/* Header */}
-            <div className="border-b py-1 border-solid border-[#ffffff33]/30 bg-cover bg-[#011522] bg-[url(src/assets/Variant6.svg)] text-white overflow-hidden"> 
             <Header>
                 <div className="flex items-center gap-4">
                     <p className="font-semibold text-xl">{logData.project}</p>
@@ -76,44 +74,52 @@ function ViewLog(){
                     <Profile />
                 </div>
             </Header>
-            </div>
 
             <div className="flex flex-1 overflow-hidden p-4 sm:p-6 lg:p-8 gap-6">
                 <AiSideNavBar />
-                <main className="flex-grow flex-1 overflow-y-auto overflow-hidden bg-[#011522] bg-[url(src/assets/Variant6.svg)] rounded-xl border border-gray-700 p-6 space-y-6">
+                <main className="flex-grow flex-1 overflow-hidden bg-[#1E293B]/80 border border-white/25 bg-cover bg-[url(src/assets/Variant4.svg)] rounded-2xl p-6 backdrop-blur-sm shadow-lg shadow-teal-500/10 flex flex-col">
                     
-                    {/* Log Header */}
-                    <div>
-                        <div className="flex flex-wrap justify-center gap-2 items-center text-sm text-gray-400 mb-4">
-                            <h1 className="font-semibold text-xl text-white">{logData.title}</h1>
+                    <div className="flex justify-between items-start mb-4">
+                        
+                        {/* Left block (Title + Author/Date) */}
+                        <div className="flex flex-col items-start space-y-2 mr-4 min-w-0">
+                            <h1 className="font-semibold text-2xl truncate" title={logData.title}>
+                                {logData.title}
+                            </h1>
+                            <div className="flex items-center gap-x-3 text-sm text-gray-400">
+                                <span><strong>{logData.author.initials}</strong> {logData.author.name}</span>
+                                <span>{creationDate.toLocaleDateString()}</span> 
+                                <span>{creationDate.toLocaleTimeString()}</span>
+                            </div>
+                        </div>
+
+                        {/* Right block (Status + Tags) */}
+                        <div className="flex-shrink-0 flex flex-col items-end space-y-2">
                             <StatusTag status={logData.status} />
-                            <div className="w-full flex-none"></div>
-                            <span><strong>{logData.author.initials}</strong> {logData.author.name}</span>
-                            <span>{creationDate.toLocaleDateString()}</span>
-                            <span>{creationDate.toLocaleTimeString()}</span>
-                        </div> 
-                        <div className="flex flex-wrap justify-center gap-2 items-center">
-                            <TypeTag type={logData.type} />
-                            <span className="text-gray-400">|</span>
-                            {tagsArray.map((tag, index) => (
-                                <span key={index} className="px-3 py-1 text-xs font-medium bg-cyan-500/20 text-cyan-300 rounded-full border border-cyan-400">
-                                    {tag}
-                                </span>
-                            ))}
+                            
+                            <div className="flex flex-wrap justify-end gap-2 max-w-xs">
+                                <TypeTag type={logData.type} />
+                                {tagsArray.map((tag, index) => (
+                                    <span key={index} className="px-3 py-1 text-xs font-medium bg-cyan-500/20 text-cyan-300 rounded-full border border-cyan-400">
+                                        {tag}
+                                    </span>
+                                ))}
+                            </div>
                         </div>
                     </div>
                     
-                    {/* Sections */}
-                    <div className="flex flex-wrap justify-start bg-black/70 p-6 rounded-xl border border-gray-700 overflow-y-auto">
-                    <SectionView title="Error" content={logData.sections.error} colorClassName="text-red-400" />
-                    <div className="w-full flex-none"></div> {/* forces next section to be on a new line */}
-                    <SectionView title="Code Snippet" content={logData.sections.code} colorClassName="text-cyan-400" />
-                    <div className="w-full flex-none"></div>
-                    <SectionView title="Solution" content={logData.sections.solution} colorClassName="text-green-400" />
-                    <div className="w-full flex-none"></div>
-                    <SectionView title="Resources" content={logData.sections.resources} colorClassName="text-purple-400" />
-                    <div className="w-full flex-none"></div>
-                    <SectionView title="Comments" content={logData.sections.comments} colorClassName="text-gray-400" />
+                    <div className="flex-grow pt-4 flex flex-col overflow-y-auto">
+                        <div className="flex flex-wrap justify-start bg-black/70 p-6 rounded-xl border border-gray-700 overflow-y-auto">
+                            <SectionView title="Error" content={logData.sections.error} colorClassName="text-red-400" />
+                            <div className="w-full flex-none"></div> {/* forces next section to be on a new line */}
+                            <SectionView title="Code Snippets" content={logData.sections.code} colorClassName="text-cyan-400" />
+                            <div className="w-full flex-none"></div>
+                            <SectionView title="Solution" content={logData.sections.solution} colorClassName="text-green-400" />
+                            <div className="w-full flex-none"></div>
+                            <SectionView title="Resources" content={logData.sections.resources} colorClassName="text-purple-400" />
+                            <div className="w-full flex-none"></div>
+                            <SectionView title="Comments" content={logData.sections.comments} colorClassName="text-gray-400" />
+                        </div>
                     </div>
                 </main>
             </div>

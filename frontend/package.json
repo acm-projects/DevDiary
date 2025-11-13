@@ -21,6 +21,7 @@
     "framer-motion": "^12.23.24",
     "react": "^19.1.1",
     "react-apple-emojis": "^3.0.0",
+    "react-calendar": "^6.0.0",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.3",
     "tailwindcss": "^4.1.13"
@@ -30,6 +31,7 @@
     "@tailwindcss/line-clamp": "^0.4.4",
     "@types/node": "^24.10.0",
     "@types/react": "^19.1.13",
+    "@types/react-calendar": "^3.9.0",
     "@types/react-dom": "^19.1.9",
     "@vitejs/plugin-react": "^5.0.4",
     "babel-plugin-react-compiler": "^19.1.0-rc.3",

@@ -5,16 +5,16 @@ import Profile from '../components/Profile';
 import Header from '../components/Header';
 import AiSideNavBar from '../components/AiSideNavBar';
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react'; 
 import TypeTag from 'components/TypeTag';
 import StatusTag from 'components/StatusTag';
 import AnimatedPage from 'components/AnimatedPages';
 
-// Log data structure
 interface LogData {
+    _id?: string; 
     title: string;
     project: string;
-    tags: string;
+    tags: string; 
     status: string;
     type: string;
     sections: {
@@ -31,25 +31,27 @@ interface LogData {
     creationDate: string;
 }
 
-// Section component for each editable section
+const sectionStyles: { [key: string]: { border: string; text: string; borderB: string; } } = {
+    'Error': { border: 'border-[#ff0000]', text: 'text-red-500', borderB: 'border-red-500' },
+    'Code Snippets': { border: 'border-blue-500', text: 'text-blue-500', borderB: 'border-blue-500' },
+    'Solution': { border: 'border-green-500', text: 'text-green-500', borderB: 'border-green-500' },
+    'Resources': { border: 'border-purple-500', text: 'text-purple-500', borderB: 'border-purple-500' },
+    'Comments': { border: 'border-gray-500', text: 'text-gray-500', borderB: 'border-gray-500' },
+    'AI Insights': { border: 'border-teal-400', text: 'text-teal-400', borderB: 'border-teal-400' },
+};
+const defaultStyle = sectionStyles['Comments'];
+
+
 const Section: React.FC<{
     section: string;
     content: string;
     onContentChange: (newContent: string) => void;
 }> = ({ section, content, onContentChange }) => {
-    const sectionStyles: { [key: string]: string } = {
-        'Error': 'border-[#ff0000] text-red-500',
-        'Code Snippets': 'border-blue-500 text-blue-500',
-        'Solution': 'border-green-500 text-green-500',
-        'Resources': 'border-purple-500 text-purple-500',
-        'Comments': 'border-gray-500 text-gray-500',
-    };
-    const style = sectionStyles[section] || 'border-gray-500 text-gray-500';
+    const style = sectionStyles[section] || defaultStyle;
 
     return (
         <div className="w-full h-full flex flex-col">
-            <label className={`block text-left text-md font-medium mb-2 ${style}`}>{section}</label>
-            <div className={`flex-grow bg-black/50 rounded-[10px] border ${style}`}>
+            <div className={`flex-grow bg-black/50 rounded-[10px] border ${style.border}`}>
                 <textarea
                     value={content}
                     onChange={(e) => onContentChange(e.target.value)}
@@ -64,30 +66,74 @@ const Section: React.FC<{
 function EditLog() {
     const location = useLocation();
     const state = location.state as { logData: LogData };
-    const [activeSection, setActiveSection] = useState('error'); // sets error as the default active section
-    const [creationDate] = useState(new Date());  // get current date and time
+    const [activeSection, setActiveSection] = useState('error'); 
     const navigate = useNavigate(); 
 
-
-    // Default log data structure in case no data is passed
+    // Default log data structure in case no data is passed (for a new log)
     const defaultLogData: LogData = {
         title: 'Untitled Log',
         project: 'Untitled Project',
-        tags: '',
+        tags: '', // Start with an empty string
         status: 'In Progress',
         type: 'Feature',
         sections: { error: '', code: '', solution: '', resources: '', comments: '' },
-        author: { initials: 'JD', name: 'John Doe' }, // Hardcoded author (for now, until we connect to user auth/database)
-        creationDate: new Date().toISOString(), // Capture creation time
+        author: { initials: 'JD', name: 'John Doe' }, 
+        creationDate: new Date().toISOString(),
     };
 
-    // Merge/replace the default log data with any data passed in 
-    const initialLogData: LogData = {
-        ...defaultLogData,
-        ...state?.logData,
-    };
+    const [logData, setLogData] = useState<LogData | null>(null);
+    const [isEditingTitle, setIsEditingTitle] = useState(false);
+    
+    useEffect(() => {
+        const passedData = state?.logData;
 
-    // Navigation links for sections
+        if (passedData) {
+            if (passedData._id) {
+                console.log("Editing existing log, fetching data...", passedData._id);
+                fetch(`/api/logs/${passedData._id}`)
+                    .then(res => {
+                        if (res.ok) return res.json();
+                        throw new Error('Failed to fetch log');
+                    })
+                    .then(data => {
+                        // Convert tags array back to string for the input
+                        setLogData({ ...data, tags: data.tags.join(', ') });
+                    })
+                    .catch(err => {
+                        console.error("Error fetching log:", err);
+                        // Fallback to the passed data if fetch fails
+                        setLogData({ ...passedData, tags: Array.isArray(passedData.tags) ? passedData.tags.join(', ') : passedData.tags });
+                    });
+            } else {
+
+                console.log("Creating new log, merging passed data with defaults...");
+                const tagsAsString = Array.isArray(passedData.tags) ? passedData.tags.join(', ') : passedData.tags;
+                
+                // This merge ensures fields from QuickLog (like sections) are kept,
+                // and fields from LogMetaData are added to the defaults.
+                setLogData({
+                    ...defaultLogData, 
+                    ...passedData,     
+                    tags: tagsAsString 
+                });
+            }
+        } else {
+            console.log("Creating new blank log...");
+            setLogData(defaultLogData);
+        }
+    }, [state?.logData]); // Re-run if the passed-in state changes
+    
+
+    if (!logData) {
+        return (
+            <div className="w-screen h-screen bg-[#0d0b1e] text-white flex items-center justify-center">
+                <p className="text-xl">Loading Editor...</p>
+            </div>
+        );
+    }
+
+    const creationDate = new Date(logData.creationDate); 
+
     const navLinks = [
         { id: 'error', label: 'Error' },
         { id: 'code', label: 'Code Snippets' },
@@ -95,41 +141,72 @@ function EditLog() {
         { id: 'resources', label: 'Resources' },
         { id: 'comments', label: 'Comments' },
         { id: 'ai-insights', label: 'AI Insights' },
-    ]
+    ];
 
-    const [title, setTitle] = useState(initialLogData.title);
-    const [isEditingTitle, setIsEditingTitle] = useState(false);
-    const [sectionsContent, setSectionsContent] = useState(initialLogData.sections);
+    const handleTitleChange = (newTitle: string) => {
+        setLogData(prev => prev ? ({ ...prev, title: newTitle }) : null);
+    };
 
-    // Handles content changes for each section
     const handleSectionChange = (sectionId: keyof LogData['sections'], content: string) => {
-        setSectionsContent(prev => ({ ...prev, [sectionId]: content }));
+        setLogData(prev => prev ? ({
+            ...prev,
+            sections: {
+                ...prev.sections,
+                [sectionId]: content
+            }
+        }) : null);
     };
 
-    // When clicking the save button, navigate to ViewLog page with updated log data
-    const handleSave = () => {
-        const updatedLogData: LogData = {
-            ...initialLogData,
-            title: title,
-            sections: sectionsContent,
-        };
-        navigate('/view-log', { state: { logData: updatedLogData } });
+    const handleSave = async () => {
+        if (!logData) return; // Guard clause
+
+        // Determine if this is a new log or an update
+        const isUpdating = !!logData._id;
+        
+        const url = isUpdating ? `/api/logs/${logData._id}` : '/api/logs';
+        const method = isUpdating ? 'PUT' : 'POST';
+
+        console.log(`Attempting to ${method} log at ${url}`);
+
+        try {
+            const res = await fetch(url, {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(logData), // Send the whole logData object
+            });
+
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.message || 'Failed to save log');
+            }
+
+            const savedLog = await res.json();
+
+            // After saving, navigate to the ViewLog page for the log
+            const logToView = isUpdating ? savedLog.log : savedLog; 
+            
+            console.log('Save successful, navigating to view log');
+            navigate(`/view-log`, { state: { logData: logToView } });
+
+        } catch (err) {
+            console.error("Error saving log:", err);
+            // Don't use alert in production
+            alert(`Error: ${err.message}`);
+        }
     };
 
 
-    // Parse tags into tagsArrya
-    const tagsArray = initialLogData.tags.split(',').map(tag => tag.trim()).filter(Boolean);
+    // Parse tags string into tagsArray for display
+    const tagsArray = logData.tags.split(',').map(tag => tag.trim()).filter(Boolean);
 
     return (
         <AnimatedPage>
-        <div className="w-screen h-screen bg-[#011522] text-white overflow-hidden flex flex-grow flex-col font-sans">
-
-            {/* Header */}
-            {/*<div className="border-b border-solid border-[#ffffff33]/30 bg-cover bg-[#41B3A9]/15 bg-[url(src/assets/gradient2.png) overflow-hidden">*/}
-            <div className="border-b py-1 border-solid border-[#ffffff33]/30 bg-cover bg-[#011522] bg-[url(src/assets/Variant6.svg)] text-white overflow-hidden">
-               <Header>
+        <div className="w-screen h-screen bg-[#0d0b1e] bg-[url(src/assets/Variant8.png)] text-white overflow-hidden flex flex-grow flex-col font-sans">
+            <Header>
                 <div className="flex items-center gap-4">
-                    <p className="font-semibold text-xl">{initialLogData.project}</p>
+                    <p className="font-semibold text-xl">{logData.project}</p>
                 </div>
                 <div className="flex items-center gap-4">
                     <Cancel />
@@ -137,92 +214,80 @@ function EditLog() {
                     <Profile />
                 </div>
             </Header>
-            </div>
 
-
-            {/*  Editor & Siderbar  */}
             <div className="flex flex-1 overflow-hidden p-4 sm:p-6 lg:p-8 gap-6">
-
-                {/* AI Sidebar */}
                 <AiSideNavBar />
-
-                {/* Main Area for the Editor */}
-                <main className="flex-grow flex-1 overflow-hidden bg-[#011522] bg-[url(src/assets/Variant6.svg)] rounded-xl border border-gray-700 p-6 flex flex-col">
-                    <div className="mb-4">
-                        <div className="flex justify-center gap-2 items-center mb-2">
+                <main className="flex-grow flex-1 overflow-hidden bg-[#1E293B]/60 border border-teal-500/20 rounded-2xl p-6 backdrop-blur-sm shadow-lg shadow-teal-500/10 flex flex-col">
+                    
+                    <div className="flex justify-between items-start mb-4">
+                        {/* Left block (Title + Author/Date) */}
+                        <div className="flex flex-col items-start space-y-2 mr-4 min-w-0">
                             {isEditingTitle ? (
                                 <input
                                     type="text"
-                                    value={title}
-                                    onChange={(e) => setTitle(e.target.value)}
+                                    value={logData.title}
+                                    onChange={(e) => handleTitleChange(e.target.value)}
                                     onBlur={() => setIsEditingTitle(false)}
-                                    onKeyDown={(e) => {
-                                        if (e.key === 'Enter') {
-                                            e.preventDefault();
-                                            setIsEditingTitle(false);
-                                        }
-                                    }}
-                                    className="font-semibold text-xl bg-transparent border-b border-teal-400 outline-none text-white"
+                                    onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); setIsEditingTitle(false); } }}
+                                    className="font-semibold text-2xl bg-transparent border-b border-teal-400 outline-none text-white"
                                     autoFocus
                                 />
                             ) : (
                                 <p
-                                    className="font-semibold text-xl cursor-pointer"
+                                    className="font-semibold text-2xl cursor-pointer truncate"
                                     onClick={() => setIsEditingTitle(true)}
                                 >
-                                    {title}
+                                    {logData.title}
                                 </p>
                             )}
-                            {/* Status Tag */}
-                            <StatusTag status={initialLogData.status} />
+                            <div className="flex items-center gap-x-3 text-sm text-gray-400">
+                                <span><strong>{logData.author.initials}</strong> {logData.author.name}</span>
+                                <span>{creationDate.toLocaleDateString()}</span> 
+                                <span>{creationDate.toLocaleTimeString()}</span>
+                            </div>
                         </div>
 
-                        {/* Author and Date Info */}
-                        <div className="flex justify-center mb-5 items-center gap-x-4 gap-y-2 text-sm text-white">
-                            <span><strong>JD</strong> John Doe</span>
-                            <span>{creationDate.toLocaleDateString()}</span> 
-                            <span>{creationDate.toLocaleTimeString()}</span>
+                        {/* Right block (Status + Tags) */}
+                        <div className="flex-shrink-0 flex flex-col items-end space-y-2">
+                            <StatusTag status={logData.status} />
+                            <div className="flex flex-wrap justify-end gap-2 max-w-xs">
+                                <TypeTag type={logData.type} />
+                                {tagsArray.map((tag, index) => (
+                                    <span key={index} className="px-3 py-1 text-xs font-medium bg-cyan-500/20 text-cyan-300 rounded-full border border-cyan-400">
+                                        {tag}
+                                    </span>
+                                ))}
+                            </div>
                         </div>
-
-                        
-                        <div className="flex flex-wrap justify-center gap-2 mt-2">
-                            {/* Type Tag */}
-                            <TypeTag type = {initialLogData.type} />
-                            <span className="text-gray-400">|</span>
-                            {tagsArray.map((tag, index) => (
-                                <span key={index} className="px-3 py-1 text-xs font-medium bg-cyan-500/20 text-cyan-300 rounded-full border border-cyan-400">
-                                    {tag}
-                                </span>
-                            ))}
-                        </div>
-
-                        <nav className="w-full overflow-x-auto mt-4 p-1 bg-cover border-b border-solid border-white/20 ">
-                            {/* Navigation Links */}
-                            <ul className="flex items-center gap-30 text-white">
-                                {navLinks.map((link) => (
-
+                    </div>
+                    
+                    <nav className="w-full overflow-x-auto mt-2 p-1 border-b border-solid border-white/20 ">
+                        <ul className="flex items-center gap-8 text-white">
+                            {navLinks.map((link) => {
+                                const isActive = activeSection === link.id;
+                                const style = sectionStyles[link.label] || defaultStyle;
+                                const activeClasses = `${style.text} border-b-2 ${style.borderB}`;
+                                const inactiveClasses = 'text-gray-400 hover:text-white';
+                                return (
                                     <li key={link.id}>
                                         <button
                                             type='button'
                                             onClick={() => setActiveSection(link.id)}
-                                            className={`block p-2 font-semibold transition-colors ${activeSection === link.id ? 'text-teal-300 border-b-2 border-teal-300' : 'text-gray-400 hover:text-white'}`}>
-
+                                            className={`block p-2 font-semibold transition-colors ${isActive ? activeClasses : inactiveClasses}`}>
                                             {link.label}
-
                                         </button>
                                     </li>
-                                )
-                                )}
-                            </ul>
-                        </nav>
-                    </div>
+                                );
+                            })}
+                        </ul>
+                    </nav>
 
-                    <div className="flex-grow pt-1 flex">
-                        {activeSection === 'error' && <Section section="Error" content={sectionsContent.error} onContentChange={(c) => handleSectionChange('error', c)} />}
-                        {activeSection === 'code' && <Section section="Code Snippets" content={sectionsContent.code} onContentChange={(c) => handleSectionChange('code', c)} />}
-                        {activeSection === 'solution' && <Section section="Solution" content={sectionsContent.solution} onContentChange={(c) => handleSectionChange('solution', c)} />}
-                        {activeSection === 'resources' && <Section section="Resources" content={sectionsContent.resources} onContentChange={(c) => handleSectionChange('resources', c)} />}
-                        {activeSection === 'comments' && <Section section="Comments" content={sectionsContent.comments} onContentChange={(c) => handleSectionChange('comments', c)} />}
+                    <div className="flex-grow pt-4 flex">
+                        {activeSection === 'error' && <Section section="Error" content={logData.sections.error} onContentChange={(c) => handleSectionChange('error', c)} />}
+                        {activeSection === 'code' && <Section section="Code Snippets" content={logData.sections.code} onContentChange={(c) => handleSectionChange('code', c)} />}
+                        {activeSection === 'solution' && <Section section="Solution" content={logData.sections.solution} onContentChange={(c) => handleSectionChange('solution', c)} />}
+                        {activeSection === 'resources' && <Section section="Resources" content={logData.sections.resources} onContentChange={(c) => handleSectionChange('resources', c)} />}
+                        {activeSection === 'comments' && <Section section="Comments" content={logData.sections.comments} onContentChange={(c) => handleSectionChange('comments', c)} />}
                     </div>
                 </main>
             </div>

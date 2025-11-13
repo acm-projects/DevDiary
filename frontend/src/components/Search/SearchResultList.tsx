@@ -4,9 +4,9 @@ import type { LogProps } from "../LogListView/Log.tsx"
 import { useEffect, useState } from "react";
 
 interface SearchResultListProps {
-    query: string|null;
-    projectFilter: string;
-    tagFilter: string[];
+  query: string | null;
+  projectFilter: string;
+  tagFilter: string[];
 }
 
 // type logSchema = {
@@ -71,13 +71,11 @@ function SearchResultList({ query, projectFilter, tagFilter }: SearchResultListP
     );
 
     return projectMatches && tagMatches;
-  });  
+  });
   
   return (
-    <div>
-        <LogList logList={filteredSearchResults}/>
-    </div>
-  )  
+    <LogList logList={filteredSearchResults} />
+  )
 }
 
-export default SearchResultList
+export default SearchResultList;

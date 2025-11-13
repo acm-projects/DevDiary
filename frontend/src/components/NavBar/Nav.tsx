@@ -1,5 +1,4 @@
 import Logo from "components/Logo";
-import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Nav = () => {
@@ -20,16 +19,16 @@ const Nav = () => {
         </div>
         <span className="mb-65">
           {/* Quick Log */}
-          <button className="bg-[#244F51]  bg-opacity-65 w-[175px] h-[35px] ml-1.5 mb-6 mr-1.5 rounded-xl">
-            <span className=" flex items-center justify-center text-[#4BDEB4] hover:scale-105 ease-in-out duration-200">
-              <img src="/Lightning Bolt.png" alt="" />
-              Quick Log
-            </span>
-          </button>
+          <Link
+            to="/quick-log"
+            className=" flex  !text-white visited:text-white  items-left justify-left hover:scale-105 ease-in-out duration-200 text-l mb-4 ml-2  ">
+            <img src="/Lightning Bolt.png" alt="" className="mr-2" />
+            Quick Log
+          </Link>
 
           {/* Calendar */}
           <Link
-            to=""
+            to="/calendar"
             className=" flex  !text-white visited:text-white  items-left justify-left hover:scale-105 ease-in-out duration-200 text-l mb-4 ml-2  ">
             <img src="/Calendar.png" alt="" className="mr-2" />
             Calendar

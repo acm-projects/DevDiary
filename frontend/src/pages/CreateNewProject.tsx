@@ -68,7 +68,7 @@ const CreateNewProject: React.FC = () => {
               <h2 className="text-2xl font-semibold mb-6 text-teal-300">General Information</h2>
               <div className="space-y-6">
                 <div>
-                  <label htmlFor="project-name" className="block text-md font-medium text-gray-300 mb-2">Project Name*</label>
+                  <label htmlFor="project-name" className="flex justify-start text-md font-medium text-gray-300 mb-2">Project Name*</label>
                   <input
                     type="text"
                     id="project-name"
@@ -149,7 +149,7 @@ const CreateNewProject: React.FC = () => {
                 </div>
                 {/* <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-lg font-medium">Select Tags</p>
+                    <p className="flex justify-start text-lg font-medium">Select Tags</p>
                     <p className="text-sm text-gray-400">Categorize with languages and tools.</p>
                   </div>
                   <div className="w-1/3">

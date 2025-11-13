@@ -138,10 +138,10 @@ const LandingPage: React.FC = () => {
                         <span className="inline-block px-3 py-1 mb-4 text-sm text-teal-300 bg-teal-500/20 rounded-full border border-teal-500/30">
                             Your AI-powered developer logbook
                         </span>
-                        <h2 className="text-5xl md:text-7xl font-bold tracking-tighter leading-tight">
+                        <h2 className="text-5xl md:text-7xl font-bold tracking-tighter leading-tight ">
                             Document.<br/>
-                            Debug.<br/>
-                            Conquer.
+                            <div className="green-text-gradient">Debug.</div>
+                            <div className="blue-text-gradient">Conquer.</div>
                         </h2>
                         <p className="mt-6 text-lg text-gray-400 max-w-lg">
                             Transform your debugging experience into a searchable knowledge base. Log errors, get AI insights, and build solutions that grow with you.
