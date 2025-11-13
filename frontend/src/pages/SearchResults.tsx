@@ -1,7 +1,6 @@
 //Should the search return projects or logs within projects or both
 //both would be like projects then a sublist of the logs
 import { useEffect, useState } from "react";
-import React, { useState } from 'react';
 import '/src/styles/App.css'
 import SearchBar from "../components/Search/SearchBar.tsx"
 import SearchResultList from "../components/Search/SearchResultList.tsx"
