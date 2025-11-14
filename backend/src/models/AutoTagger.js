@@ -6,7 +6,7 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-export async function generateTags(title, content) {
+export async function generateTags(title, sections) {
   try {
     const prompt = `You are a software debugger that is trying to teach this newbie why 
     his code sucks and is not working. 
@@ -17,7 +17,8 @@ export async function generateTags(title, content) {
     - "explanation": a short one-sentence explanation of possible directions.
     This is what you are given:
     Title: ${title}
-    Error/Code: ${content}`;
+    Error: ${sections.error}
+    Code: ${sections.code}`;
 
     const response = await openai.chat.completions.create({
       model: "gpt-5-nano",
