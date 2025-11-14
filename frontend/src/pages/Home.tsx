@@ -56,7 +56,7 @@ const RecentLogsCarousel: React.FC<{ logs: any[] }> = ({ logs }) => {
         </div>
 
         {/* Code Snippet */}
-        <div className="bg-black/50 p-3 rounded-lg border border-gray-700 font-mono text-teal-300 text-sm">
+        <div className="bg-black/50 p-3 rounded-lg border border-gray-700 font-mono text-teal-300 text-sm truncate">
           <code>{currentLog.sections.code}</code>
         </div>
 
@@ -148,28 +148,18 @@ const Home = () => {
       });
   }, []);
 
-  const simplifiedAllLogs = allLogs.map(({ _id, title, project, summary, tags, updatedAt }) => ({
+  const simplifiedAllLogs = allLogs.map(({ _id, title, project, summary, tags, updatedAt, status, sections }) => ({
     id: _id,
     project: project,
     title: title,
-    status: "test",
+    status: status,
     description: summary,
     tags: tags,
-    sections: { code: `const [user, setUser] = useState(null)`, error: '', solution: '', resources: '', comments: '' },
+    sections: sections,
     updatedAt: updatedAt,
   }));
 
   const recentLogs = simplifiedAllLogs.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()).slice(0,5);
-
-  const logList = allLogs.map(({ _id, title, project, summary, tags }) => ({
-      id: _id,
-      project: project,
-      name: title,
-      status: "test",
-      description: summary,
-      tags: tags.map((tag: any) => ({name: tag})),
-      
-    }));
 
   return (
     <div className="relative snap-y snap-mandatory h-screen overflow-y-scroll">
@@ -202,22 +192,14 @@ const Home = () => {
             {/* Carousel */}
             <RecentLogsCarousel logs={recentLogs} />
           </section>
-
+          
           <div className="w-4/5 mx-auto flex flex-col flex-1 min-h-0">
-
             <h2 className=" text-xl font-semibold text-white text-left pt-5 pb-5">
-
               Unresolved Logs:
-
             </h2>
-
-
             <div className="overflow-y-scroll ">
-
-              <LogList logList={logList} />
-
+              <LogList logList={simplifiedAllLogs} />
             </div>
-
           </div>
         </div>
       </div>

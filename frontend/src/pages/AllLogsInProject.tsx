@@ -63,14 +63,15 @@ function AllLogs() {
       // Filter out any null responses
       const validLogs = logList.filter((log) => log !== null);
 
-      const filteredLogList = validLogs.map(({ _id, title, project, summary, tags }) => ({
+      const filteredLogList = validLogs.map(({ _id, title, project, summary, tags, status, sections, updatedAt }) => ({
         id: _id,
         project: project,
-        name: title,
-        status: "test",
+        title: title,
+        status: status,
         description: summary,
-        tags: tags.map((tag: any) => ({name: tag})),
-        
+        tags: tags,
+        sections: sections,
+      updatedAt: updatedAt,
       }))
       setLogList(filteredLogList); // Assuming you have a state variable for this
       console.log(filteredLogList);
