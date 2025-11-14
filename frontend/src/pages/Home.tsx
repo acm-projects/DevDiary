@@ -4,7 +4,6 @@ import Nav from "../components/NavBar/Nav.tsx";
 import LogList from "components/LogListView/LogList.tsx";
 import StatusTag from "components/StatusTag.tsx";
 import SearchBar from "components/Search/SearchBar.tsx";
-//import RobotCanvas from "../components/Robot.jsx";
 
 // Carousel Component 
 const RecentLogsCarousel: React.FC<{ logs: any[] }> = ({ logs }) => {
@@ -38,7 +37,7 @@ const RecentLogsCarousel: React.FC<{ logs: any[] }> = ({ logs }) => {
       updatedAt: "updatedAt",
     };
   }
-  // const tagsArray = currentLog.tags.split(',').map((tag: string) => tag.trim()).filter(Boolean);
+
   return (
     <div className="w-full max-w-4xl mx-auto relative group ">
       <div className="relative h-[280px] w-full bg-[#1E293B]/80 border border-white/25 bg-cover bg-[url(src/assets/Variant4.svg)] rounded-2xl p-6 flex flex-col justify-between backdrop-blur-sm shadow-lg shadow-teal-500/10 hover:shadow-[0px_20px_80px_-30px_#41cca6] hover:h-[320px] transition-all duration-300">
@@ -51,7 +50,7 @@ const RecentLogsCarousel: React.FC<{ logs: any[] }> = ({ logs }) => {
             </span>
           </div>
           <div className="flex justify-start items-start" >
-            <p className="text-sm text-gray-400 mt-1">&lt;&gt; {currentLog.project} </p> {/* Dummy Project Names for now */}
+            <p className="text-sm text-gray-400 mt-1">&lt;&gt; {currentLog.project} </p>
           </div>
         </div>
 
@@ -69,10 +68,11 @@ const RecentLogsCarousel: React.FC<{ logs: any[] }> = ({ logs }) => {
               </span>
             ))}
           </div>
+          {/* FIXED: Changed _id to id since we renamed it in simplifiedAllLogs */}
           <Link
-            onClick={() => window.location.href = '/view-log'}
-            state={{ logData: currentLog }}
-            className="px-6 py-3 bg-cyan-400/50 text-white font-semibold rounded-lg hover:opacity-90 transition-opacity" to={""}                    >
+            to={`/view-log?id=${currentLog.id}`}
+            className="px-6 py-3 bg-cyan-400/50 text-white font-semibold rounded-lg hover:opacity-90 transition-opacity"
+          >
             View Full Details
           </Link>
         </div>
@@ -110,21 +110,11 @@ const Home = () => {
     navigate("/log-meta-data");
   };
 
-  // Hardcoded data for the carousel and list (for now, ideally it comes from backend)
-  // const recentLogs = [
-  //   { title: 'CORS policy blocking API requests', project: 'WebApp V2', status: 'In Progress', tags: 'cors,api,express', sections: { code: `fetch("https://api.example.com/data")`, error: '', solution: '', resources: '', comments: '' } },
-  //   { title: 'Database connection timeout', project: 'Backend API', status: 'On Hold', tags: 'database,mongo,timeout', sections: { code: `mongoose.connect(process.env.DB_URI)`, error: '', solution: '', resources: '', comments: '' } },
-  //   { title: 'React component not re-rendering', project: 'Frontend Dashboard', status: 'Completed', tags: 'react,state,hooks', sections: { code: `const [user, setUser] = useState(null)`, error: '', solution: '', resources: '', comments: '' } },
-  //   { title: 'CSS Grid alignment issue on Firefox', project: 'Company Website', status: 'In Progress', tags: 'css,grid,firefox', sections: { code: `display: grid; place-items: center;`, error: '', solution: '', resources: '', comments: '' } },
-  //   { title: 'Authentication token expiring early', project: 'Mobile App', status: 'In Progress', tags: 'jwt,auth,security', sections: { code: `jwt.sign({ id }, SECRET, { expiresIn: '1h' })`, error: '', solution: '', resources: '', comments: '' } },
-  // ];
-
   const [allLogs, setAllLogs] = useState<any[]>([]);
   const [loadingRecentLogs, setLoadingRecentLogs] = useState<boolean>(true);
   const [errorRecentLogs, setErrorRecentLogs] = useState<string | null>(null);
   
   useEffect(() => {
-
     setLoadingRecentLogs(true);
     setErrorRecentLogs(null);
 
@@ -168,7 +158,6 @@ const Home = () => {
       status: "test",
       description: summary,
       tags: tags.map((tag: any) => ({name: tag})),
-      
     }));
 
   return (
@@ -182,7 +171,6 @@ const Home = () => {
           {/* Welcome, Search, and Carousel */}
           <section className="h-screen w-full flex flex-col items-center justify-center p-8 space-y-12">
             {/* Welcome Banner */}
-
             <div className=" bg-[#0F172A] bg-[url(src/assets/Variant6.svg)] bg-cover w-full max-w-4xl border border-white/30 rounded-2xl p-8 flex items-center justify-between shadow-lg shadow-teal-500/10 hover:shadow-teal-500/20 transition-all duration-300">
               <span className="text-3xl font-semibold">Welcome Back, User!</span>
               <button
@@ -198,26 +186,18 @@ const Home = () => {
               <SearchBar />
             </div>
 
-
             {/* Carousel */}
             <RecentLogsCarousel logs={recentLogs} />
           </section>
 
           <div className="w-4/5 mx-auto flex flex-col flex-1 min-h-0">
-
             <h2 className=" text-xl font-semibold text-white text-left pt-5 pb-5">
-
               Unresolved Logs:
-
             </h2>
 
-
             <div className="overflow-y-scroll ">
-
               <LogList logList={logList} />
-
             </div>
-
           </div>
         </div>
       </div>

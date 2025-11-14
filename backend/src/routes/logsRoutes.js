@@ -1,5 +1,5 @@
 import express from 'express';
-import { createLog, createLogWithContext, deleteLog, getAllLogs, getLogById, updateLog } from '../controllers/logsController.js';
+import { createLog, deleteLog, getAllLogs, getLogById, updateLog } from '../controllers/logsController.js';
 import { get } from 'mongoose';
 
 console.log('running logsRoutes.js');
@@ -10,7 +10,7 @@ router.get("/", getAllLogs);
 router.get("/:id", getLogById);
 
 router.post("/", createLog);
-router.post("/context", createLogWithContext);
+//router.post("/context", createLogWithContext);
 
 
 router.put("/:id", updateLog); 
