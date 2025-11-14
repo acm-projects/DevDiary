@@ -1,27 +1,34 @@
 import mongoose from 'mongoose';
 
-// Define a schema
-const SectionSchema = new mongoose.Schema({
-    error: { type: String, default: '' },
-    code: { type: String, default: '' },
-    solution: { type: String, default: '' },
-    resources: { type: String, default: '' },
-    comments: { type: String, default: '' }
-}, { _id: false }); // _id: false stops Mongoose from creating sub-document IDs
-
 // A sub-schema to hold the author info
 const AuthorSchema = new mongoose.Schema({
     initials: { type: String, default: 'N/A' },
     name: { type: String, default: 'No Author' }
 }, { _id: false });
 
+// Dynamic section schema: each section has a type and content
+const DynamicSectionSchema = new mongoose.Schema({
+    type: { 
+        type: String, 
+        required: true,
+        enum: ['error', 'code', 'solution', 'resources', 'comments', 'heading', 'text', 'list']
+    },
+    content: { 
+        type: String, 
+        default: '' 
+    },
+    order: { 
+        type: Number, 
+        required: true 
+    }
+}, { _id: false });
 
 const LogSchema = new mongoose.Schema(
     {
         user: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',
-            required: false // Made optional since logs may not be linked to users
+            required: false
         },
         title: {
             type: String,
@@ -48,12 +55,17 @@ const LogSchema = new mongoose.Schema(
             default: 'Bug'
         },
         tags: {
-            type: [String], // An array of strings
+            type: [String],
             default: []
         },
         sections: {
-            type: SectionSchema, 
-            default: () => ({})
+            type: [DynamicSectionSchema],
+            default: []
+        },
+        // old sections structure (deleted after migration)
+        legacySections: {
+            type: mongoose.Schema.Types.Mixed,
+            required: false
         },
         author: {
             type: AuthorSchema, 
@@ -77,7 +89,7 @@ const LogSchema = new mongoose.Schema(
             required: false
         },
     },
-    { timestamps: true } // createdAt, updatedAt
+    { timestamps: true }
 );
 
 // 2. Create a model

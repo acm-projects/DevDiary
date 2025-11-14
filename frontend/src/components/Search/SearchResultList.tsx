@@ -8,7 +8,6 @@ interface SearchResultListProps {
   projectFilter: string;
   tagFilter: string[];
 }
-
 // type logSchema = {
 //         _id: string,
 //         title: string,
@@ -54,11 +53,12 @@ function SearchResultList({ query, projectFilter, tagFilter }: SearchResultListP
       });
   }, [query]);
 
-  const simplifiedSearchResults = searchResults.map(({ _id, title, project, summary, tags }) => ({
+  const simplifiedSearchResults = searchResults.map(({ _id, title, project, summary, status, tags }) => ({
     id: _id,
     project: project,
     name: title,
     description: summary,
+    status: status,
     tags: tags.map((tag: any) => ({ name: tag })),
   }));
 

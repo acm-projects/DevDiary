@@ -77,7 +77,15 @@ function LogMetaData() {
         if (step < totalSteps) {
             setStep(step + 1);
         } else {
-            navigate('/edit-log', { state: { logData: formData } });
+            const params = new URLSearchParams();
+            params.set('title', formData.title || 'Untitled Log'); // Use a default if empty
+            params.set('project', formData.project);
+            params.set('type', formData.type);
+            params.set('status', formData.status);
+            params.set('tags', formData.tags);
+            
+            // Navigate to the edit page with the params in the URL
+            navigate(`/edit-log?${params.toString()}`);
         }
     };
 

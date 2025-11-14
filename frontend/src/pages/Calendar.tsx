@@ -1,15 +1,13 @@
-import React, { useState, useMemo, useEffect } from 'react'; // --- Highlight: Added React and useEffect
+import React, { useState, useMemo, useEffect } from 'react'; 
 import { useNavigate } from 'react-router-dom';
-// --- Highlight: Removed AnimatedPage ---
 import Nav from 'components/NavBar/Nav';
 import StatusTag from 'components/StatusTag';
 
-// --- Highlight: Updated interface to match your real log model ---
 interface Log {
     _id: string;
     title: string;
     status: string;
-    createdAt: string; // --- Highlight: Use createdAt from your schema ---
+    createdAt: string; 
     project: string;
     tags: string[];
     type: string;
@@ -25,8 +23,6 @@ interface Log {
         name: string;
     };
 }
-
-// --- Highlight: Removed hardcodedLogs array ---
 
 // Helper to generate the days for the current month
 const getDaysInMonth = (year: number, month: number) => {
@@ -44,23 +40,19 @@ const getFirstDayOfMonth = (year: number, month: number) => {
     return new Date(year, month, 1).getDay();
 };
 
-// --- Highlight: Renamed to CalendarPage to match file/exports ---
 const Calendar: React.FC = () => {
-    // --- Highlight: Set default date to today ---
     const [currentDate, setCurrentDate] = useState(new Date()); 
     const [selectedDayLogs, setSelectedDayLogs] = useState<Log[]>([]);
     const navigate = useNavigate();
 
-    // --- Highlight: Added state for loading and fetched logs ---
     const [allLogs, setAllLogs] = useState<Log[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    // --- Highlight: useEffect to fetch logs from the database ---
     useEffect(() => {
         const fetchLogs = async () => {
             setIsLoading(true);
             try {
-                const res = await fetch('/api/logs'); // Fetches all logs
+                const res = await fetch('http://localhost:5000/api/logs'); // Fetches all logs
                 if (!res.ok) {
                     throw new Error('Failed to fetch logs');
                 }
@@ -68,7 +60,6 @@ const Calendar: React.FC = () => {
                 setAllLogs(data);
             } catch (err) {
                 console.error("Error fetching logs:", err);
-                // You could set an error state here
             } finally {
                 setIsLoading(false);
             }
@@ -86,9 +77,7 @@ const Calendar: React.FC = () => {
     // Group logs by their creation date
     const logsByDate = useMemo(() => {
         const map = new Map<string, Log[]>();
-        // --- Highlight: Use the fetched `allLogs` array ---
         allLogs.forEach(log => {
-            // --- Highlight: Use `log.createdAt` from your schema ---
             const date = new Date(log.createdAt).toDateString();
             if (!map.has(date)) {
                 map.set(date, []);
@@ -96,7 +85,7 @@ const Calendar: React.FC = () => {
             map.get(date)?.push(log);
         });
         return map;
-    }, [allLogs]); // --- Highlight: Re-runs when allLogs changes ---
+    }, [allLogs]); 
 
     const handlePrevMonth = () => {
         setCurrentDate(new Date(year, month - 1, 1));
@@ -152,7 +141,6 @@ const Calendar: React.FC = () => {
                                 {daysInMonth.map(day => {
                                     const dayString = day.toDateString();
                                     const logsForThisDay = logsByDate.get(dayString) || [];
-                                    // --- Highlight: Updated logic to use createdAt ---
                                     const isSelected = selectedDayLogs.length > 0 && dayString === new Date(selectedDayLogs[0].createdAt).toDateString();
                                     
                                     return (
@@ -185,11 +173,9 @@ const Calendar: React.FC = () => {
                     <div className="w-80 flex-shrink-0 mt-[88px]"> 
                         <div className="bg-[#1E293B]/60 border border-teal-500/20 rounded-2xl p-6 backdrop-blur-sm shadow-lg shadow-teal-500/10 h-full">
                             <h2 className="text-xl font-semibold mb-4">
-                                {/* --- Highlight: Updated logic to use createdAt --- */}
                                 {selectedDayLogs.length > 0 ? `Logs for ${new Date(selectedDayLogs[0].createdAt).toLocaleDateString()}` : 'Select a Day'}
                             </h2>
                             <div className="space-y-3 overflow-y-auto max-h-[calc(100%-40px)]">
-                                {/* --- Highlight: Added loading state --- */}
                                 {isLoading ? (
                                     <p className="text-gray-400">Loading logs...</p>
                                 ) : selectedDayLogs.length > 0 ? (
@@ -197,8 +183,8 @@ const Calendar: React.FC = () => {
                                         <div 
                                             key={log._id} 
                                             className="p-3 bg-black/30 rounded-lg border border-gray-700 cursor-pointer hover:bg-teal-500/20"
-                                            // Passing the full log object to ViewLog
-                                            onClick={() => navigate('/view-log', { state: { logData: log } })}
+                                            // Navigate using query params instead of state
+                                            onClick={() => navigate(`/view-log?id=${log._id}`)}
                                         >
                                             <p className="font-semibold truncate">{log.title}</p>
                                             <div className="flex justify-start mt-5">

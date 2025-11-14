@@ -22,7 +22,7 @@ export async function getAllLogs(req, res) {
         console.error("Error fetching logs:", error);
         res.status(500).json({ message: "Internal Server Error" });
     }
-};
+}
 
 /**
  * Gets a single log by its ID
@@ -47,11 +47,10 @@ export async function getLogById(req, res) {
 }
 
 /**
- * Creates a new log (not linked to any user)
+ * Creates a new log with dynamic sections
  */
 export async function createLog(req, res) {
     try {
-        // Get all the data from the frontend body
         const {
             title,
             project,
@@ -59,8 +58,8 @@ export async function createLog(req, res) {
             tags, 
             status,
             type,
-            sections, // object with { error, code, solution, ... }
-            author // object with { initials, name } 
+            sections, // Array of {type, content, order}
+            author
         } = req.body;
 
         //auto generate tags
@@ -95,7 +94,8 @@ export async function createLog(req, res) {
         
         // Generate embedding from all text content
         try {
-            const fullText = `${title} ${project} ${sections.error} ${sections.code} ${sections.solution} ${sections.resources} ${sections.comments}`;
+            const allContent = sections?.map(s => s.content).join(' ') || '';
+            const fullText = `${title} ${project} ${allContent}`;
             
             const embeddingRes = await openai.embeddings.create({
                 model: "text-embedding-3-small",
@@ -121,12 +121,12 @@ export async function createLog(req, res) {
 
     } catch (error) {
         console.error("Error creating log:", error);
-        res.status(500).json({ message: "Internal Server Error" });
+        res.status(500).json({ message: "Internal Server Error", error: error.message });
     }
-};
+}
 
 /**
- * Updates an existing log
+ * Updates an existing log with dynamic sections
  */
 export async function updateLog(req, res) {
     try {
@@ -134,7 +134,6 @@ export async function updateLog(req, res) {
             return res.status(404).json({ message: "Log not found" });
         }
 
-        // Find the log 
         let log = await Log.findById(req.params.id);
         if (!log) {
             return res.status(404).json({ message: "Log not found" });
@@ -144,13 +143,13 @@ export async function updateLog(req, res) {
         const { title, project, project_id, tags, status, type, sections, author } = req.body;
         const tagsArray = tags;
 
-        // Update the log fields
+        // Update all fields
         log.title = title;
         log.project = project;
         log.tags = tagsArray;
         log.status = status;
         log.type = type;
-        log.sections = sections;
+        log.sections = sections || [];
         log.author = author;
 
         // Generate new AI summary and tags
@@ -169,7 +168,8 @@ export async function updateLog(req, res) {
         log.summary = AIOutput.summary;
         // Re-generate embedding on update
         try {
-            const fullText = `${log.title} ${log.project} ${log.sections.error} ${log.sections.code} ${log.sections.solution} ${log.sections.resources} ${log.comments}`;
+            const allContent = sections?.map(s => s.content).join(' ') || '';
+            const fullText = `${title} ${project} ${allContent}`;
             
             const embeddingRes = await openai.embeddings.create({
                 model: "text-embedding-3-small",
@@ -207,21 +207,19 @@ export async function updateLog(req, res) {
     }
     catch (error) {
         console.error("Error updating log:", error);
-        res.status(500).json({ message: "Internal Server Error" });
+        res.status(500).json({ message: "Internal Server Error", error: error.message });
     }
-};
+}
 
 /**
  * Deletes a log
  */
 export async function deleteLog(req, res) {
     try {
-
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
             return res.status(404).json({ message: "Log not found" });
         }
 
-        // Find the log
         let log = await Log.findById(req.params.id);
         if (!log) {
             return res.status(404).json({ message: "Log not found" });
@@ -235,4 +233,4 @@ export async function deleteLog(req, res) {
         console.error("Error deleting log:", error);
         res.status(500).json({ message: "Internal Server Error" });
     }
-};
+}
