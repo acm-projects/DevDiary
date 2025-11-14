@@ -10,7 +10,7 @@ router.get("/", getAllLogs);
 router.get("/:id", getLogById);
 
 router.post("/", createLog);
-//router.post("/context", createLogWithContext);
+// router.post("/context", createLogWithContext);
 
 
 router.put("/:id", updateLog); 
