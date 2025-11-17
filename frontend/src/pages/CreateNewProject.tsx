@@ -1,138 +1,104 @@
-// TODO:
-// Make tags a component so they are reusable
-// Update colors as needed
+import React, { useState } from "react";
+import Nav from "../components/NavBar/Nav";
+import Dropdown from "../components/Dropdown";
+import Cancel from "../components/Cancel";
+import TagSearch from "../components/Tags/TagSearch"; // Assuming you have this component
 
+const CreateNewProject: React.FC = () => {
+  const [selectedFolder, setSelectedFolder] = useState<string>("");
 
-import '/src/styles/App.css'
-import '/src/styles/CreateNewProject.css'
-import { useState } from "react";
-import Dropdown from "../components/Dropdown.tsx"
-import TagSearch from "../components/TagSearch.tsx"
-import Logo from "../components/Logo.tsx"
-import Cancel from "../components/Cancel.tsx"
-function CreateNewProject() {
-  const[selected,  setSelected] = useState<string>("");
-
-  //TODO: get options from backend
+  // Hardcoded options for now
   const folder_options = ["Folder 1", "Folder 2", "Folder 3"];
-  const tag_options = ["Tag 1", "Tag 2", "Tag 3", "Tag 4", "Tag 5"];
+  const tag_options = ["React", "TypeScript", "Node.js", "TailwindCSS", "Express"];
 
   return (
+    <div className="grid grid-cols-[200px_auto] bg-[#0F172A] bg-[url(src/assets/Variant6.svg)] bg-cover h-screen w-screen text-white font-sans">
+      {/* Navigation Sidebar */}
+      <div className="sticky top-0 h-screen">
+        <Nav />
+      </div>
 
-<div className="flex items-center justify-center w-screen h-screen bg-center bg-cover bg-[url(src/assets/gradient2.png)]">
+      {/* Main Content */}
+      <main className="relative h-screen overflow-y-auto p-8">
+        <div className="w-full max-w-4xl mx-auto">
+          {/* Header */}
+          <div className="mb-10">
+            <h1 className="text-4xl font-bold text-white">Create New Project</h1>
+            <p className="text-lg text-gray-400 mt-2">
+              Organize your development process by creating a new project.
+            </p>
+          </div>
 
-  <div className="fixed top-[1.5vh] left-[1vw]">
-    <Logo />
-  </div>
-  
+          <form className="space-y-8">
+            {/* General */}
+            <div className="bg-[#1E293B]/80 border border-white/25 bg-cover bg-[url(src/assets/Variant4.svg)] rounded-2xl p-8 backdrop-blur-sm shadow-lg shadow-teal-500/10 hover:shadow-[0px_20px_80px_-30px_#6d28d9] transition-all duration-300">
+              <h2 className="text-2xl font-semibold mb-6 text-teal-300">General Information</h2>
+              <div className="space-y-6">
+                <div>
+                  <label htmlFor="project-name" className="block text-md font-medium text-gray-300 mb-2">Project Name*</label>
+                  <input
+                    type="text"
+                    id="project-name"
+                    name="project-name"
+                    placeholder="e.g., My Awesome App"
+                    className="block w-full p-3 bg-[#011522]/80 border border-teal-500/30 rounded-lg focus:ring-teal-400 focus:border-teal-400 outline-none transition"
+                    required
+                  />
+                </div>
+                <div>
+                  <label htmlFor="project-description" className="block text-md font-medium text-gray-300 mb-2">Project Description</label>
+                  <textarea
+                    id="project-description"
+                    name="project-description"
+                    placeholder="A brief description of what this project is about."
+                    rows={3}
+                    className="block w-full p-3 bg-[#011522]/80 border border-teal-500/30 rounded-lg focus:ring-teal-400 focus:border-teal-400 outline-none transition resize-none"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
 
+            {/* Configuration */}
+            <div className="bg-[#1E293B]/80 border border-white/25 bg-cover bg-[url(src/assets/Variant4.svg)] rounded-2xl p-8 backdrop-blur-sm shadow-lg shadow-teal-500/10">
+              <h2 className="text-2xl font-semibold mb-6 text-teal-300">Configuration</h2>
+              <div className="space-y-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-lg font-medium">Select Folder</p>
+                    <p className="text-sm text-gray-400">Organize your projects with folders.</p>
+                  </div>
+                  <div className="w-1/3">
+                    <Dropdown label="" options={folder_options} onChange={setSelectedFolder} />
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-lg font-medium">Select Tags</p>
+                    <p className="text-sm text-gray-400">Categorize with languages and tools.</p>
+                  </div>
+                  <div className="w-1/3">
+                    <TagSearch options={tag_options} />
+                  </div>
+                </div>
+              </div>
+            </div>
 
-  <div className="w-3/5 px-30 py-5">
-
-    {/* Create New Project Header */}
-    <div className="my-5 space-y-0.5 pl-15">
-      <h2 className="font-dm-mono text-4xl text-shadow-lg font-bold text-white text-left">
-        Create New Project
-      </h2>
-      <p className="font-headvig text-m text-shadow-lg text-white text-left">
-        Create a new project to store, organize, and track your development process as you learn
-      </p>
+            {/* Create Project Button */}
+            <div className="flex justify-end items-center gap-4 pt-4">
+              <Cancel />
+              <button
+                type="submit"
+                className="px-6 py-3 bg-teal-500 text-white font-semibold rounded-lg hover:bg-teal-600 transition-colors"
+              >
+                Create Project
+              </button>
+            </div>
+          </form>
+        </div>
+      </main>
     </div>
+  );
+};
 
-    <form className="space-y-5">
+export default CreateNewProject;
 
-
-    {/* Section 1: General */}
-      <div className="flex flex-row">
-        {/* Number and vertical bar */}
-        <div className="basis-15 flex-none text-shadow-lg text-4xl">
-          1. 
-        </div>
-        <div className="basis-full">
-          <div className="text-left text-3xl text-shadow-lg font-dm-mono pb-2 pt-3">
-            General
-          </div>
-          <div className="space-y-2">
-            {/* Project Name */}
-            <div className="">
-              <label htmlFor="project-name" className="font-headvig text-lg block text-white text-left">Project Name*</label>
-              <input
-                className="input-field"
-                type="text" 
-                id="project-name" 
-                name="project-name" 
-                placeholder="Enter project name"
-                required
-              />
-            </div>
-            {/* Project Description */}
-            <div className="">
-              <label htmlFor="project-description" className="font-headvig block text-lg text-white text-left">Project Description</label>
-              <input
-                className="input-field"
-                id="project-description"
-                name="project-description"
-                placeholder="Enter project description"
-              ></input>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      {/* Section 2: Configuration */}
-      <div className="flex flex-row">
-        {/* Number and vertical bar */}
-        <div className="basis-15 flex-none text-shadow-lg text-4xl">
-          2. 
-        </div>
-        <div className="basis-full">
-          <div className="text-left text-3xl text-shadow-lg font-dm-mono pb-2 pt-3">
-            Configuration
-          </div>
-          <div className="space-y-3">
-            <div className="flex items-center w-full bg-[#011522]/50 px-2 border-[#011522] border-2 rounded-2xl p-1 font-headvig">
-              <div className="flex-auto text-left self-center">        {/* Dropdown description*/}
-                <p className="text-lg">Select Folder</p>
-                <p className="text-sm">Organize your projects with folders</p>
-              </div>
-              <div className="font-headvig basis-25">     {/* Dropdown */}
-                {/* TODO: add new project option */}
-                <Dropdown label="" options={folder_options} onSelect={setSelected} />
-              </div>
-            </div>
-            <div className="flex items-center w-full bg-[#011522]/50 px-2 border-[#011522] border-2 rounded-2xl p-1 font-headvig">
-              <div className="flex-auto text-left self-center">        {/* Dropdown description*/}
-                <p className="text-lg">Select Tags</p>
-                <p className="text-sm">Categorize your project with languages and tools</p>
-              </div>
-              <div className="">
-                <label className="font-headvig flex justify-start-safe text-sm">Select Tags</label>
-                {/* TODO: Fix with tag components
-                          Add another box with selected tags */}
-                <TagSearch options={tag_options}/>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>      
-
-      <div className="flex justify-end items-center space-x-3 pt-5">
-        <div className="mx-2 font-dm-mono">
-          <Cancel />
-        </div>
-        {/* TODO: route to new log page */}
-        <button 
-          type="submit" 
-          className="mx-2 px-4 self-stretch bg-[#011522] text-white font-dm-mono rounded-lg shadow-md hover:bg-[#1E3249] focus:ring-2 focus:ring-blue-500"
-        >
-          Create Project
-        </button>
-      </div>
-    </form>
-  </div>
-</div>
-)  
-}
-
-export default CreateNewProject

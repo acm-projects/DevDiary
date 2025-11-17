@@ -1,3 +1,4 @@
+import Logo from "components/Logo";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -11,9 +12,11 @@ const Nav = () => {
   };
   return (
     <>
-      <div className="h-full flex justify-left  flex-col items-center justify-between relative bg-[#011522] text-white ">
+      <div className="hidden sm:flex h-full justify-left  flex-col items-center justify-between relative bg-[#011522] text-white ">
         <div className="text-xl mt-3 mr-1.5 ">
-          <span className="text-[#80FFDB]">{"</>"}</span> DevDiary{" "}
+          <span className="text-[#80FFDB]">
+            <Logo />
+            </span> 
         </div>
         <span className="mb-65">
           {/* Quick Log */}
@@ -31,21 +34,29 @@ const Nav = () => {
             <img src="/Calendar.png" alt="" className="mr-2" />
             Calendar
           </Link>
-          {/* 
-         All Projects 
+          
+         {/* All Projects  */}
           <Link
-            to=""
-            className=" flex items-left justify-left  hover:scale-105 ease-in-out duration-200 text-l mb-6 ml-2">
+            to="/projects"
+            className=" flex  !text-white visited:text-white  items-left justify-left hover:scale-105 ease-in-out duration-200 text-l mb-4 ml-2  ">
             <img src="/Folder.png" alt="" className="mr-2" />
             All Projects
           </Link>
- */}
+
+          {/* Search Page */}
+          <Link
+            to="/search"
+            className=" flex  !text-white visited:text-white  items-left justify-left hover:scale-105 ease-in-out duration-200 text-l mb-4 ml-2  ">
+            <img src="/src/assets/icons/search.png" alt="" className="mr-2" />
+            Search
+          </Link>
+
           {/* New Log */}
           {/*bg-gradient-to-r from-[#43B5A8] to-[#318CB1] */}
           <div className="flex justify-center mb-5">
             <button
               onClick={handleNewLog}
-              className=" text-[#4BDEB4] bg-gradient-to-r from-teal-300 via-teal-500 to-cyan-500 bg-opacity-60 w-[155px] h-[35px] rounded-xl flex justify-center items-center mb-2 hover:scale-105 ease-in-out duration-200">
+              className=" text-teal-300 bg-teal-500/20 border border-teal-500/30 bg-opacity-60 w-[155px] h-[35px] rounded-xl flex justify-center items-center mb-2 hover:scale-105 ease-in-out duration-200">
               <span className="text-3xl mb-1">+ </span>
               <span className="text-l ml-1 "> New Log</span>
             </button>
@@ -63,7 +74,7 @@ const Nav = () => {
         <Link
           to={"/settings"}
           className="flex mb-2 items-center hover:scale-105 ease-in-out duration-200 text-l  !text-white visited:text-white  ">
-          <img src="public\Profile.png" alt="" />
+          <img src="Profile.png" alt="" />
           Account
         </Link>
       </div>

@@ -4,17 +4,9 @@ function Header({ children }: { children?: React.ReactNode }) {
     return (
 
         <div>
-<<<<<<< HEAD
-            <header className="flex mx-4 items-center justify-between py-3 px-4 border-gray-700/80">
+            <header className="w-full bg-cover bg-[url(src/assets/NavBarGradient.png)] p-4 flex justify-between items-center backdrop-blur-sm">
                 <Logo />
 
-=======
-            <header className="flex mx-4 items-center justify-between py-3 px-4border-b border-gray-700/80">
-                {/* Render the Logo on the left */}
-                <Logo />
-
-                {/* Renders the content passed from the page */}
->>>>>>> Updated_Home
                 {children}
             </header>
         </div>

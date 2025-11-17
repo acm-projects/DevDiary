@@ -11,12 +11,13 @@ function LogList({ logList }: LogListProps) {
   //      implement tags as components
 
   return (
-    <div className="w-full ">
+    <div className="w-full overflow-y-auto">
       <ul className="space-y-5 font-dm-mono">
         {logList.map((log) => (
           <Log
             id={log.id}
             name={log.name}
+            project={log.project}
             description={log.description}
             tags={log.tags}
           />
