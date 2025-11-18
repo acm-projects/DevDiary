@@ -24,13 +24,12 @@ function Dropdown({ label, tags, sendDataToParent }: TagDropdownProps) {
     });    
     const dropdownRef = useRef<HTMLDivElement>(null);
 
-            console.log("tags: ",tags);
-
     const filteredTags = tags.filter((tag, i) => {
-        return query === "" || tag.name.toLowerCase().includes(query.toLowerCase());
+        return tag.name != null && (query === "" || tag.name.toLowerCase().includes(query.toLowerCase()));
     });
     
     function handleSelect(tag: TagProps) {
+        
         setSelectedMap(prev => {
             const current = prev[tag.name];
             // Only toggle if the tag isn't permanently disabled (-1)
@@ -43,6 +42,8 @@ function Dropdown({ label, tags, sendDataToParent }: TagDropdownProps) {
             };
 
             sendDataToParent(tags.filter(t => updated[t.name] === 1).map(t => t.name));
+            // console.log("tags: ",tags);
+
             return updated;
         });
         

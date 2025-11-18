@@ -62,13 +62,15 @@ function SearchResultList({ query, projectFilter, tagFilter }: SearchResultListP
     tags: tags,
   }));
 
-  console.log("In searchresultlist")
   const filteredSearchResults = simplifiedSearchResults.filter(result => {
     const projectMatches = result.project === projectFilter || projectFilter == "" || projectFilter == "No Project";
 
     const tagMatches = result.tags.some((tag: any) => 
-      tagFilter.includes(tag.name) || tagFilter.length == 0
+      tagFilter.includes(tag) || tagFilter.length == 0
     );
+    console.log("includes",tagFilter.includes(result.tags[0]));
+    console.log("Tag Matches:",tagMatches)
+
 
     return projectMatches && tagMatches;
   });

@@ -50,6 +50,7 @@ function SearchResults() {
     setProjectFilter(data);
   };
   const handleTagFilterData = (data: string[]) => {
+    console.log("Tag Filters:",data);
     setTagFilter(data);
   };
   //TODO: get project names from backend
