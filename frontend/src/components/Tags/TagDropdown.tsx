@@ -24,6 +24,8 @@ function Dropdown({ label, tags, sendDataToParent }: TagDropdownProps) {
     });    
     const dropdownRef = useRef<HTMLDivElement>(null);
 
+            console.log("tags: ",tags);
+
     const filteredTags = tags.filter((tag, i) => {
         return query === "" || tag.name.toLowerCase().includes(query.toLowerCase());
     });
