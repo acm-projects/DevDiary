@@ -2,3 +2,4 @@ config.ini
 .env
 secrets/
 *.local
+node_modules
