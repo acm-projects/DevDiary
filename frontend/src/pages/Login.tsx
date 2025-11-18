@@ -54,7 +54,7 @@ function Login () {
         };
 
     const goToHome = () => {
-        navigate('/'); 
+        navigate('/home'); 
     };
 
     return (
@@ -74,6 +74,7 @@ function Login () {
                             value={email}
                             onChange={handleChange}
                             className="w-full p-3 bg-[#2D3748] rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                            required
                         />
                     </div>
                     <div>
@@ -84,6 +85,7 @@ function Login () {
                             value={password}
                             onChange={handleChange}
                             className="w-full p-3 bg-[#2D3748] rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                            required
                         />
                     </div>
                     <button

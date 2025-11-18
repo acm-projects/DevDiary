@@ -1,17 +1,25 @@
+<<<<<<< HEAD
 import React, {type FormEvent, useState, useEffect } from "react";
+=======
+import React, {type FormEvent, useState} from "react";
+>>>>>>> routed-pages
 import { useNavigate } from 'react-router-dom';
 import "/src/styles/Projects.css";
 import Nav from "../components/NavBar/Nav.tsx";
 import ContentContainer from "../components/Container/ContentContainer.tsx";
 import SearchBar from "../components/Search/SearchBar.tsx";
 import Project from "../components/Projects/Project.tsx";
+<<<<<<< HEAD
 import ProjectPopUp from "../components/Projects/ProjectPopUp.tsx";
 
 import { useLocation } from 'react-router-dom';
+=======
+>>>>>>> routed-pages
 const Projects = () => {
 
   const navigate = useNavigate();
   const [query, setQuery] = useState<string>('');
+<<<<<<< HEAD
   // const location = useLocation();
   // const params = new URLSearchParams(location);
   // const searchString = params.get('search');
@@ -121,6 +129,35 @@ const Projects = () => {
 
 
   console.log("length", updatedProjects);
+=======
+
+  const projectList = [{
+    id: 0,
+    name: "Project 1",
+    description: "description...",
+    tags: ["Tag 1", "Tag 2", "Tag 3"],
+  }, {
+    id: 1,
+    name: "Project 2",
+    description: "description...",
+    tags: ["Tag 1", "Tag 2", "Tag 3", "Tag 4"],
+  }, {
+    id: 2,
+    name: "Project 3",
+    description: "description...",
+    tags: ["Tag 1", "Tag 2"],
+  }, {
+    id: 3,
+    name: "Project 4",
+    description: "description...",
+    tags: ["Tag 1", "Tag 2", "Tag 3"],
+  }, {id: 4,
+    name: "Project 5",
+    description: "description...",
+    tags: ["Tag 1", "Tag 2", "Tag 3"],
+  }]
+
+>>>>>>> routed-pages
   return (
     <>
       <div className="flex bg-[#011522] h-screen w-screen">
@@ -134,6 +171,7 @@ const Projects = () => {
             <div className="w-3/5 pt-10 mx-auto">
               <SearchBar/>
             </div>
+<<<<<<< HEAD
             <div className="grid grid-cols-5 gap-4 p-10 text-white text-2xl justify-items-center">
               {updatedProjects.length != 0 && updatedProjects.map(project => 
                 <div className="w-full aspect-[6/5]"
@@ -146,11 +184,32 @@ const Projects = () => {
                     status={project.status}
                     emoji={project.emoji}
                     image={project.image}
+=======
+            <div className="grid grid-cols-4 gap-4 p-10 text-white text-2xl justify-items-center space-y-10">
+              
+              <div className="w-2/3 aspect-[4/3]">
+                <Project 
+                  id = {-1} 
+                  name = "New Project"
+                  description = "Create a New Project" 
+                  tags={[]}
+                />
+              </div>
+              
+              {projectList.map(project => 
+                <div className="w-2/3 aspect-[4/3]">
+                  <Project 
+                    id = {project.id} 
+                    name={project.name} 
+                    description={project.description} 
+                    tags={project.tags}
+>>>>>>> routed-pages
                   />
                 </div>
               )}
             </div>
           </div>
+<<<<<<< HEAD
           
             
         </div>
@@ -169,6 +228,10 @@ const Projects = () => {
                   onClose={() => setShowPopUp(false)}
                 />
             )}
+=======
+        </div>
+      </div>
+>>>>>>> routed-pages
     </>
   );
 };

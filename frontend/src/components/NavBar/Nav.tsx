@@ -1,4 +1,8 @@
 import Logo from "components/Logo";
+<<<<<<< HEAD
+=======
+import React from "react";
+>>>>>>> routed-pages
 import { Link, useNavigate } from "react-router-dom";
 
 const Nav = () => {

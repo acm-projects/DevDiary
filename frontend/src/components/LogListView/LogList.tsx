@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import "styles/App.css";
 import { Link } from "react-router-dom";
 import StatusTag from "components/StatusTag";
@@ -14,12 +15,18 @@ type LogProps = {
   status: string;
   tags: string[];
 }
+=======
+import "/src/styles/App.css";
+import Log from "./Log.tsx";
+import type { LogProps } from "./Log.tsx";
+>>>>>>> routed-pages
 
 interface LogListProps {
   logList: LogProps[];
 }
 
 function LogList({ logList }: LogListProps) {
+<<<<<<< HEAD
   return (
     <div className="w-full max-w-5xl mx-auto relative group">
       <ul className="flex flex-col space-y-6 font-sans">
@@ -71,8 +78,30 @@ function LogList({ logList }: LogListProps) {
         ))
         }
       </ul >
+=======
+  //TODO: get search results from backend
+  //      implement tags as components
+
+  return (
+    <div className="w-full overflow-y-auto">
+      <ul className="space-y-5 font-dm-mono">
+        {logList.map((log) => (
+          <Log
+            id={log.id}
+            name={log.name}
+            project={log.project}
+            description={log.description}
+            tags={log.tags}
+          />
+        ))}
+      </ul>
+>>>>>>> routed-pages
     </div>
   );
 }
 
+<<<<<<< HEAD
 export default LogList;
+=======
+export default LogList;
+>>>>>>> routed-pages

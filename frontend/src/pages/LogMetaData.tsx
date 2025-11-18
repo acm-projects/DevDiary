@@ -100,15 +100,23 @@ function LogMetaData() {
     };
 
     return (
+<<<<<<< HEAD
         <AnimatedPage>
             <div className="w-screen h-screen bg-[#0d0b1e] bg-[url(src/assets/Variant8.png)] bg-cover text-white flex flex-col font-sans">
 
+=======
+        <AnimatedPage> {/* Wrap the page content with AnimatedPage for transitions */}
+            {/* Screen Container */}
+            <div className="w-screen h-screen bg-[#0d0b1e] bg-[url(src/assets/Variant8.png)] bg-cover text-white flex flex-col font-sans">
+                {/* Header */}
+>>>>>>> routed-pages
                 <Header>
                     <div className="w-full flex justify-center">
                         <p className="font-semibold text-xl">Create New Log</p>
                     </div>
                 </Header>
 
+<<<<<<< HEAD
                 <main className="flex-grow flex items-center justify-center p-8 lg:p-12 gap-12 relative">
 
                     <button
@@ -205,6 +213,70 @@ function LogMetaData() {
                         )}
                     </AnimatePresence>
 
+=======
+                {/* Progress Line */}
+                <div className="w-screen bg-[#0000004d] rounded-full h-1.5 mb-8">
+                    <div className="bg-teal-400 h-1.5 rounded-full" style={{ width: `${(step / totalSteps) * 100}%`, transition: 'width 0.3s ease-in-out' }}></div>
+                </div>
+
+                <main className="flex-grow flex flex-col items-center justify-center p-4">
+
+                    <div className="w-full max-w-3xl bg-[#1E293B]/60 border border-teal-500/20 rounded-2xl p-8 backdrop-blur-sm shadow-lg shadow-teal-500/10">
+
+                        {/* Questions */}
+                        {step === 1 && <FormStep question="What's the title of your new log?">
+                            <input
+                                type="text"
+                                placeholder="e.g., Fixed the authentication bug"
+                                value={formData.title}
+                                onChange={(e) => handleInputChange('title', e.target.value)}
+                                className="w-full p-3 text-xl bg-transparent border-b-2 border-gray-600 focus:outline-none focus:border-teal-400 transition-colors" />
+                        </FormStep>}
+
+                        {step === 2 && <FormStep question="Which project does this log belong to?">
+                            <Dropdown
+                                label=""
+                                options={["Project A", "Project B", "Project C"]}
+                                defaultValue={formData.project}
+                                onChange={(val) => handleInputChange('project', val)}
+                            />
+                        </FormStep>}
+
+                        {step === 3 && <FormStep question="What type of log is this?">
+                            <Dropdown
+                                label=""
+                                options={["Feature", "Bug", "Refactor", "Testing"]}
+                                defaultValue={formData.type}
+                                onChange={(val) => handleInputChange('type', val)}
+                            />
+                        </FormStep>}
+
+                        {step === 4 && <FormStep question="What is the current status?">
+                            <Dropdown
+                                label=""
+                                options={["In Progress", "Completed", "On Hold"]}
+                                defaultValue={formData.status}
+                                onChange={(val) => handleInputChange('status', val)}
+                            />
+                        </FormStep>}
+
+                        {step === 5 && <FormStep question="Add some comma-separated tags.">
+                            <input
+                                type="text"
+                                placeholder="e.g., react, typescript, bug"
+                                value={formData.tags}
+                                onChange={(e) => handleInputChange('tags', e.target.value)}
+                                className="w-full p-3 text-xl bg-transparent border-b-2 border-gray-600 focus:outline-none focus:border-teal-400 transition-colors"
+                            />
+                        </FormStep>}
+
+                        {/* Next/Back/Start writing buttons */}
+                        <div className="w-full flex justify-start items-center gap-4 mt-10">
+                            <button onClick={nextStep} className={`px-6 py-2 bg-[#43B5A8] rounded-md font-semibold hover:opacity-90 transition-opacity ${step === totalSteps ? 'bg-[#8248af]' : ''}`}>{step === totalSteps ? 'Start Writing' : 'Next'} </button>
+                            {step > 1 && <button onClick={prevStep} className="text-gray-400 hover:text-white transition-colors">Back</button>}
+                        </div>
+                    </div>
+>>>>>>> routed-pages
                 </main>
             </div>
         </AnimatedPage>

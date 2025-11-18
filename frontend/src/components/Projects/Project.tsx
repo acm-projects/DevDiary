@@ -1,13 +1,17 @@
 import React from "react";
+<<<<<<< HEAD
 import Tag from "../Tags/Tag.tsx"
 import type {TagProps} from "../Tags/Tag.tsx"
 import StatusTag from "components/StatusTag.tsx";
 import { useNavigate } from "react-router-dom";
+=======
+>>>>>>> routed-pages
 
 export interface ProjectProps {
     id: number;
     name: string;
     description: string;
+<<<<<<< HEAD
     tags: TagProps[];
     status: string;
     emoji: string;
@@ -71,8 +75,35 @@ const Project = ({id, name, description, tags, status, emoji, image}: ProjectPro
           {name}
         </div>
       </div> */}
+=======
+    tags: string[];
+}
+
+const Project = ({id, name, description, tags}: ProjectProps) => {4
+
+  if(id == -1) {
+    return (
+      <>
+      <div className="h-full w-full shrink-0 rounded-3xl ">
+        <div className="h-full w-full cursor-pointer hover:scale-105 ease-in-out duration-200 rounded-3xl bg-[#D9D9D9]/[.20]">+</div>
+        <div className="text-white text-center text-l">{name}</div>
+      </div>
+    </>
+    )
+  }
+  return (
+    <>
+      <div className="h-full w-full shrink-0 rounded-3xl ">
+        <div className="h-full w-full cursor-pointer hover:scale-105 ease-in-out duration-200 rounded-3xl bg-[#D9D9D9]/[.20]"></div>
+        <div className="text-white text-center text-l">{name}</div>
+      </div>
+>>>>>>> routed-pages
     </>
   );
 };
 
+<<<<<<< HEAD
 export default Project;
+=======
+export default Project;
+>>>>>>> routed-pages

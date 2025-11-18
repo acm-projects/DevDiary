@@ -1,5 +1,9 @@
 import '/src/styles/App.css'
 import {useState, useRef, useEffect} from "react";
+<<<<<<< HEAD
+=======
+import ArrowIcon from "/src/assets/icons/sideArrow.png";
+>>>>>>> routed-pages
 import Tag from "./Tag.tsx"
 import type { TagProps } from "./Tag.tsx"
 interface TagDropdownProps {
@@ -11,7 +15,11 @@ interface TagDropdownProps {
 
 
 
+<<<<<<< HEAD
 function Dropdown({ label, tags, sendDataToParent }: TagDropdownProps) {
+=======
+function Dropdown({ label, tags, defaultValue, sendDataToParent }: TagDropdownProps) {
+>>>>>>> routed-pages
     const [isOpen, setIsOpen] = useState(false);   
     const [query, setQuery] = useState("");
                            // track if dropdown is open
@@ -58,7 +66,11 @@ function Dropdown({ label, tags, sendDataToParent }: TagDropdownProps) {
 
     return (
         <div className="relative w-full" ref={dropdownRef}>
+<<<<<<< HEAD
             {label && <p className="font-sans text-sm flex justify-start-safe">{label}</p>} 
+=======
+            {label && <p className="font-headvig text-sm flex justify-start-safe">{label}</p>} 
+>>>>>>> routed-pages
 
             {/* <button onClick={ () => setIsOpen(!isOpen) } 
                 type="button"
@@ -74,23 +86,41 @@ function Dropdown({ label, tags, sendDataToParent }: TagDropdownProps) {
 
             <input
                 type="text"
+<<<<<<< HEAD
                 className="font-sans bg-[#011522]/80 border border-teal-500/30 rounded-lg focus:ring-teal-400 focus:border-teal-400 outline-none transition w-full p-2 text-white text-[15px] cursor-pointer hover:border-white/50 leading-6 flex justify-between items-center"
                 value={query}
                 placeholder="Enter Tags..."
+=======
+                className="bg-[#011522] px-3 py-1 placeholder-gray-400 placeholder:font-headvig font-headvig text-white text-lg w-full rounded-lg border-white border-0"
+                value={query}
+                placeholder="Enter Tags"
+>>>>>>> routed-pages
                 onClick={ () => setIsOpen(true)}
                 onChange={(e) => setQuery(e.target.value)}
             />
 
             { isOpen && (
+<<<<<<< HEAD
                 <ul className="font-sans bg-[#011522] border border-teal-500/30 rounded-lg focus:ring-teal-400 focus:border-teal-400 outline-none transition w-full p-2 absolute left-0 mt-1  max-h-40 overflow-y-auto shadow-lg z-10">
+=======
+                <ul className="font-headvig absolute left-0 mt-1 w-full bg-[#1E3249] border border-[#6A7278]/45 rounded-[10px] max-h-40 overflow-y-auto shadow-lg z-10">
+>>>>>>> routed-pages
                     {filteredTags.map((tag, idx) => (     // Map over tags to create list items
                         <li 
                             key={idx}
                             onClick= { () => {handleSelect(tag) }}
+<<<<<<< HEAD
                             className=" flex justify-start p-2 leading-6 hover:bg-[#4bddb433]/50  cursor-pointer text-white text-[14px]"                           
                         > {/* List items styling */}
                             <Tag 
                                 name={tag.name}
+=======
+                            className="p-2 leading-6 hover:bg-[#4bddb433]/50 cursor-pointer text-white text-[14px]"                            
+                        > {/* List items styling */}
+                            <Tag 
+                                name={tag.name}
+                                color={tag.color}
+>>>>>>> routed-pages
                                 selected={selectedMap[tag.name] ?? 0}
                             />        {/* Display option text */}
                         </li>

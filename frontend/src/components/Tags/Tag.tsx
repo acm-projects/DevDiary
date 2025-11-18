@@ -2,12 +2,22 @@ import React from "react";
 
 export interface TagProps {
     name: string;
+<<<<<<< HEAD
     selected?: number;
 }
 
 const Project = ({name, selected}: TagProps) => {
 
   const color="4BDEB4";
+=======
+    color: string;
+    selected?: number;
+}
+
+const Project = ({name, color, selected}: TagProps) => {
+
+  color="4BDEB4";
+>>>>>>> routed-pages
   if(selected == 1) {   //selected
     return (
       <>

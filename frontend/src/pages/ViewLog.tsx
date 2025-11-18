@@ -39,11 +39,32 @@ const SECTION_STYLES: { [key: string]: { color: string } } = {
     list: { color: 'text-cyan-400' },
 };
 
+<<<<<<< HEAD
 const SectionView: React.FC<{
     section: Section;
 }> = ({ section }) => {
     const style = SECTION_STYLES[section.type] || { color: 'text-gray-400' };
     const label = section.type.charAt(0).toUpperCase() + section.type.slice(1);
+=======
+function ViewLog(){
+    const location = useLocation();
+    const state = location.state as { logData: LogData };
+
+    // Get log data from edit log page
+    const logData: LogData = state?.logData || {
+        title: 'Default Title: Log Not Found',
+        project: 'Default Project',
+        status: 'On Hold',
+        tags: 'default',
+        type: 'Bug',
+        sections: { error: '', code: '', solution: '', resources: '', comments: '' },
+        author: { initials: 'N/A', name: 'No Author' },  // Default author info for now, until we can connect to user auth/database
+        creationDate: new Date().toISOString(),
+    };
+
+    const tagsArray = logData.tags.split(',').map(tag => tag.trim()).filter(Boolean);
+    const creationDate = new Date(logData.creationDate);
+>>>>>>> routed-pages
 
     return (
         <div className="flex flex-wrap justify-start w-full mb-10">
