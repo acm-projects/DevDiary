@@ -7,6 +7,7 @@ import rateLimiter from "./middleware/rateLimiter.js";
 import mongoose from "mongoose";
 import cors from "cors";
 import authRoutes from "./routes/authRoutes.js";
+import projectRoutes from "./routes/projectRoutes.js"
 import { generateTags } from "./models/AutoTagger.js";
 import { generateStuffWithLogs } from "./models/CompareWithDataBase.js";
 import { getLogById } from "./controllers/logsController.js";
@@ -32,6 +33,7 @@ app.use((req, res, next) => {
 app.use("/api/logs", logsRoutes);
 app.use("/api/search", searchRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/projects",projectRoutes);
 app.post("/api/generateTags", async (req, res) => {
   try {
     const { title, content } = req.body;

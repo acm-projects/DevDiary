@@ -64,11 +64,7 @@ function Dropdown({ label, options, defaultValue, onChange, sendDataToParent}: D
                                 setIsOpen(false);    // Close dropdown
                                 handleSelect(option);
                             }}
-<<<<<<< HEAD
                             className="flex justify-start p-2 leading-6 hover:bg-[#4bddb433]/50  cursor-pointer text-white text-[14px]"> {/* List items styling */}
-=======
-                            className="p-2 leading-6 hover:bg-[#4bddb433]/50  cursor-pointer text-white text-[14px]"> {/* List items styling */}
->>>>>>> routed-pages
                             {option}        {/* Display option text */}
                         </li>
                     ))}
