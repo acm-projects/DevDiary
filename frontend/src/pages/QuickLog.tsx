@@ -11,6 +11,7 @@ interface Log {
     status: string;
     tags: string[];
     type: string;
+    cli_flag: Boolean;
     sections: {
         error: string;
         code: string;
@@ -77,13 +78,13 @@ const QuickLog: React.FC = () => {
     useEffect(() => {
         const fetchQuickLogs = async () => {
             try {
-                const res = await fetch('/api/logs');
+                const res = await fetch('http://localhost:5000/api/logs');
                 if (!res.ok) {
                     throw new Error('Failed to fetch logs');
                 }
                 const allLogs: Log[] = await res.json();
-                
-                const cliLogs = allLogs.filter(log => log.project === 'Quick Log Inbox');
+                console.log("allLogs",allLogs);
+                const cliLogs = allLogs.filter(log => log.cli_flag);
                 
                 setQuickLogs(cliLogs);
             } catch (err) {
