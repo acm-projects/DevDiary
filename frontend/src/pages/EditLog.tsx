@@ -63,6 +63,11 @@ function EditLog() {
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
+  // AI Insights state
+  const [aiInsight, setAiInsight] = useState('');
+  const [similarLogs, setSimilarLogs] = useState<string[]>([]);
+  const [timer, setTimer] = useState<number | undefined>(undefined);
+
   // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -81,13 +86,11 @@ function EditLog() {
   // Load log data
   useEffect(() => {
     const loadLog = async () => {
-      // Editing existing log by ID
       if (logIdFromQuery) {
         try {
           const res = await fetch(`http://localhost:5000/api/logs/${logIdFromQuery}`);
           const data = await res.json();
           
-          // Convert sections array back to markdown format
           const markdownContent = data.sections
             ?.sort((a: any, b: any) => a.order - b.order)
             .map((s: any) => `/${s.type}\n${s.content}`)
@@ -104,7 +107,6 @@ function EditLog() {
           navigate('/home');
         }
       } 
-      // Data passed via state
       else if (state?.logData) {
         const passedData = state.logData;
         if (passedData._id) {
@@ -127,7 +129,6 @@ function EditLog() {
           setLogData({ ...defaultLogData, ...passedData } as LogData);
         }
       }
-      // Data from URL params (from LogMetaData)
       else {
         const title = searchParams.get('title');
         const project = searchParams.get('project');
@@ -136,7 +137,6 @@ function EditLog() {
         const tags = searchParams.get('tags');
         
         if (title || project || type || status || tags) {
-          console.log('Loading data from URL params:', { title, project, type, status, tags });
           setLogData({
             ...defaultLogData,
             title: title || defaultLogData.title,
@@ -150,11 +150,60 @@ function EditLog() {
     };
     loadLog();
   }, [logIdFromQuery, state, navigate, searchParams]);
+  const fetchAiInsights = async (title: string, contentText: string) => {
+    try {
+      // Generate tags and explanation
+      const res1 = await fetch('http://localhost:5000/api/generateTags', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, content: contentText }),
+      });
+      if (res1.ok) {
+        const data = await res1.json();
+        setAiInsight(data.explanation);
+      }
+      const res2 = await fetch('http://localhost:5000/api/generateStuffWithLogs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, content: contentText }),
+      });
+      if (res2.ok) {
+        const data = await res2.json();
+        const logIds = data.similar_logs.split(',');
+        const titles: string[] = [];
+        for (const id of logIds) {
+          try {
+            const logRes = await fetch('http://localhost:5000/api/getLogById', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ id }),
+            });
+            if (logRes.ok) {
+              const log = await logRes.json();
+              titles.push(log.summary);
+            }
+          } catch (err) {
+            console.error('Error fetching similar log:', err);
+          }
+        }
+        setSimilarLogs(titles);
+      }
+    } catch (err) {
+      console.error('Error fetching AI insights:', err);
+    }
+  };
 
   // Handle textarea input
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newContent = e.target.value;
     setContent(newContent);
+
+    // Debounce AI insights
+    clearTimeout(timer);
+    const newTimer = setTimeout(() => {
+      fetchAiInsights(logData.title, newContent);
+    }, 4000);
+    setTimer(newTimer);
 
     // Check for slash command
     const cursorPos = e.target.selectionStart;
@@ -172,24 +221,14 @@ function EditLog() {
       setSelectedIndex(0);
       setShowSlashMenu(true);
       
-      // Calculate menu position based on cursor
       const textarea = textareaRef.current;
       if (textarea) {
-        // Get the textarea's position
-        const textareaRect = textarea.getBoundingClientRect();
-        
-        // Estimate line height and character width
-        const lineHeight = 24; 
-        const charWidth = 8; 
-        
-        // Count lines before cursor
+        const lineHeight = 24;
+        const charWidth = 8;
         const linesBeforeCursor = textBeforeCursor.split('\n').length - 1;
         const lastLineText = textBeforeCursor.split('\n').pop() || '';
-        
-        // Calculate position
-        const top = linesBeforeCursor * lineHeight + lineHeight + 8; // 8px padding
-        const left = lastLineText.length * charWidth + 8; 
-        
+        const top = linesBeforeCursor * lineHeight + lineHeight + 8;
+        const left = lastLineText.length * charWidth + 8;
         setSlashMenuPosition({ top, left });
       }
     } else {
@@ -203,17 +242,14 @@ function EditLog() {
     const textBeforeCursor = content.substring(0, cursorPos);
     const textAfterCursor = content.substring(cursorPos);
     
-    // Remove the slash command
     const lines = textBeforeCursor.split('\n');
     lines[lines.length - 1] = lines[lines.length - 1].replace(/\/\w*$/, '');
     const newTextBefore = lines.join('\n');
     
-    // Insert the section marker
     const newContent = `${newTextBefore}/${sectionType}\n\n${textAfterCursor}`;
     setContent(newContent);
     setShowSlashMenu(false);
     
-    // Focus back on textarea
     setTimeout(() => {
       textareaRef.current?.focus();
     }, 0);
@@ -248,23 +284,18 @@ function EditLog() {
       const line = lines[i];
       
       if (line.startsWith('/')) {
-        // Save previous section if exists
         if (currentSection) {
           sections.push({ ...currentSection, order: order++ });
         }
-        
-        // Start new section
         const sectionType = line.substring(1).trim();
         if (SECTION_TYPES.find(s => s.type === sectionType)) {
           currentSection = { type: sectionType, content: '' };
         }
       } else if (currentSection) {
-        // Add content to current section
         currentSection.content += (currentSection.content ? '\n' : '') + line;
       }
     }
     
-    // Push the last section if exists
     if (currentSection) {
       sections.push({ ...currentSection, order: order++ });
     }
@@ -322,7 +353,7 @@ function EditLog() {
       </Header>
 
       <div className="flex flex-1 overflow-hidden p-4 sm:p-6 lg:p-8 gap-6">
-        <AiSideNavBar />
+        <AiSideNavBar insights={aiInsight} similarLogs={similarLogs} />
         
         <main className="flex-grow flex-1 overflow-hidden bg-[#1E293B]/60 border border-teal-500/20 rounded-2xl p-6 backdrop-blur-sm shadow-lg shadow-teal-500/10 flex flex-col">
           {/* Header */}

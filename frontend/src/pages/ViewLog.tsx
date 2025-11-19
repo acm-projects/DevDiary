@@ -167,7 +167,7 @@ function ViewLog() {
             </Header>
 
             <div className="flex flex-1 overflow-hidden p-4 sm:p-6 lg:p-8 gap-6">
-                <AiSideNavBar />
+                <AiSideNavBar insights="" similarLogs={[]} />
 
                 <main className="flex-grow flex-1 overflow-hidden bg-[#1E293B]/60 border border-teal-500/20 rounded-2xl p-6 backdrop-blur-sm shadow-lg shadow-teal-500/10 flex flex-col">
                     {/* Header section */}
