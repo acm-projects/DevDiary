@@ -20,6 +20,7 @@ interface LogListProps {
 }
 
 function LogList({ logList }: LogListProps) {
+  console.log("In LogList",logList);
   return (
     <div className="w-full max-w-5xl mx-auto relative group">
       <ul className="flex flex-col space-y-6 font-sans">

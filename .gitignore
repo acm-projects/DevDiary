@@ -7,7 +7,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
+node_modules/
 dist
 dist-ssr
 *.local
@@ -27,3 +27,4 @@ config.ini
 .env
 secrets/
 *.local
+node_modules
