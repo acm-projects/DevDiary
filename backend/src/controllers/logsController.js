@@ -1,6 +1,11 @@
 import Log from "../models/Log.js";
 import mongoose from "mongoose";
 import OpenAI from "openai";
+import { generateTags } from "../models/AutoTagger.js";
+import { generateStuffWithLogs } from "../models/CompareWithDataBase.js";
+import { search } from '../models/SearchFeature.js';
+import Search from '../models/Search.js';
+import Project from "../models/Project.js";
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -49,6 +54,7 @@ export async function createLog(req, res) {
         const {
             title,
             project,
+            project_id,
             tags, 
             status,
             type,
@@ -56,20 +62,34 @@ export async function createLog(req, res) {
             author
         } = req.body;
 
+        //auto generate tags
+        let AITagsData = { core_tags: "", summary: "", explanation: "" };
+        try {
+            AITagsData = await generateTags(title, sections);
+        } catch (err) {
+            console.error("Failed:", err.message);
+        }
         // Parse the tags string into an array
-        const tagsArray = typeof tags === 'string' 
-            ? tags.split(',').map(tag => tag.trim()).filter(Boolean)
-            : tags;
-        
-        // Create the new log with dynamic sections
+        const tagsManualArray = tags;
+        const tagsAIArray = AITagsData.core_tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
+
+        //combine manual and AI tags into one array
+        const combinedArray = tagsAIArray;
+        if (tagsManualArray) combinedArray = tagsAIArray.concat(tagsManualArray);
+
+        //define solution in sections
+
+        // Create the new log with all the data
         const log = new Log({
             title,
             project,
             status,
             type,
-            tags: tagsArray,
-            sections: sections || [], 
+            tags: combinedArray || tagsManualArray,
+            sections, 
             author, 
+            summary: AITagsData.summary || "",
+            explanation: AITagsData.explanation || "",
         });
         
         // Generate embedding from all text content
@@ -79,7 +99,8 @@ export async function createLog(req, res) {
             
             const embeddingRes = await openai.embeddings.create({
                 model: "text-embedding-3-small",
-                input: fullText.trim(),
+                input: fullText.trim(), // Use the combined text
+                dimensions: 24
             });
             log.embedding = embeddingRes.data[0].embedding;
         } catch (err) {
@@ -87,7 +108,16 @@ export async function createLog(req, res) {
         }
         
         const savedLog = await log.save();
-        res.status(201).json(savedLog);
+        if (project_id && mongoose.Types.ObjectId.isValid(project_id))
+        {
+            const project = await Project.findById(project_id);
+            if (project) {
+                project.logs.push(savedLog._id);
+                project.tags.push(...log.tags);
+                await project.save();
+            }
+        }
+        res.status(201).json(savedLog); // Send the full saved log back
 
     } catch (error) {
         console.error("Error creating log:", error);
@@ -109,11 +139,9 @@ export async function updateLog(req, res) {
             return res.status(404).json({ message: "Log not found" });
         }
 
-        const { title, project, tags, status, type, sections, author } = req.body;
-        
-        const tagsArray = typeof tags === 'string'
-            ? tags.split(',').map(tag => tag.trim()).filter(Boolean)
-            : tags;
+        // Get the new data from the body
+        const { title, project, project_id, tags, status, type, sections, author } = req.body;
+        const tagsArray = tags;
 
         // Update all fields
         log.title = title;
@@ -124,6 +152,21 @@ export async function updateLog(req, res) {
         log.sections = sections || [];
         log.author = author;
 
+        // Generate new AI summary and tags
+        let AIOutput = { core_tags: "", summary: "", explanation: "" };
+        try {
+            AIOutput = await generateTags(title, sections);
+        } catch (err) {
+            console.error("Failed:", err.message);
+        }
+
+        //only save new tags if not enough already existing tags
+        if (!tagsArray) {
+            log.tags = AIOutput.core_tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
+        }
+        log.explanation = AIOutput.explanation;
+        log.summary = AIOutput.summary;
+        // Re-generate embedding on update
         try {
             const allContent = sections?.map(s => s.content).join(' ') || '';
             const fullText = `${title} ${project} ${allContent}`;
@@ -131,12 +174,33 @@ export async function updateLog(req, res) {
             const embeddingRes = await openai.embeddings.create({
                 model: "text-embedding-3-small",
                 input: fullText.trim(),
+                dimensions: 24,
             });
             log.embedding = embeddingRes.data[0].embedding;
         } catch (err) {
             console.error("Failed to generate embedding on update:", err.message);
         }
         
+        //if the project has changed
+        if (project_id && mongoose.Types.ObjectId.isValid(project_id) && project_id != log.project_id)
+        {
+            console.log("here");
+            const old_project = await Project.findById(log.project_id)
+            if (old_project) {
+                old_project.logs.pull(log._id)
+                old_project.tags.pull(...log.tags);
+                await old_project.save();
+            }
+
+            const new_project = await Project.findById(project_id);
+            if (new_project) {
+                new_project.logs.push(log._id);
+                new_project.tags.push(...log.tags);
+                await new_project.save();
+            }
+
+            log.project_id = project_id
+        }
         const updatedLog = await log.save();
 
         res.status(200).json({ message: "Log updated successfully", log: updatedLog });

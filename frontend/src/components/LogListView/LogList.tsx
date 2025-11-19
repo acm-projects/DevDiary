@@ -8,11 +8,11 @@ interface Tag {
 
 type LogProps = {
   id: number;
-  name: string;
+  title: string;
   project: string;
   description: string;
   status: string;
-  tags: Tag[];
+  tags: string[];
 }
 
 interface LogListProps {
@@ -30,7 +30,7 @@ function LogList({ logList }: LogListProps) {
               {/* Top Section */}
               <div className="flex justify-between items-start mb-3">
                 <div>
-                  <h3 className="text-2xl font-bold text-white">{log.name}</h3>
+                  <h3 className="text-2xl font-bold text-white">{log.title}</h3>
                   <div className="flex justify-start items-start" >
                     <p className="text-sm text-gray-400 mt-1">{log.project}</p>
                   </div>
@@ -50,10 +50,10 @@ function LogList({ logList }: LogListProps) {
                 <div className="flex flex-wrap gap-2">
                   {log.tags.map((tag) => (
                     <span
-                      key={tag.name}
+                      key={tag}
                       className="px-3 py-1 text-xs font-medium bg-cyan-500/20 text-cyan-300 rounded-full border border-cyan-400"
                     >
-                      {tag.name}
+                      {tag}
                     </span>
                   ))}
                 </div>

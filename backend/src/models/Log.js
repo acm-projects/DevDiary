@@ -40,6 +40,10 @@ const LogSchema = new mongoose.Schema(
             required: [true, 'Please add a project name'],
             trim: true
         },
+        project_id: { 
+            type: mongoose.Schema.Types.ObjectId,
+            required: false
+        },
         status: {
             type: String,
             enum: ['In Progress', 'Completed', 'On Hold'],
@@ -87,6 +91,31 @@ const LogSchema = new mongoose.Schema(
     },
     { timestamps: true }
 );
+
+// 2. Create a model
+
+LogSchema.pre('save', async function (next) {
+  // Only run if this.project_id isn’t already set
+  if (!this.project_id && this.project) {
+    const existingLog = await this.constructor.findOne({ project: this.project });
+
+    if (existingLog && existingLog.project_id) {
+      this.project_id = existingLog.project_id;
+    } else {
+      this.project_id = new mongoose.Types.ObjectId();
+    }
+  }
+  else if (this.project_id && !this.project) {
+    const existingLog = await this.constructor.findOne({ project_id: this.project_id });
+    if (existingLog && existingLog.project) {
+      this.project = existingLog.project;
+    } else {
+      this.project = "Unassigned Project";
+    }
+  }
+  next();
+});
+
 
 const Log = mongoose.model("Log", LogSchema);
 

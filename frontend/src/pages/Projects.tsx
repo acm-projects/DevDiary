@@ -24,6 +24,8 @@ const Projects = () => {
   const [loadingLogs, setLoadingLogs] = useState<boolean>(true);
   const [errorLogs, setErrorLogs] = useState<string | null>(null);
 
+  const [updatedProjects, setUpdatedProjects] = useState<any[]>([]);
+
   const [showPopUp, setShowPopUp] = useState(false);
   const [popUpName, setPopUpName] = useState<string>("");
   useEffect(() => {
@@ -31,6 +33,7 @@ const Projects = () => {
     setLoadingProjects(true);
     setErrorProjects(null);
 
+    console.log("fetch")
     fetch("http://localhost:5000/api/projects", {
       method: "GET",
     })
@@ -50,37 +53,66 @@ const Projects = () => {
         setLoadingProjects(false);
       });
 
-    fetch("http://localhost:5000/api/logs", {
-      method: "GET",
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setAllLogs(data);
-        setLoadingLogs(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching search results:", error);
-        setErrorLogs("Error fetching search results");
-        setLoadingLogs(false);
-      });
+    // fetch("http://localhost:5000/api/logs", {
+    //   method: "GET",
+    // })
+    //   .then((response) => {
+    //     if (!response.ok) {
+    //       throw new Error("Network response was not ok");
+    //     }
+    //     return response.json();
+    //   })
+    //   .then((data) => {
+    //     setAllLogs(data);
+    //     setLoadingLogs(false);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error fetching search results:", error);
+    //     setErrorLogs("Error fetching search results");
+    //     setLoadingLogs(false);
+    //   });
   }, []);
 
-  allProjects.map((project) => {
-    console.log("project",project);
-    project.status = "In Progress";
-    const filteredLogs = allLogs.filter((log) => (log.project = project.title));
-    if( filteredLogs.filter((log) => (log.status==="Completed")).length == filteredLogs.length) {
-      project.status = "Completed";
-    }
-    if( filteredLogs.filter((log) => (log.status==="On Hold")).length == filteredLogs.length) {
-      project.status = "On Hold";
-    }
-  })
+  useEffect(() => {
+  if (allProjects.length === 0) return;
+
+  const update = async () => {
+    const updated = await Promise.all(
+      allProjects.map(async (project) => {
+        const logResponses = await Promise.all(
+          project.logs.map((logId: string) =>
+            fetch(`http://localhost:5000/api/logs/${logId}`)
+              .then((res) => (res.ok ? res.json() : null))
+              .catch(() => null)
+          )
+        );
+
+        // filter out failed logs
+        const logs = logResponses.filter((log) => log !== null);
+
+        let status = "In Progress";
+
+        const completed = logs.every((log) => log.status === "Completed");
+        const onHold = logs.every((log) => log.status === "On Hold");
+
+        if (completed && logs.length > 0) status = "Completed";
+        else if (onHold && logs.length > 0) status = "On Hold";
+
+        return {
+          ...project,
+          status,
+        };
+      })
+    );
+
+    setUpdatedProjects(updated);
+  };
+
+  update();
+}, [allProjects]);
+
+
+  
 
   // console.log("allProjects: "+allProjects);
   // console.log("popUpName: "+popUpName);
@@ -88,7 +120,7 @@ const Projects = () => {
   // console.log("project: "+allProjects[0].id);
 
 
-
+  console.log("length", updatedProjects);
   return (
     <>
       <div className="flex bg-[#011522] h-screen w-screen">
@@ -103,7 +135,7 @@ const Projects = () => {
               <SearchBar/>
             </div>
             <div className="grid grid-cols-5 gap-4 p-10 text-white text-2xl justify-items-center">
-              {allProjects.map(project => 
+              {updatedProjects.length != 0 && updatedProjects.map(project => 
                 <div className="w-full aspect-[6/5]"
                   onClick={(e) => {setShowPopUp(true); setPopUpName(project.title);}}>
                   <Project 
@@ -126,13 +158,13 @@ const Projects = () => {
       {showPopUp && (
               
                 <ProjectPopUp 
-                  id = {allProjects[allProjects.findIndex(project => project.title === popUpName)].id}
-                  name={allProjects[allProjects.findIndex(project => project.title === popUpName)].title} 
-                  description={allProjects[allProjects.findIndex(project => project.title === popUpName)].description} 
-                  tags={allProjects[allProjects.findIndex(project => project.title === popUpName)].tags.map((tag:any) => ({name: tag}))}
-                  status={allProjects[allProjects.findIndex(project => project.title === popUpName)].status}
-                  image={allProjects[allProjects.findIndex(project => project.title === popUpName)].image}
-                  emoji={allProjects[allProjects.findIndex(project => project.title === popUpName)].emoji}
+                  id = {updatedProjects[updatedProjects.findIndex(project => project.title === popUpName)].id}
+                  name={updatedProjects[updatedProjects.findIndex(project => project.title === popUpName)].title} 
+                  description={updatedProjects[updatedProjects.findIndex(project => project.title === popUpName)].description} 
+                  tags={updatedProjects[updatedProjects.findIndex(project => project.title === popUpName)].tags.map((tag:any) => ({name: tag}))}
+                  status={updatedProjects[updatedProjects.findIndex(project => project.title === popUpName)].status}
+                  image={updatedProjects[updatedProjects.findIndex(project => project.title === popUpName)].image}
+                  emoji={updatedProjects[updatedProjects.findIndex(project => project.title === popUpName)].emoji}
                   show={showPopUp}
                   onClose={() => setShowPopUp(false)}
                 />
