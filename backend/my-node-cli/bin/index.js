@@ -16,7 +16,7 @@ const configPath = path.join(os.homedir(), ".devdiary-config.txt");
 const CLISchema = new mongoose.Schema({
   PastedText: String,
   project_id: String, // Storing ID as a string is often simpler
-  log_name: String,
+  cli_flag: Boolean,
   title: String,
   tags: [String],
   summary: String,
@@ -61,18 +61,18 @@ async function add() {
       const answers = await inquirer.prompt([
         {
           type: "input",
-          name: "log_name",
+          name: "title",
           message: "Input Your Log Name:",
           default: "Untitled",
         },
       ]);
-      LogName = answers.log_name;
+      LogName = answers.title;
       projectID = await getID();
       const Log = new logs({
-        title: "CLI-logs",
+        title: LogName,
         PastedText,
         tags: tag,
-        log_name: LogName ? LogName : "Untitled",
+        cli_flag: true,
         project_id: projectID ? projectID : "",
         summary: "",
         explanation: "",
@@ -99,19 +99,19 @@ async function addWithContext(info) {
       const answers = await inquirer.prompt([
         {
           type: "input",
-          name: "log_name",
+          name: "title",
           message: "Input Your Log Name:",
           default: "Untitled",
         },
       ]);
-      LogName = answers.log_name;
+      LogName = answers.title;
 
       projectID = await getID();
       const Log = new logs({
-        title: "CLI-logs",
+        title: LogName,
         PastedText,
         tags: tag,
-        log_name: LogName ? LogName : "Untitled",
+        cli_flag: true,
         project_id: projectID ? projectID : "",
         summary: info,
         explanation: "",
