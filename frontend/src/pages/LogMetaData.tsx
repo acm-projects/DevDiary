@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Dropdown from '../components/Dropdown';
 import Header from '../components/Header';
@@ -65,10 +65,45 @@ function LogMetaData() {
     const [formData, setFormData] = useState({
         title: '',
         project: 'Project A',
+        project_id: '',
         type: 'Feature',
         status: 'In Progress',
         tags: '',
     });
+
+    const [projectTitles, setProjectTitles] = useState<any[]>([]);
+    const [projectIds, setProjectIds] = useState<any[]>([]);
+    const [loadingProjects, setLoadingProjects] = useState<boolean>(true);
+    const [errorProjects, setErrorProjects] = useState<string | null>(null);
+    useEffect(() => {
+    
+        setLoadingProjects(true);
+        setErrorProjects(null);
+    
+        console.log("fetch")
+        fetch("http://localhost:5000/api/projects", {
+            method: "GET",
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+        .then((data) => {
+            console.log(data)
+            setProjectTitles(data.map((project: any) => project.title));
+            setProjectIds(data.map((project: any) => project.id));
+            handleInputChange('project', data[0].title)
+            handleInputChange('project_id', data[0].id)
+            setLoadingProjects(false);
+        })
+        .catch((error) => {
+            console.error("Error fetching search results:", error);
+            setErrorProjects("Error fetching search results");
+            setLoadingProjects(false);
+        });
+    }, []);
 
     const navigate = useNavigate();
     const totalSteps = 5;
@@ -80,6 +115,7 @@ function LogMetaData() {
             const params = new URLSearchParams();
             params.set('title', formData.title || 'Untitled Log'); // Use a default if empty
             params.set('project', formData.project);
+            params.set('project_id', formData.project_id);
             params.set('type', formData.type);
             params.set('status', formData.status);
             params.set('tags', formData.tags);
@@ -142,9 +178,13 @@ function LogMetaData() {
                                 {step === 2 && <FormStep question="Which project does this log belong to?">
                                     <Dropdown
                                         label=""
-                                        options={["Project A", "Project B", "Project C"]}
+                                        options={projectTitles}
                                         defaultValue={formData.project}
-                                        onChange={(val) => handleInputChange('project', val)}
+                                        onChange={(val) => {handleInputChange('project', val);
+                                            console.log("project titles index",projectTitles.indexOf(val));
+                                            console.log("project ids",projectIds);
+                                                            handleInputChange('project_id',projectIds[projectTitles.indexOf(val)]);
+                                        }}
                                     />
                                 </FormStep>}
 

@@ -13,6 +13,7 @@ interface LogData {
     _id?: string;
     title: string;
     project: string;
+    project_id: string;
     tags: string;
     status: string;
     type: string;
@@ -46,6 +47,7 @@ function EditLog() {
   const defaultLogData: LogData = {
     title: 'Untitled Log',
     project: 'Untitled Project',
+    project_id: '',
     tags: '',
     status: 'In Progress',
     type: 'Feature',
@@ -132,14 +134,16 @@ function EditLog() {
       else {
         const title = searchParams.get('title');
         const project = searchParams.get('project');
+        const project_id = searchParams.get('project_id');
         const type = searchParams.get('type');
         const status = searchParams.get('status');
         const tags = searchParams.get('tags');
         
-        if (title || project || type || status || tags) {
+        if (title || project || type || status || tags || project_id) {
           setLogData({
             ...defaultLogData,
             title: title || defaultLogData.title,
+            project_id: project_id || defaultLogData.project_id,
             project: project || defaultLogData.project,
             type: (type as LogData['type']) || defaultLogData.type,
             status: (status as LogData['status']) || defaultLogData.status,
