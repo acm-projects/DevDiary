@@ -1,5 +1,5 @@
 import "styles/App.css";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import StatusTag from "components/StatusTag";
 
 interface Tag {
@@ -20,6 +20,8 @@ interface LogListProps {
 }
 
 function LogList({ logList }: LogListProps) {
+    const navigate = useNavigate();
+
   console.log("In LogList",logList);
   return (
     <div className="w-full max-w-5xl mx-auto relative group">
@@ -59,7 +61,7 @@ function LogList({ logList }: LogListProps) {
                   ))}
                 </div>
                 <button
-                  onClick={() => window.location.href = '/view-log'} 
+                  onClick={() => navigate(`/view-log?id=${log.id}`)} 
                   //state={{ logData: log }}
                   className="px-5 py-2 bg-cyan-400/50 text-white font-semibold rounded-lg hover:opacity-90 transition-opacity" 
                   //to={"/view-log"} 

@@ -29,18 +29,13 @@ const Project = ({id, name, description, tags, status, emoji, image}: ProjectPro
       <div className="h-full w-full bg-[#011522] rounded-3xl">
         <div className="flex justify-start overflow-hidden pb-1">
           <div className="aspect-square w-2/5 rounded-full bg-teal-500/20 mx-2 mt-2 flex justify-center items-center text-5xl flex-none">
-              {emoji}
+            {emoji}
           </div>
-          <div className="flex flex-col justify-between items-start">
-            <div className="grow text-left text-xl py-2 text-wrap  mr-2">
-              {name.substring(0,name.substring(0,12).lastIndexOf(' ')) }
-              <p className="truncate">
-                {name.substring(name.substring(0,12).lastIndexOf(' '), 22)}
-              </p>
+          <div className="flex flex-col flex-1 min-w-0 justify-between items-start">
+            <div className="text-left text-xl py-2 line-clamp-2 mr-2">
+              {name}
             </div>
-            <div>
-              <StatusTag status={status}/>
-            </div>
+            <StatusTag status={status}/>
           </div>
         </div>
         <div className="px-2 pt-4">
