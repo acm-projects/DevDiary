@@ -24,6 +24,7 @@ interface Log {
         name: string;
     };
     creationDate: string;
+    PastedText: string;
 }
 
 
@@ -98,6 +99,8 @@ const QuickLog: React.FC = () => {
     }, []); // Runs once when the page loads
 
     const handlePromoteLog = (quickLog: Log) => {
+        quickLog.sections.code = quickLog.PastedText;
+        quickLog.PastedText;
         navigate('/edit-log', { state: { logData: quickLog } });
     };
 

@@ -23,6 +23,8 @@ const CLISchema = new mongoose.Schema({
   explanation: String,
 });
 
+
+
 const commands = ["add", "set"];
 const logs = mongoose.model("Log", CLISchema);
 let projectID;
@@ -53,6 +55,7 @@ async function getID() {
 }
 
 async function add() {
+  
   const PastedText = await clipboard.read();
   if (PastedText) {
     console.log(chalk.green("Content from clipboard:"));
