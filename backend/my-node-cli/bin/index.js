@@ -10,7 +10,10 @@ import mongoose from "mongoose";
 import fs from "fs/promises";
 import os from "os";
 import path from "path";
+import dotenv from 'dotenv';
 import { constants } from "buffer";
+dotenv.config();
+
 //import { generateTags } from "../../backend/src/models/AutoTagger";
 const configPath = path.join(os.homedir(), ".devdiary-config.txt");
 const CLISchema = new mongoose.Schema({
@@ -32,7 +35,7 @@ let LogName;
 let tag = [];
 await mongoose
   .connect(
-    "mongodb+srv://tylerle3_db_user:11uRcABsKsLS36WG@cluster0.8utcpzo.mongodb.net/logs_db?retryWrites=true&w=majority&appName=Cluster0"
+    process.env.MONGO_URI
   )
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("MongoDB connection error:", err));
