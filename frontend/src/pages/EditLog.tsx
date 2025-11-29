@@ -182,6 +182,7 @@ function EditLog() {
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ id }),
             });
+            console.log('Fetched similar log response:', logRes);
             if (logRes.ok) {
               const log = await logRes.json();
               titles.push(log.summary);
