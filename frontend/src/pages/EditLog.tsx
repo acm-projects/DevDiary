@@ -73,6 +73,7 @@ function EditLog() {
   // Project Dropdown fields
   const [projectTitles, setProjectTitles] = useState<any[]>([]);
   const [projectIds, setProjectIds] = useState<any[]>([]);
+  const [loadingProjects, setLoadingProjects] = useState(false);
   // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -92,6 +93,7 @@ function EditLog() {
   useEffect(() => {
     console.log("here", state, state?.logData);
     const loadLog = async () => {
+      setLoadingProjects(true);
       if (logIdFromQuery) {
         console.log("first")
         try {
@@ -102,7 +104,6 @@ function EditLog() {
             ?.sort((a: any, b: any) => a.order - b.order)
             .map((s: any) => `/${s.type}\n${s.content}`)
             .join('\n\n') || '';
-          
           setLogData({
             ...data,
             tags: Array.isArray(data.tags) ? data.tags.join(', ') : data.tags
@@ -159,6 +160,7 @@ function EditLog() {
           setContent("/code\n"+code);
         }
       }
+      setLoadingProjects(false);
     };
     loadLog();
   }, [logIdFromQuery, state, navigate, searchParams]);
@@ -380,7 +382,7 @@ function EditLog() {
         <div className="flex items-center gap-4">
           <p className="font-semibold text-xl">Project:</p>
           <div className="relative z-[9999] w-60">
-            <Dropdown
+            {!loadingProjects && (<Dropdown
               label=""
               options={projectTitles}
               defaultValue={logData.project}
@@ -389,7 +391,8 @@ function EditLog() {
                   console.log("project titles index",projectTitles.indexOf(val));
                   console.log("project ids",projectIds);
               }}
-            />
+            />)}
+            
           </div>
         </div>
         
