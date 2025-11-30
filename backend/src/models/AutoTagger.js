@@ -27,8 +27,7 @@ export async function generateTags(title, sections) {
         {
           role: "developer",
           content: prompt,
-        },
-      timeout = 2
+        }
       ],
     });
 

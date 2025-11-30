@@ -61,16 +61,13 @@ function SearchResultList({ query, projectFilter, tagFilter }: SearchResultListP
     status: status,
     tags: tags,
   }));
-
   const filteredSearchResults = simplifiedSearchResults.filter(result => {
     const projectMatches = result.project === projectFilter || projectFilter == "" || projectFilter == "No Project";
 
-    const tagMatches = result.tags.some((tag: any) => 
-      tagFilter.includes(tag) || tagFilter.length == 0
-    );
-    console.log("includes",tagFilter.includes(result.tags[0]));
-    console.log("Tag Matches:",tagMatches)
-
+    const tagMatches = (result.tags.length == 0) ? (true) : 
+      result.tags.some((tag: any) => 
+        tagFilter.includes(tag) || tagFilter.length == 0
+      );
 
     return projectMatches && tagMatches;
   });
