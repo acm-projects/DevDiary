@@ -185,12 +185,14 @@ function EditLog() {
             console.log('Fetched similar log response:', logRes);
             if (logRes.ok) {
               const log = await logRes.json();
-              titles.push(log.summary);
+              console.log("log",log);
+              titles.push(log.title);
             }
           } catch (err) {
             console.error('Error fetching similar log:', err);
           }
         }
+        console.log("title",titles);
         setSimilarLogs(titles);
       }
     } catch (err) {
