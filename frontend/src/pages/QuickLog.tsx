@@ -12,6 +12,7 @@ interface Log {
     tags: string[];
     type: string;
     cli_flag: Boolean;
+    summary: String;
     sections: {
         error: string;
         code: string;
@@ -47,7 +48,7 @@ const QuickLogCard: React.FC<{ log: Log; onClick: () => void }> = ({ log, onClic
 
                 {/* Log Description (Summary) */}
                 <div className="bg-black/50 p-3 my-4 rounded-lg border border-gray-700 font-sans text-gray-300 text-sm">
-                    <p className="line-clamp-2">{log.sections.error || "No summary provided."}</p>
+                    <p className="line-clamp-2">{log.summary || "No summary provided."}</p>
                 </div>
 
                 {/* Bottom Section */}
@@ -87,6 +88,7 @@ const QuickLog: React.FC = () => {
                 console.log("allLogs",allLogs);
                 const cliLogs = allLogs.filter(log => log.cli_flag);
                 
+                console.log("cliLogs",cliLogs)
                 setQuickLogs(cliLogs);
             } catch (err) {
                 console.error("Error fetching quick logs:", err);
@@ -100,8 +102,15 @@ const QuickLog: React.FC = () => {
 
     const handlePromoteLog = (quickLog: Log) => {
         quickLog.sections.code = quickLog.PastedText;
-        quickLog.PastedText;
-        navigate('/edit-log', { state: { logData: quickLog } });
+
+        const params = new URLSearchParams();
+        params.set('title', quickLog.title || 'Untitled Log'); // Use a default if empty
+        params.set('project', quickLog.project);
+        params.set('type', quickLog.type);
+        params.set('status', quickLog.status);
+        params.set('code', quickLog.sections.code);
+        // Navigate to the edit page with the params in the URL
+        navigate(`/edit-log?${params.toString()}`);
     };
 
     const renderLogList = () => {
@@ -177,11 +186,11 @@ const QuickLog: React.FC = () => {
                             <div className="p-6">
                                 <h2 className="text-2xl font-bold text-white mb-4">{selectedLog.title}</h2>
                                 <h3 className="font-semibold text-teal-300 mt-4 mb-2">Summary</h3>
-                                <p className="text-gray-300 bg-black/30 p-3 rounded-lg border border-gray-700">{selectedLog.sections.error || "No summary."}</p>
+                                <p className="text-gray-300 bg-black/30 p-3 rounded-lg border border-gray-700">{selectedLog.summary || "No summary."}</p>
 
                                 <h3 className="font-semibold text-teal-300 mt-4 mb-2">Code Snippet</h3>
                                 <pre className="bg-black/50 p-4 rounded-lg border border-gray-700 text-cyan-300 font-mono text-sm overflow-x-auto">
-                                    <code>{selectedLog.sections.code || "No code snippet."}</code>
+                                    <code>{selectedLog.PastedText || "No code snippet."}</code>
                                 </pre>
                             </div>
                             <div className="bg-black/20 p-4 flex justify-end gap-4">
