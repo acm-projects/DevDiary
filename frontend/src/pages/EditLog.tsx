@@ -8,7 +8,7 @@ import AiSideNavBar from '../components/AiSideNavBar';
 import StatusTag from 'components/StatusTag';
 import TypeTag from 'components/TypeTag';
 import AnimatedPage from 'components/AnimatedPages';
-
+import Dropdown from 'components/Dropdown';
 interface LogData {
     _id?: string;
     title: string;
@@ -70,6 +70,9 @@ function EditLog() {
   const [similarLogs, setSimilarLogs] = useState<string[]>([]);
   const [timer, setTimer] = useState<number | undefined>(undefined);
 
+  // Project Dropdown fields
+  const [projectTitles, setProjectTitles] = useState<any[]>([]);
+  const [projectIds, setProjectIds] = useState<any[]>([]);
   // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -347,6 +350,26 @@ function EditLog() {
     }
   };
 
+  useEffect(() => {
+          console.log("fetch")
+          fetch("http://localhost:5000/api/projects", {
+              method: "GET",
+          })
+          .then((response) => {
+              if (!response.ok) {
+                  throw new Error("Network response was not ok");
+              }
+              return response.json();
+          })
+          .then((data) => {
+              console.log(data)
+              setProjectTitles(data.map((project: any) => project.title));
+              setProjectIds(data.map((project: any) => project.id));
+          })
+          .catch((error) => {
+              console.error("Error fetching search results:", error);
+          });
+      }, []);
   const tagsArray = logData.tags.split(',').map(t => t.trim()).filter(Boolean);
   const creationDate = new Date(logData.createdAt);
 
@@ -355,8 +378,21 @@ function EditLog() {
     <div className="w-screen h-screen bg-[#0d0b1e] bg-[url(src/assets/Variant8.png)] text-white overflow-hidden flex flex-col font-sans">
       <Header>
         <div className="flex items-center gap-4">
-          <p className="font-semibold text-xl">{logData.project}</p>
+          <p className="font-semibold text-xl">Project:</p>
+          <div className="relative z-[9999] w-60">
+            <Dropdown
+              label=""
+              options={projectTitles}
+              defaultValue={logData.project}
+              onChange={(val) => {
+                  setLogData(prev => ({ ...prev, project: val, project_id: projectIds[projectTitles.indexOf(val)]}));
+                  console.log("project titles index",projectTitles.indexOf(val));
+                  console.log("project ids",projectIds);
+              }}
+            />
+          </div>
         </div>
+        
         <div className="flex items-center gap-4">
           <Cancel />
           <Save onClick={handleSave} />
@@ -367,7 +403,7 @@ function EditLog() {
       <div className="flex flex-1 overflow-hidden p-4 sm:p-6 lg:p-8 gap-6">
         <AiSideNavBar insights={aiInsight} similarLogs={similarLogs} />
         
-        <main className="flex-grow flex-1 overflow-hidden bg-[#1E293B]/60 border border-teal-500/20 rounded-2xl p-6 backdrop-blur-sm shadow-lg shadow-teal-500/10 flex flex-col">
+        <main className="flex-grow flex-1 bg-[#1E293B]/60 border border-teal-500/20 rounded-2xl p-6 shadow-lg shadow-teal-500/10 flex flex-col">
           {/* Header */}
           <div className="flex justify-between items-start mb-4">
             <div className="flex flex-col items-start space-y-2 mr-4 min-w-0">

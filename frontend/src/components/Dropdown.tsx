@@ -52,7 +52,7 @@ function Dropdown({ label, options, defaultValue, onChange, sendDataToParent}: D
             </button>
 
             {isOpen && (
-                <ul className="font-sans bg-[#011522] border border-teal-500/30 rounded-lg focus:ring-teal-400 focus:border-teal-400 outline-none transition w-full p-2 absolute left-0 mt-1  max-h-40 overflow-y-auto shadow-lg z-10">
+                <ul className="font-sans bg-[#011522] border border-teal-500/30 rounded-lg focus:ring-teal-400 focus:border-teal-400 outline-none transition w-full p-2 absolute left-0 mt-1  max-h-40 overflow-y-auto shadow-lg z-50">
                     {options.map((option, idx) => (     // Map over options to create list items
                         <li 
                             key={idx}
