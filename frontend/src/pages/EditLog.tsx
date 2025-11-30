@@ -87,8 +87,10 @@ function EditLog() {
 
   // Load log data
   useEffect(() => {
+    console.log("here", state, state?.logData);
     const loadLog = async () => {
       if (logIdFromQuery) {
+        console.log("first")
         try {
           const res = await fetch(`http://localhost:5000/api/logs/${logIdFromQuery}`);
           const data = await res.json();
@@ -111,6 +113,7 @@ function EditLog() {
       } 
       else if (state?.logData) {
         const passedData = state.logData;
+        console.log("passedData",passedData);
         if (passedData._id) {
           try {
             const res = await fetch(`http://localhost:5000/api/logs/${passedData._id}`);
@@ -132,13 +135,14 @@ function EditLog() {
         }
       }
       else {
+        console.log("third")
         const title = searchParams.get('title');
         const project = searchParams.get('project');
         const project_id = searchParams.get('project_id');
         const type = searchParams.get('type');
         const status = searchParams.get('status');
         const tags = searchParams.get('tags');
-        
+        const code = searchParams.get('code');
         if (title || project || type || status || tags || project_id) {
           setLogData({
             ...defaultLogData,
@@ -149,6 +153,7 @@ function EditLog() {
             status: (status as LogData['status']) || defaultLogData.status,
             tags: tags || defaultLogData.tags,
           });
+          setContent("/code\n"+code);
         }
       }
     };
