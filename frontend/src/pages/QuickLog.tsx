@@ -189,7 +189,7 @@ const QuickLog: React.FC = () => {
                                 <p className="text-gray-300 bg-black/30 p-3 rounded-lg border border-gray-700">{selectedLog.summary || "No summary."}</p>
 
                                 <h3 className="font-semibold text-teal-300 mt-4 mb-2">Code Snippet</h3>
-                                <pre className="bg-black/50 p-4 rounded-lg border border-gray-700 text-cyan-300 font-mono text-sm overflow-x-auto">
+                                <pre className="bg-black/50 p-4 rounded-lg border border-gray-700 text-cyan-300 font-mono text-sm overflow-x-auto text-left">
                                     <code>{selectedLog.PastedText || "No code snippet."}</code>
                                 </pre>
                             </div>

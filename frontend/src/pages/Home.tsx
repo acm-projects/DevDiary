@@ -163,7 +163,7 @@ const Home = () => {
           <section className="h-screen w-full flex flex-col items-center justify-center p-8 space-y-12">
             {/* Welcome Banner */}
             <div className=" bg-[#0F172A] bg-[url(src/assets/Variant6.svg)] bg-cover w-full max-w-4xl border border-white/30 rounded-2xl p-8 flex items-center justify-between shadow-lg shadow-teal-500/10 hover:shadow-teal-500/20 transition-all duration-300">
-              <span className="text-3xl font-semibold">Welcome Back, User!</span>
+              <span className="text-3xl font-semibold">Welcome Back, Phuc!</span>
               <button
                 onClick={handleNewLog}
                 className="flex items-center gap-2 px-5 py-3 text-teal-300 bg-teal-500/20 border border-teal-500/30 rounded-xl hover:bg-teal-500/30 transition-colors">

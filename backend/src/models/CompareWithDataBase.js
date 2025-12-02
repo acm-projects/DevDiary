@@ -32,9 +32,6 @@ export async function generateStuffWithLogs(title, content) {
     This is what you are given:
     Title: ${title}
     Error/Code: ${content}
-    
-    Here are the most similar logs:
-    ${matchedLogs.map(l => `id: ${l._id}\ncontent: ${l.content}`).join("\n")}
     `;
 
     const response = await openai.chat.completions.create({
