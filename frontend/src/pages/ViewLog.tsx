@@ -211,7 +211,7 @@ function ViewLog() {
 
                     {/* Main content sections */}
                     <div className="flex-grow pt-4 flex flex-col overflow-y-auto">
-                        <div className="bg-black/70 p-6 rounded-xl border border-gray-700 overflow-y-auto">
+                        <div className="bg-black/70 p-6 rounded-xl border border-gray-700 overflow-y-auto text-left">
                             {sortedSections.length > 0 ? (
                                 sortedSections.map((section, index) => (
                                     <SectionView
