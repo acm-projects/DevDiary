@@ -24,6 +24,12 @@ interface Log {
     };
 }
 
+interface Collaborator {
+    initials: string;
+    name: string;
+    color: string;
+}
+
 // Helper to generate the days for the current month
 const getDaysInMonth = (year: number, month: number) => {
     const date = new Date(year, month, 1);
@@ -48,16 +54,37 @@ const Calendar: React.FC = () => {
     const [allLogs, setAllLogs] = useState<Log[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
+    const sharedLogs = useMemo(() => {
+        return new Map<string, Collaborator[]>([
+            // logId -> array of collaborators
+
+        ]);
+    }, []);
+
     useEffect(() => {
         const fetchLogs = async () => {
             setIsLoading(true);
             try {
-                const res = await fetch('http://localhost:5000/api/logs'); // Fetches all logs
+                const res = await fetch('http://localhost:5000/api/logs');
                 if (!res.ok) {
                     throw new Error('Failed to fetch logs');
                 }
                 const data: Log[] = await res.json();
                 setAllLogs(data);
+
+                // Randomly assigns some logs as shared for demo
+                data.forEach((log, index) => {
+                    if (index % 3 === 0) { // Make every 3rd log shared
+                        sharedLogs.set(log._id, [
+                            { initials: 'JD', name: 'John Doe', color: 'bg-blue-500' },
+                            { initials: 'SA', name: 'Sarah Anderson', color: 'bg-pink-500' },
+                        ]);
+                    } else if (index % 5 === 0) { // Make every 5th log shared with different people
+                        sharedLogs.set(log._id, [
+                            { initials: 'MK', name: 'Mike Kim', color: 'bg-green-500' },
+                        ]);
+                    }
+                });
             } catch (err) {
                 console.error("Error fetching logs:", err);
             } finally {
@@ -66,7 +93,7 @@ const Calendar: React.FC = () => {
         };
 
         fetchLogs();
-    }, []); // Runs once when the page loads
+    }, [sharedLogs]);
 
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
@@ -103,6 +130,39 @@ const Calendar: React.FC = () => {
     };
     
     const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+    // profile icons component
+    const ProfileIcons: React.FC<{ log: Log; size?: 'sm' | 'md' }> = ({ log, size = 'md' }) => {
+        const collaborators = sharedLogs.get(log._id) || [];
+        const isShared = collaborators.length > 0;
+        
+        const sizeClasses = size === 'sm' ? 'w-5 h-5 text-[10px]' : 'w-7 h-7 text-xs';
+        const offsetClass = size === 'sm' ? '-ml-2' : '-ml-3';
+
+        return (
+            <div className="flex items-center">
+                {/* Author's icon */}
+                <div 
+                    className={`${sizeClasses} rounded-full bg-purple-500 flex items-center justify-center font-semibold border-2 border-[#1E293B] z-10`}
+                    title={log.author.name}
+                >
+                    {log.author.initials}
+                </div>
+                
+                {/* Collaborators' icons */}
+                {isShared && collaborators.map((collab, index) => (
+                    <div 
+                        key={index}
+                        className={`${sizeClasses} ${offsetClass} rounded-full ${collab.color} flex items-center justify-center font-semibold border-2 border-[#1E293B]`}
+                        style={{ zIndex: 9 - index }}
+                        title={collab.name}
+                    >
+                        {collab.initials}
+                    </div>
+                ))}
+            </div>
+        );
+    };
 
     return (
             <div className="grid grid-cols-[200px_auto] bg-[#0F172A] bg-[url(src/assets/Variant6.svg)] bg-cover h-screen w-screen text-white font-sans">
@@ -183,12 +243,12 @@ const Calendar: React.FC = () => {
                                         <div 
                                             key={log._id} 
                                             className="p-3 bg-black/30 rounded-lg border border-gray-700 cursor-pointer hover:bg-teal-500/20"
-                                            // Navigate using query params instead of state
                                             onClick={() => navigate(`/view-log?id=${log._id}`)}
                                         >
                                             <p className="font-semibold truncate">{log.title}</p>
-                                            <div className="flex justify-start mt-5">
+                                            <div className="flex justify-between items-center mt-3">
                                                 <StatusTag status={log.status} />
+                                                <ProfileIcons log={log} size="sm" />
                                             </div>
                                         </div>
                                     ))

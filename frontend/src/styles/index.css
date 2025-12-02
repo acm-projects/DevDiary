@@ -128,3 +128,22 @@ fadeIn {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+@keyframes robot-walk {
+  0%, 100% {
+    transform: translateX(0) scale(1);
+  }
+
+  50% {
+    transform: translateX(200px) scale(1) rotate(0deg);
+  }
+  25%, 75% {
+  transform: translateX(100px) scale(1.15) rotate(5deg);
+}
+}
+
+.animate-robot-walk {
+  animation: robot-walk 8s ease-in-out infinite;
+  animation-delay: 1s; /* Waits 1s before starting */
+}
+

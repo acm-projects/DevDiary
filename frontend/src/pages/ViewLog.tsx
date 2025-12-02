@@ -5,7 +5,6 @@ import AiSideNavBar from "../components/AiSideNavBar";
 import Profile from "../components/Profile";
 import StatusTag from "components/StatusTag";
 import TypeTag from "components/TypeTag";
-import AnimatedPage from "components/AnimatedPages";
 
 interface Section {
     type: string;
@@ -123,15 +122,15 @@ function ViewLog() {
 
     if (loading || !logData) {
         return (
-            <div className="w-screen h-screen bg-[#0d0b1e] text-white flex items-center justify-center">
-                <p className="text-xl">Loading Log...</p>
+            <div className="canvas-load flex items-center justify-center h-full">
+                <div className="w-12 h-12 border-4 border-teal-500/20 border-t-teal-500 rounded-full animate-spin" />
             </div>
         );
     }
 
     const tagsArray = logData.tags;
     const creationDate = new Date(logData.createdAt);
-    
+
     // Sort sections by order
     const sortedSections = [...logData.sections].sort((a, b) => a.order - b.order);
 

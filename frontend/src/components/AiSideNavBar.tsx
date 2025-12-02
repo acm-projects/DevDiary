@@ -1,5 +1,6 @@
 import ArrowIcon from "../assets/icons/sideArrow.png";
 import { useState } from "react";
+import RobotMascot from "./RobotMascot";
 
 type AiSideBarProps = {
   insights: string;
@@ -47,7 +48,7 @@ function AiSideNavBar({ insights, similarLogs }: AiSideBarProps) {
           <div className="space-y-3">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-2 h-2 bg-teal-400 rounded-full animate-pulse"></div>
-              <h3 className="font-bold text-lg text-teal-300 tracking-wide">AI Insights</h3>
+              <h3 className="font-bold text-lg text-teal-300 tracking-wide">Bug Buddy</h3>
             </div>
             
             {insights ? (
@@ -56,7 +57,7 @@ function AiSideNavBar({ insights, similarLogs }: AiSideBarProps) {
               </ul>
             ) : (
               <div className="bg-[#1E293B]/40 p-4 rounded-lg border border-dashed border-gray-600 text-center">
-                <p className="text-gray-500 text-sm">Start typing to get AI insights...</p>
+                <p className="text-gray-500 text-sm">Start typing to get Bug Buddy insights...</p>
               </div>
             )}
           </div>
@@ -85,12 +86,15 @@ function AiSideNavBar({ insights, similarLogs }: AiSideBarProps) {
 
           {/* Loading Sign */}
           {!insights && !similarLogs?.length && (
-            <div className="flex flex-col items-center justify-center py-8 space-y-4">
+            <div className="flex flex-col items-center justify-center py-2 space-y-4">
               <div className="relative">
-                <div className="w-12 h-12 border-4 border-teal-500/20 border-t-teal-500 rounded-full animate-spin"></div>
-                <div className="absolute inset-0 w-12 h-12 border-4 border-transparent border-r-purple-500 rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }}></div>
+                <div className="w-25 h-25 border-4 border-teal-500/20 border-t-teal-500 rounded-full animate-spin"></div>
+                <div className="absolute inset-0 w-25 h-25 border-4 border-transparent border-r-purple-500 rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }}></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <RobotMascot />
+                </div>
               </div>
-              <p className="text-gray-400 text-sm">AI is analyzing...</p>
+              <p className="text-gray-400 text-sm">Bug Buddy is analyzing...</p>
             </div>
           )}
         </div>

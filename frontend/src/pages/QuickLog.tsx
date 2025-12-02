@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from 'react'; 
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Nav from 'components/NavBar/Nav';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -32,7 +32,7 @@ interface Log {
 const QuickLogCard: React.FC<{ log: Log; onClick: () => void }> = ({ log, onClick }) => {
     return (
         <li className="relative w-full h-auto p-0 flex flex-col justify-between transition-all duration-300">
-            <div 
+            <div
                 className="relative w-full bg-[#1E293B]/80 border border-white/25 bg-cover bg-[url(src/assets/Variant4.svg)] rounded-2xl p-6 flex flex-col justify-between backdrop-blur-sm shadow-lg shadow-teal-500/10 hover:shadow-[0px_20px_80px_-30px_#41cca6] hover:scale-[1.02] transition-all duration-300 cursor-pointer"
                 onClick={onClick}
             >
@@ -57,15 +57,47 @@ const QuickLogCard: React.FC<{ log: Log; onClick: () => void }> = ({ log, onClic
                     <span className="px-3 py-1 text-xs font-medium bg-purple-500/20 text-purple-300 rounded-full border border-purple-400">
                         CLI Log
                     </span>
-                    
+
                     <button
-                        className="px-5 py-2 bg-cyan-400/50 text-white font-semibold rounded-lg hover:opacity-90 transition-opacity" 
+                        className="px-5 py-2 bg-cyan-400/50 text-white font-semibold rounded-lg hover:opacity-90 transition-opacity"
                     >
                         View Details
                     </button>
                 </div>
             </div>
         </li>
+    );
+};
+
+// Copy to Clipboard Button
+const CopyButton = ({ text }: { text: string }) => {
+    const [copied, setCopied] = useState(false);
+
+    const handleCopy = async () => {
+        await navigator.clipboard.writeText(text);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
+
+    return (
+        <button
+            onClick={handleCopy}
+            className="absolute top-2 right-2 px-3 py-1 bg-gray-600/80 hover:bg-purple-400/50 text-white/50 text-xs rounded-md transition-colors flex items-center gap-1"
+        >
+            {copied ? (
+                <>
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                </>
+            ) : (
+                <>
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                </>
+            )}
+        </button>
     );
 };
 
@@ -85,10 +117,8 @@ const QuickLog: React.FC = () => {
                     throw new Error('Failed to fetch logs');
                 }
                 const allLogs: Log[] = await res.json();
-                console.log("allLogs",allLogs);
                 const cliLogs = allLogs.filter(log => log.cli_flag);
                 
-                console.log("cliLogs",cliLogs)
                 setQuickLogs(cliLogs);
             } catch (err) {
                 console.error("Error fetching quick logs:", err);
@@ -128,7 +158,7 @@ const QuickLog: React.FC = () => {
         return (
             <ul className="mt-6 max-w-5xl mx-auto space-y-6">
                 {quickLogs.map(log => (
-                    <QuickLogCard 
+                    <QuickLogCard
                         key={log._id}
                         log={log}
                         onClick={() => setSelectedLog(log)}
@@ -181,7 +211,7 @@ const QuickLog: React.FC = () => {
                             exit={{ scale: 0.9, opacity: 0 }}
                             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
                             className="bg-[#1E293B] border border-teal-500/30 w-full max-w-2xl rounded-2xl shadow-xl overflow-hidden"
-                            onClick={e => e.stopPropagation()} 
+                            onClick={e => e.stopPropagation()}
                         >
                             <div className="p-6">
                                 <h2 className="text-2xl font-bold text-white mb-4">{selectedLog.title}</h2>
@@ -233,38 +263,58 @@ const QuickLog: React.FC = () => {
                                 <p className="text-gray-300 mb-4">
                                     You can log errors, snippets, and notes directly from your terminal.
                                 </p>
-                                
-                                <h3 className="font-semibold text-purple-300 mt-4 mb-2">Installation (Example)</h3>
-                                <pre className="bg-black/50 p-4 rounded-lg border border-gray-700 text-cyan-300 font-mono text-sm">
-                                    <code>npm install -g devdiary-cli</code>
-                                </pre>
 
-                                <h3 className="font-semibold text-purple-300 mt-4 mb-2">Log a Snippet</h3>
-                                <pre className="bg-black/50 p-4 rounded-lg border border-gray-700 text-cyan-300 font-mono text-sm">
-                                    <code>diary log "My title" -s "My summary" -c "my.code.snippet()"</code>
-                                </pre>
+                                <h3 className="font-semibold text-purple-300 mt-4 mb-2">Installation</h3>
+                                <div className="relative">
+                                    <CopyButton text="command here" />
+                                    <pre className="bg-black/50 p-4 rounded-lg border border-gray-700 text-cyan-300 font-mono text-sm">
+                                        <code>command here</code>
+                                    </pre>
+                                </div>
 
-                                <h3 className="font-semibold text-purple-300 mt-4 mb-2">Log from a File</h3>
-                                <pre className="bg-black/50 p-4 rounded-lg border border-gray-700 text-cyan-300 font-mono text-sm">
-                                    <code>diary log "CORS Error" -f ./error.log</code>
-                                </pre>
+                                <h3 className="font-semibold text-purple-300 mt-4 mb-2">(Optional) Specify Project</h3>
+                                <div className="relative">
+                                    <CopyButton text='devdiary set "projectid_example"' />
+                                    <pre className="bg-black/50 p-4 rounded-lg border border-gray-700 text-cyan-300 font-mono text-sm">
+                                        <code>devdiary set "projectid_example"</code>
+                                    </pre>
+                                </div>
 
-                                <p className="text-gray-400 mt-4 text-sm">
-                                    All logs will appear here in your inbox, ready to be reviewed and promoted to a full log.
-                                </p>
-                            </div>
-                            <div className="bg-black/20 p-4 flex justify-end">
-                                <button
-                                    onClick={() => setShowHelpModal(false)}
-                                    className="px-4 py-2 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors"
-                                >
-                                    Got it!
-                                </button>
+                                <h3 className="font-semibold text-purple-300 mt-4 mb-2">Add a log and specify log type</h3>
+                                <div className="relative">
+                                    <CopyButton text="devdiary add --debug" />
+                                    <pre className="bg-black/50 p-4 rounded-lg border border-gray-700 text-cyan-300 font-mono text-sm">
+                                        <code>devdiary add --debug</code>
+                                        <div>
+                                            <code>devdiary add --document</code>
+                                        </div>
+                                    </pre>
+
+                                    <h3 className="font-semibold text-purple-300 mt-4 mb-2">To add context, use the context flag</h3>
+                                    <div className="relative">
+                                        <CopyButton text='devdiary add --debug --context "error details"' />
+                                        <pre className="bg-black/50 p-4 rounded-lg border border-gray-700 text-cyan-300 font-mono text-sm">
+                                            <code>devdiary add --debug --context "error details"</code>
+                                        </pre>
+
+                                        <p className="text-gray-400 mt-4 text-sm">
+                                            All logs will appear here in your inbox, ready to be reviewed and promoted to a full log.
+                                        </p>
+                                    </div>
+                                    <div className="bg-black/20 p-4 flex justify-end">
+                                        <button
+                                            onClick={() => setShowHelpModal(false)}
+                                            className="px-4 py-2 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors"
+                                        >
+                                            Got it!
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </motion.div>
                     </motion.div>
                 )}
-           </AnimatePresence>
+            </AnimatePresence>
         </>
     );
 };
