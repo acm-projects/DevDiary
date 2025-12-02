@@ -1,9 +1,10 @@
 //Should the search return projects or logs within projects or both
 //both would be like projects then a sublist of the logs
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import '/src/styles/App.css'
 import SearchBar from "../components/Search/SearchBar.tsx"
 import SearchResultList from "../components/Search/SearchResultList.tsx"
+import Logo from "../components/Logo.tsx"
 import Dropdown from "../components/Dropdown.tsx"
 import TagDropdown from "../components/Tags/TagDropdown.tsx"
 import { useLocation } from 'react-router-dom';
@@ -50,6 +51,7 @@ function SearchResults() {
     setProjectFilter(data);
   };
   const handleTagFilterData = (data: string[]) => {
+    console.log("Tag Filters:",data);
     setTagFilter(data);
   };
   //TODO: get project names from backend

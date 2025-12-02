@@ -8,11 +8,12 @@ import AiSideNavBar from '../components/AiSideNavBar';
 import StatusTag from 'components/StatusTag';
 import TypeTag from 'components/TypeTag';
 import AnimatedPage from 'components/AnimatedPages';
-
+import Dropdown from 'components/Dropdown';
 interface LogData {
     _id?: string;
     title: string;
     project: string;
+    project_id: string;
     tags: string;
     status: string;
     type: string;
@@ -46,6 +47,7 @@ function EditLog() {
   const defaultLogData: LogData = {
     title: 'Untitled Log',
     project: 'Untitled Project',
+    project_id: '',
     tags: '',
     status: 'In Progress',
     type: 'Feature',
@@ -68,6 +70,10 @@ function EditLog() {
   const [similarLogs, setSimilarLogs] = useState<string[]>([]);
   const [timer, setTimer] = useState<number | undefined>(undefined);
 
+  // Project Dropdown fields
+  const [projectTitles, setProjectTitles] = useState<any[]>([]);
+  const [projectIds, setProjectIds] = useState<any[]>([]);
+  const [loadingProjects, setLoadingProjects] = useState(false);
   // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -85,8 +91,11 @@ function EditLog() {
 
   // Load log data
   useEffect(() => {
+    console.log("here", state, state?.logData);
     const loadLog = async () => {
+      setLoadingProjects(true);
       if (logIdFromQuery) {
+        console.log("first")
         try {
           const res = await fetch(`http://localhost:5000/api/logs/${logIdFromQuery}`);
           const data = await res.json();
@@ -95,7 +104,6 @@ function EditLog() {
             ?.sort((a: any, b: any) => a.order - b.order)
             .map((s: any) => `/${s.type}\n${s.content}`)
             .join('\n\n') || '';
-          
           setLogData({
             ...data,
             tags: Array.isArray(data.tags) ? data.tags.join(', ') : data.tags
@@ -109,6 +117,7 @@ function EditLog() {
       } 
       else if (state?.logData) {
         const passedData = state.logData;
+        console.log("passedData",passedData);
         if (passedData._id) {
           try {
             const res = await fetch(`http://localhost:5000/api/logs/${passedData._id}`);
@@ -130,23 +139,28 @@ function EditLog() {
         }
       }
       else {
+        console.log("third")
         const title = searchParams.get('title');
         const project = searchParams.get('project');
+        const project_id = searchParams.get('project_id');
         const type = searchParams.get('type');
         const status = searchParams.get('status');
         const tags = searchParams.get('tags');
-        
-        if (title || project || type || status || tags) {
+        const code = searchParams.get('code');
+        if (title || project || type || status || tags || project_id) {
           setLogData({
             ...defaultLogData,
             title: title || defaultLogData.title,
+            project_id: project_id || defaultLogData.project_id,
             project: project || defaultLogData.project,
             type: (type as LogData['type']) || defaultLogData.type,
             status: (status as LogData['status']) || defaultLogData.status,
             tags: tags || defaultLogData.tags,
           });
+          setContent("/code\n"+code);
         }
       }
+      setLoadingProjects(false);
     };
     loadLog();
   }, [logIdFromQuery, state, navigate, searchParams]);
@@ -178,14 +192,17 @@ function EditLog() {
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ id }),
             });
+            console.log('Fetched similar log response:', logRes);
             if (logRes.ok) {
               const log = await logRes.json();
-              titles.push(log.summary);
+              console.log("log",log);
+              titles.push(log.title);
             }
           } catch (err) {
             console.error('Error fetching similar log:', err);
           }
         }
+        console.log("title",titles);
         setSimilarLogs(titles);
       }
     } catch (err) {
@@ -335,6 +352,26 @@ function EditLog() {
     }
   };
 
+  useEffect(() => {
+          console.log("fetch")
+          fetch("http://localhost:5000/api/projects", {
+              method: "GET",
+          })
+          .then((response) => {
+              if (!response.ok) {
+                  throw new Error("Network response was not ok");
+              }
+              return response.json();
+          })
+          .then((data) => {
+              console.log(data)
+              setProjectTitles(data.map((project: any) => project.title));
+              setProjectIds(data.map((project: any) => project.id));
+          })
+          .catch((error) => {
+              console.error("Error fetching search results:", error);
+          });
+      }, []);
   const tagsArray = logData.tags.split(',').map(t => t.trim()).filter(Boolean);
   const creationDate = new Date(logData.createdAt);
 
@@ -343,8 +380,22 @@ function EditLog() {
     <div className="w-screen h-screen bg-[#0d0b1e] bg-[url(src/assets/Variant8.png)] text-white overflow-hidden flex flex-col font-sans">
       <Header>
         <div className="flex items-center gap-4">
-          <p className="font-semibold text-xl">{logData.project}</p>
+          <p className="font-semibold text-xl">Project:</p>
+          <div className="relative z-[9999] w-60">
+            {!loadingProjects && (<Dropdown
+              label=""
+              options={projectTitles}
+              defaultValue={logData.project}
+              onChange={(val) => {
+                  setLogData(prev => ({ ...prev, project: val, project_id: projectIds[projectTitles.indexOf(val)]}));
+                  console.log("project titles index",projectTitles.indexOf(val));
+                  console.log("project ids",projectIds);
+              }}
+            />)}
+            
+          </div>
         </div>
+        
         <div className="flex items-center gap-4">
           <Cancel />
           <Save onClick={handleSave} />
@@ -355,7 +406,7 @@ function EditLog() {
       <div className="flex flex-1 overflow-hidden p-4 sm:p-6 lg:p-8 gap-6">
         <AiSideNavBar insights={aiInsight} similarLogs={similarLogs} />
         
-        <main className="flex-grow flex-1 overflow-hidden bg-[#1E293B]/60 border border-teal-500/20 rounded-2xl p-6 backdrop-blur-sm shadow-lg shadow-teal-500/10 flex flex-col">
+        <main className="flex-grow flex-1 bg-[#1E293B]/60 border border-teal-500/20 rounded-2xl p-6 shadow-lg shadow-teal-500/10 flex flex-col">
           {/* Header */}
           <div className="flex justify-between items-start mb-4">
             <div className="flex flex-col items-start space-y-2 mr-4 min-w-0">

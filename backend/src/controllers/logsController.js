@@ -108,6 +108,7 @@ export async function createLog(req, res) {
         }
         
         const savedLog = await log.save();
+        console.log("project id",project_id);
         if (project_id && mongoose.Types.ObjectId.isValid(project_id))
         {
             const project = await Project.findById(project_id);

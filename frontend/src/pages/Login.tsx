@@ -54,7 +54,7 @@ function Login () {
         };
 
     const goToHome = () => {
-        navigate('/'); 
+        navigate('/home'); 
     };
 
     return (
@@ -65,7 +65,7 @@ function Login () {
 
             <div className="bg-[#1E293B] p-10 rounded-xl shadow-lg w-full max-w-md">
                 <h2 className="text-3xl font-bold text-center mb-8">Login</h2>
-                <form className="space-y-6" onSubmit={handleSubmit}>
+                <form className="space-y-6">
                     <div>
                         <label htmlFor="email" className="text-left block text-sm font-medium mb-2">Email</label>
                         <input
@@ -74,6 +74,7 @@ function Login () {
                             value={email}
                             onChange={handleChange}
                             className="w-full p-3 bg-[#2D3748] rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                            required
                         />
                     </div>
                     <div>
@@ -84,12 +85,13 @@ function Login () {
                             value={password}
                             onChange={handleChange}
                             className="w-full p-3 bg-[#2D3748] rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                            required
                         />
                     </div>
                     <button
                         type="submit"
                         className="w-full py-3 bg-[#43B5A8] rounded-md font-semibold hover:opacity-90 transition-opacity"
-                        //onClick={handleSubmit}
+                        onClick={goToHome}
                     >
                         Login
                     </button>

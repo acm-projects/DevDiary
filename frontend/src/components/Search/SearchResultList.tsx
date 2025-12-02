@@ -56,19 +56,18 @@ function SearchResultList({ query, projectFilter, tagFilter }: SearchResultListP
   const simplifiedSearchResults = searchResults.map(({ _id, title, project, summary, status, tags }) => ({
     id: _id,
     project: project,
-    name: title,
+    title: title,
     description: summary,
     status: status,
-    tags: tags.map((tag: any) => ({ name: tag })),
+    tags: tags,
   }));
-
-
   const filteredSearchResults = simplifiedSearchResults.filter(result => {
     const projectMatches = result.project === projectFilter || projectFilter == "" || projectFilter == "No Project";
 
-    const tagMatches = result.tags.some((tag: any) => 
-      tagFilter.includes(tag.name) || tagFilter.length == 0
-    );
+    const tagMatches = (result.tags.length == 0) ? (true) : 
+      result.tags.some((tag: any) => 
+        tagFilter.includes(tag) || tagFilter.length == 0
+      );
 
     return projectMatches && tagMatches;
   });
