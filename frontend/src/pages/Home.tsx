@@ -1,9 +1,10 @@
 import React, { useEffect, useState, type FormEvent } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Nav from "../components/NavBar/Nav.tsx";
 import LogList from "components/LogListView/LogList.tsx";
 import StatusTag from "components/StatusTag.tsx";
 import SearchBar from "components/Search/SearchBar.tsx";
+import RobotMascot from '../components/RobotMascot.tsx';
 
 // Carousel Component 
 const RecentLogsCarousel: React.FC<{ logs: any[] }> = ({ logs }) => {
@@ -68,7 +69,6 @@ const RecentLogsCarousel: React.FC<{ logs: any[] }> = ({ logs }) => {
               </span>
             ))}
           </div>
-          {/* FIXED: Changed _id to id since we renamed it in simplifiedAllLogs */}
           <Link
             to={`/view-log?id=${currentLog.id}`}
             className="px-6 py-3 bg-cyan-400/50 text-white font-semibold rounded-lg hover:opacity-90 transition-opacity"
@@ -91,7 +91,7 @@ const RecentLogsCarousel: React.FC<{ logs: any[] }> = ({ logs }) => {
             <div key={index} onClick={() => setCurrentIndex(index)} className={`w-2 h-2 rounded-full cursor-pointer transition-colors ${currentIndex === index ? 'bg-teal-400' : 'bg-gray-600'}`}></div>
           ))}
         </div>
-      </div>
+    </div>
     </div>
   );
 };
@@ -113,7 +113,7 @@ const Home = () => {
   const [allLogs, setAllLogs] = useState<any[]>([]);
   const [loadingRecentLogs, setLoadingRecentLogs] = useState<boolean>(true);
   const [errorRecentLogs, setErrorRecentLogs] = useState<string | null>(null);
-  
+
   useEffect(() => {
     setLoadingRecentLogs(true);
     setErrorRecentLogs(null);
@@ -149,7 +149,7 @@ const Home = () => {
     updatedAt: updatedAt,
   }));
 
-  const recentLogs = simplifiedAllLogs.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()).slice(0,5);
+  const recentLogs = simplifiedAllLogs.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()).slice(0, 5);
 
   return (
     <div className="relative snap-y snap-mandatory h-screen overflow-y-scroll">
@@ -159,19 +159,27 @@ const Home = () => {
         </div>
 
         <div className="relative h-screen overflow-y-auto ">
-          {/* Welcome, Search, and Carousel */}
-          <section className="h-screen w-full flex flex-col items-center justify-center p-8 space-y-12">
-            {/* Welcome Banner */}
-            <div className=" bg-[#0F172A] bg-[url(src/assets/Variant6.svg)] bg-cover w-full max-w-4xl border border-white/30 rounded-2xl p-8 flex items-center justify-between shadow-lg shadow-teal-500/10 hover:shadow-teal-500/20 transition-all duration-300">
-              <span className="text-3xl font-semibold">Welcome Back, Phuc!</span>
-              <button
-                onClick={handleNewLog}
-                className="flex items-center gap-2 px-5 py-3 text-teal-300 bg-teal-500/20 border border-teal-500/30 rounded-xl hover:bg-teal-500/30 transition-colors">
-                <span className="text-2xl mb-1">+</span>
-                <span className="text-md"> New Log</span>
-              </button>
-            </div>
-
+  <section className="h-screen w-full flex flex-col items-center justify-center space-y-12">
+    {/* Welcome Banner */}
+    <div className="bg-[#0F172A] bg-[url(src/assets/Variant6.svg)] bg-cover w-full max-w-4xl border border-white/30 rounded-2xl pr-8 flex items-center justify-between shadow-lg shadow-teal-500/10 hover:shadow-teal-500/20 transition-all duration-300">
+      {/* Robot Mascot*/}
+      <span className="flex justify-center w-40 h-40 -ml-5 flex-shrink-0">
+        <RobotMascot />
+      </span>
+      
+      {/* Welcome Text*/}
+      <span className="text-3xl font-semibold flex-1 mt-5 text-left">
+        Welcome Back, User!
+      </span>
+      
+      {/* New Log Button*/}
+      <button
+        onClick={handleNewLog}
+        className="flex items-center gap-2 px-5 py-3 mt-5 text-teal-300 bg-teal-500/20 border border-teal-500/30 rounded-xl hover:bg-teal-500/30 transition-colors flex-shrink-0">
+        <span className="text-2xl mb-1">+</span>
+        <span className="text-md">New Log</span>
+      </button>
+    </div>
             {/* Search Bar */}
             <div className="w-1/2">
               <SearchBar />
@@ -180,7 +188,7 @@ const Home = () => {
             {/* Carousel */}
             <RecentLogsCarousel logs={recentLogs} />
           </section>
-          
+
           <div className="w-4/5 mx-auto flex flex-col flex-1 min-h-0">
             <h2 className=" text-xl font-semibold text-white text-left pt-5 pb-5">
               Unresolved Logs:
