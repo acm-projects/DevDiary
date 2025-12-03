@@ -73,7 +73,9 @@ function SearchResultList({ query, projectFilter, tagFilter }: SearchResultListP
   });
   
   return (
+    <div className="z-10">
     <LogList logList={filteredSearchResults} />
+    </div>
   )
 }
 

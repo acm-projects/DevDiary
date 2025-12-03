@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Nav from 'components/NavBar/Nav';
 import { motion, AnimatePresence } from 'framer-motion';
+import FloatingBackground from 'components/FloatingBackground';
 
 interface Log {
     _id: string;
@@ -170,7 +171,7 @@ const QuickLog: React.FC = () => {
 
     return (
         <>
-            <div className="grid grid-cols-[200px_auto] bg-[#0d0b1e] bg-[url(src/assets/Variant8.png)] bg-cover h-screen w-screen text-white font-sans">
+            <div className="grid grid-cols-[200px_auto] bg-[#0d0b1e] bg-[url(src/assets/Variant6.svg)] bg-cover h-screen w-screen text-white font-sans">
                 {/* Navigation Sidebar */}
                 <div className="sticky top-0 h-screen">
                     <Nav />
@@ -178,6 +179,12 @@ const QuickLog: React.FC = () => {
 
                 {/* Main Content */}
                 <main className="relative h-screen overflow-y-auto p-8">
+
+                    <div className="z-10">
+                        {/* Floating Background */}
+                        <FloatingBackground />
+                    </div>
+                    
                     {/* Header */}
                     <div className="flex justify-between items-center mb-6">
                         <h1 className="text-3xl font-bold">Quick Logs</h1>

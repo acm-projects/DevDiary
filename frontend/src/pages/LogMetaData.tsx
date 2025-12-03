@@ -4,6 +4,7 @@ import Dropdown from '../components/Dropdown';
 import Header from '../components/Header';
 import AnimatedPage from '../components/AnimatedPages';
 import { motion, AnimatePresence } from 'framer-motion';
+import FloatingBackground from 'components/FloatingBackground';
 
 const FormStep: React.FC<{ question: string; children: React.ReactNode }> = ({ question, children }) => (
     <div className="w-full text-left">
@@ -146,6 +147,10 @@ function LogMetaData() {
                 </Header>
 
                 <main className="flex-grow flex items-center justify-center p-8 lg:p-12 gap-12 relative">
+                    <div className="">
+                        {/* Floating Background */}
+                        <FloatingBackground />
+                    </div>
 
                     <button
                         onClick={() => setIsTipsVisible(prev => !prev)}

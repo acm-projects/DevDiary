@@ -10,6 +10,7 @@ import TagDropdown from "../components/Tags/TagDropdown.tsx"
 import { useLocation } from 'react-router-dom';
 import Nav from "../components/NavBar/Nav.tsx"
 import type { TagProps } from "../components/Tags/Tag.tsx"
+import FloatingBackground from 'components/FloatingBackground.tsx';
 
 function SearchResults() {
   const location = useLocation();
@@ -128,6 +129,10 @@ function SearchResults() {
                     <div className="w-full max-w-2xl mb-6 mx-auto">
             <SearchBar />
           </div>
+          {/* Floating Background */}
+                    <div className="">
+                    <FloatingBackground />
+                    </div>
 
           <div className="flex gap-4 mb-10 justify-center">
             <div className="w-64">

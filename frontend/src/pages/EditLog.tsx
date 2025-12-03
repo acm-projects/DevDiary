@@ -9,6 +9,7 @@ import StatusTag from 'components/StatusTag';
 import TypeTag from 'components/TypeTag';
 import AnimatedPage from 'components/AnimatedPages';
 import Dropdown from 'components/Dropdown';
+import FloatingBackground from 'components/FloatingBackground';
 interface LogData {
     _id?: string;
     title: string;
@@ -380,6 +381,8 @@ function EditLog() {
   return (
     <AnimatedPage>
     <div className="w-screen h-screen bg-[#0d0b1e] bg-[url(src/assets/Variant8.png)] text-white overflow-hidden flex flex-col font-sans">
+    {/* Floating Background */}
+          <FloatingBackground />
       <Header>
         <div className="flex items-center gap-4">
           <p className="font-semibold text-xl">Project:</p>
@@ -404,7 +407,6 @@ function EditLog() {
           <Profile />
         </div>
       </Header>
-
       <div className="flex flex-1 overflow-hidden p-4 sm:p-6 lg:p-8 gap-6">
         <AiSideNavBar insights={aiInsight} similarLogs={similarLogs} />
         
