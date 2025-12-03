@@ -25,6 +25,21 @@ function AiSideNavBar({ insights, similarLogs }: AiSideBarProps) {
     </li>
   );
 
+  const InsightItem2: React.FC<{ children: React.ReactNode; icon?: string }> = ({
+    children,
+    icon,
+  }) => (
+    <li className="bg-gradient-to-br from-[#1E293B]/8 to-[#0F172A]/90 p-2 rounded-lg border border-teal-500/20 text-sm text-gray-200 hover:border-teal-500/4 transition-all duration-200 shadow-lg">
+      {icon && (
+        <div className="flex items-center gap-1 mb-1">
+          <span className="text-lg">{icon}</span>
+          <div className="h-px flex-1 bg-gradient-to-r from-teal-500/50 to-transparent"></div>
+        </div>
+      )}
+      <p className="leading-relaxed">{children}</p>
+    </li>
+  );
+
   return (
     <div
       className={`h-full bg-gradient-to-br from-[#1E293B]/60 to-[#0F172A]/80 backdrop-blur-sm border border-teal-500/20 rounded-2xl p-4 transition-all duration-300 ease-in-out shadow-xl shadow-teal-500/5 ${
@@ -72,9 +87,9 @@ function AiSideNavBar({ insights, similarLogs }: AiSideBarProps) {
             {similarLogs && similarLogs.length > 0 ? (
               <ul className="space-y-3">
                 {similarLogs.map((log, index) => (
-                  <InsightItem key={`log-${index}`}>
+                  <InsightItem2 key={`log-${index}`}>
                     {log}
-                  </InsightItem>
+                  </InsightItem2>
                 ))}
               </ul>
             ) : (

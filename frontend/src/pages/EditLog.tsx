@@ -52,7 +52,7 @@ function EditLog() {
     status: 'In Progress',
     type: 'Feature',
     sections: [],
-    author: { initials: 'JD', name: 'John Doe' },
+    author: { initials: 'PT', name: 'Phuc Trinh' },
     createdAt: new Date().toISOString(),
   };
 
@@ -164,34 +164,35 @@ function EditLog() {
     };
     loadLog();
   }, [logIdFromQuery, state, navigate, searchParams]);
+
   const fetchAiInsights = async (title: string, contentText: string) => {
     try {
+      const sections = parseContentToSections();
+      console.log("SECTIONS:",sections);
       // Generate tags and explanation
       const res1 = await fetch('http://localhost:5000/api/generateTags', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, content: contentText }),
+        body: JSON.stringify({ title, content: sections }),
       });
       if (res1.ok) {
         const data = await res1.json();
         setAiInsight(data.explanation);
       }
-      const res2 = await fetch('http://localhost:5000/api/generateStuffWithLogs', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, content: contentText }),
-      });
+      const res2 = await fetch("http://localhost:5000/api/search", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ searchContent: title }),
+    });
       if (res2.ok) {
         const data = await res2.json();
-        const logIds = data.similar_logs.split(',');
+        console.log("NEW SEARCH",)
+        const logIds = data.map((d:any) => d._id);
+        console.log("LOG IDS",logIds);
         const titles: string[] = [];
         for (const id of logIds) {
           try {
-            const logRes = await fetch('http://localhost:5000/api/getLogById', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ id }),
-            });
+            const logRes = await fetch(`http://localhost:5000/api/logs/`+id);
             console.log('Fetched similar log response:', logRes);
             if (logRes.ok) {
               const log = await logRes.json();
@@ -214,6 +215,7 @@ function EditLog() {
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newContent = e.target.value;
     setContent(newContent);
+    console.log("new content",newContent)
 
     // Debounce AI insights
     clearTimeout(timer);
@@ -381,7 +383,7 @@ function EditLog() {
       <Header>
         <div className="flex items-center gap-4">
           <p className="font-semibold text-xl">Project:</p>
-          <div className="relative z-[9999] w-60">
+          <div className="relative z-[9999] w-70">
             {!loadingProjects && (<Dropdown
               label=""
               options={projectTitles}
@@ -428,7 +430,7 @@ function EditLog() {
                 </p>
               )}
               <div className="flex items-center gap-x-3 text-sm text-gray-400">
-                <span><strong>{logData.author.initials}</strong> {logData.author.name}</span>
+                <span><strong>PT </strong>Phuc Trinh</span>
                 <span>{creationDate.toLocaleDateString()}</span>
                 <span>{creationDate.toLocaleTimeString()}</span>
               </div>

@@ -8,19 +8,19 @@ const openai = new OpenAI({
 
 export async function generateTags(title, sections) {
   try {
+    console.log("SECTIONS",sections);
     const prompt = `You are a software debugger that is trying to teach this newbie why 
-    his code sucks and is not working. 
-    It is important that you complete this fast. At max 2 seconds. Accurary is less important than time.
+    his code sucks and is not working. Be very specific. Don't just say to check for uninstantiated variables. Actually look at the code.
     Given an error message (and optional code), then identify the core ideas.
     Return JSON with:
     - "core_tags": 3 tags each 11 characters or shorter (comma separated)
-    - "summary": one short sentence summarizing it
-    - "explanation": a short one-sentence explanation of possible directions.
+    - "summary": two sentences summarizing it
+    - "explanation": a two sentence explanation of what exactly is wrong and how to fix it.
     This is what you are given:
     Title: ${title}
-    Error: ${sections.error}
-    Code: ${sections.code}`;
+    Error/Code: ${JSON.stringify(sections)}`;
 
+    console.log(prompt);
     const response = await openai.chat.completions.create({
       model: "gpt-4.1-nano",
       messages: [

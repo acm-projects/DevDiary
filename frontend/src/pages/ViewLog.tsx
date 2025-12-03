@@ -179,9 +179,9 @@ function ViewLog() {
                             <div className="flex items-center gap-x-3 text-sm text-gray-400">
                                 <span>
                                     <strong>
-                                        {logData.author.initials}
+                                        PT
                                     </strong>{" "}
-                                    {logData.author.name}
+                                    Phuc Trinh
                                 </span>
                                 <span>
                                     {creationDate.toLocaleDateString()}

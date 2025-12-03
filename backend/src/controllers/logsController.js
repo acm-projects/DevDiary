@@ -142,7 +142,7 @@ export async function updateLog(req, res) {
 
         // Get the new data from the body
         const { title, project, project_id, tags, status, type, sections, author } = req.body;
-        const tagsArray = tags;
+        const tagsArray = tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
 
         // Update all fields
         log.title = title;
@@ -153,6 +153,8 @@ export async function updateLog(req, res) {
         log.sections = sections || [];
         log.author = author;
 
+        console.log("tagsArray",tagsArray);
+
         // Generate new AI summary and tags
         let AIOutput = { core_tags: "", summary: "", explanation: "" };
         try {
@@ -162,9 +164,9 @@ export async function updateLog(req, res) {
         }
 
         //only save new tags if not enough already existing tags
-        if (!tagsArray) {
-            log.tags = AIOutput.core_tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
-        }
+        // if (!tagsArray) {
+        //     log.tags = AIOutput.core_tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
+        // }
         log.explanation = AIOutput.explanation;
         log.summary = AIOutput.summary;
         // Re-generate embedding on update

@@ -5,6 +5,7 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export async function search(searchContent) {
   try {
+    console.log("searchContent",searchContent);
     const embeddingRes = await openai.embeddings.create({
       model: "text-embedding-3-small",
       input: searchContent,
