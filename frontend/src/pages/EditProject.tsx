@@ -5,6 +5,7 @@ import Dropdown from "../components/Dropdown";
 import Cancel from "../components/Cancel";
 import { useNavigate } from "react-router-dom"
 import EmojiPicker from 'emoji-picker-react';
+import FloatingBackground from "components/FloatingBackground";
 
 const EditProject: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<File|null>(null);
@@ -76,6 +77,10 @@ const EditProject: React.FC = () => {
 
       {/* Main Content */}
       <main className="relative h-screen overflow-y-auto p-8">
+        <div className="z-10">
+                        {/* Floating Background */}
+                        <FloatingBackground />
+                    </div>
         <div className="w-full max-w-4xl mx-auto">
           {/* Header */}
           <div className="mb-10">

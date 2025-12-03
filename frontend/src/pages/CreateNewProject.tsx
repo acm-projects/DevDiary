@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom"
 import EmojiPicker from 'emoji-picker-react';
 import { Theme } from 'emoji-picker-react';
 import EmojiText from '../components/EmojiText.tsx'
+import FloatingBackground from "components/FloatingBackground.tsx";
 const CreateNewProject: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<File|null>(null);
   const [selectedImageName, setSelectedImageName] = useState<String>("No Image");
@@ -53,6 +54,11 @@ const CreateNewProject: React.FC = () => {
 
       {/* Main Content */}
       <main className="relative h-screen overflow-y-auto p-8">
+
+        <div className="z-10">
+                        {/* Floating Background */}
+                        <FloatingBackground />
+                    </div>
         <div className="w-full max-w-4xl mx-auto">
           {/* Header */}
           <div className="mb-10">

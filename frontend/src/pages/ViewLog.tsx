@@ -5,6 +5,7 @@ import AiSideNavBar from "../components/AiSideNavBar";
 import Profile from "../components/Profile";
 import StatusTag from "components/StatusTag";
 import TypeTag from "components/TypeTag";
+import FloatingBackground from "components/FloatingBackground";
 
 interface Section {
     type: string;
@@ -166,7 +167,12 @@ function ViewLog() {
             </Header>
 
             <div className="flex flex-1 overflow-hidden p-4 sm:p-6 lg:p-8 gap-6">
-                <main className="flex-grow flex-1 overflow-hidden bg-[#1E293B]/60 border border-teal-500/20 rounded-2xl p-6 backdrop-blur-sm shadow-lg shadow-teal-500/10 flex flex-col">
+                <main className="flex-grow flex-1 overflow-hidden bg-[#1E293B] border border-teal-500/20 rounded-2xl p-6 backdrop-blur-sm shadow-lg shadow-teal-500/10 flex flex-col">
+                    {/* Floating Background */}
+                    <div className="-z-10">
+                    <FloatingBackground />
+                    </div>
+                    
                     {/* Header section */}
                     <div className="flex justify-between items-start mb-4">
                         <div className="flex flex-col items-start space-y-2 mr-4 min-w-0">
@@ -191,7 +197,7 @@ function ViewLog() {
                                 </span>
                             </div>
                         </div>
-
+                        
                         <div className="flex-shrink-0 flex flex-col items-end space-y-2">
                             <StatusTag status={logData.status} />
                             <div className="flex flex-wrap justify-end gap-2 max-w-xs">

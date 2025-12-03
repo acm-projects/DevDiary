@@ -1,11 +1,11 @@
-import React, { Suspense, useEffect, useRef } from "react";
-import { Canvas } from "@react-three/fiber";
+import React, { Suspense, useEffect, useRef, useState } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Preload, useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 import Loader from "./Loader.tsx";
 
 // 3D Model Robot Component
-const Robot: React.FC = () => {
+const Robot: React.FC<{ mousePosition: { x: number; y: number } }> = ({ mousePosition }) => {
   const group = useRef<THREE.Group>(null);
   const { scene, animations } = useGLTF("/cute_robot/scene.gltf");
   const { actions } = useAnimations(animations, group);
@@ -18,6 +18,30 @@ const Robot: React.FC = () => {
       });
     }
   }, [actions]);
+
+  // rotate robot to look at mouse
+  useFrame(() => {
+    if (group.current) {
+      // Convert mouse position to 3D space
+      const targetRotationY = mousePosition.x * 0.5; // Horizontal rotation
+      const targetRotationX = -mousePosition.y * 0.3; // Vertical rotation (limited)
+
+      group.current.rotation.y = THREE.MathUtils.lerp(
+        group.current.rotation.y,
+        targetRotationY,
+        0.1
+      );
+
+      if (group.current.children[0]) {
+        const currentRotationX = group.current.children[0].rotation.x;
+        group.current.children[0].rotation.x = THREE.MathUtils.lerp(
+          currentRotationX,
+          targetRotationX - 0.09,
+          0.1
+        );
+      }
+    }
+  });
 
   return (
     <group ref={group}>
@@ -51,12 +75,27 @@ const Robot: React.FC = () => {
         rotation={[-0.09, 0, 0.35]}
       />
     </group>
-
   );
 };
 
 const RobotMascot: React.FC = () => {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
+  useEffect(() => {
+    const handleMouseMove = (event: MouseEvent) => {
+      // Fix mouse position to -1 to 1 range
+      const x = (event.clientX / window.innerWidth) * 2 - 1;
+      const y = (event.clientY / window.innerHeight) * 2 - 1;
+      
+      setMousePosition({ x, y });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
 
   return (
     <div className="w-full h-full">
@@ -73,7 +112,7 @@ const RobotMascot: React.FC = () => {
             maxPolarAngle={Math.PI / 3}
             minPolarAngle={Math.PI / 3}
           />
-          <Robot />
+          <Robot mousePosition={mousePosition} />
         </Suspense>
 
         <Preload all />
@@ -83,6 +122,6 @@ const RobotMascot: React.FC = () => {
 };
 
 // Preloads the model
-useGLTF.preload("/robot_playground/scene.gltf");
+useGLTF.preload("/cute_robot/scene.gltf");
 
 export default RobotMascot;

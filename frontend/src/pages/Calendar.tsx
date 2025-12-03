@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Nav from 'components/NavBar/Nav';
 import StatusTag from 'components/StatusTag';
+import FloatingBackground from 'components/FloatingBackground';
 
 interface Log {
     _id: string;
@@ -173,6 +174,11 @@ const Calendar: React.FC = () => {
 
                 {/* Main Content */}
                 <main className="relative h-screen overflow-y-auto p-8 flex gap-6">
+                    {/* Floating Background */}
+                    <div className="">
+                    <FloatingBackground />
+                    </div>
+                    
                     {/* Calendar View */}
                     <div className="flex-1 max-w-4xl">
                     

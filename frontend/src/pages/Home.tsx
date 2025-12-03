@@ -5,6 +5,7 @@ import LogList from "components/LogListView/LogList.tsx";
 import StatusTag from "components/StatusTag.tsx";
 import SearchBar from "components/Search/SearchBar.tsx";
 import RobotMascot from '../components/RobotMascot.tsx';
+import FloatingBackground from "components/FloatingBackground.tsx";
 
 // Floating background gradient elements
 const FloatingElements: React.FC = () => {
@@ -204,6 +205,7 @@ const Home = () => {
         <div className="relative h-screen overflow-y-auto">
           {/* Floating background elements */}
           <FloatingElements />
+          <FloatingBackground />
 
           {/* Main Content */}
           <div className="relative z-10">
