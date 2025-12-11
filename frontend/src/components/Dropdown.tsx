@@ -1,0 +1,79 @@
+import '/src/styles/App.css'
+import {useState, useRef, useEffect} from "react";
+import ArrowIcon from "../assets/icons/sideArrow.png";
+
+interface DropdownProps {
+    label: string;
+    options: string[];
+    defaultValue?: string; // optional default selected value
+    onSelect?: (option: string) => void;
+    onChange?: (selectedValue: string) => void;
+    sendDataToParent?: (data: string) => void; 
+}
+
+function Dropdown({ label, options, defaultValue, onChange, sendDataToParent}: DropdownProps) {
+
+    const [isOpen, setIsOpen] = useState(false);                          // track if dropdown is open
+    const [selected, setSelected] = useState(defaultValue || options[0]); // default to first option if no defaultValue
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setIsOpen(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
+     const handleSelect = (option: string) => {
+        setSelected(option);
+        setIsOpen(false);
+        if (onChange) {
+            onChange(option);
+        }
+    };
+
+    return (
+        <div className="relative w-full" ref={dropdownRef}>
+            {label && <p className="font-sans text-sm flex justify-start-safe">{label}</p>} 
+
+            <button onClick={ () => setIsOpen(!isOpen) } 
+                type="button"
+                className="font-sans bg-[#011522]/80 border border-teal-500/30 rounded-lg focus:ring-teal-400 focus:border-teal-400 outline-none transition w-full p-2 text-white text-[15px] text-center cursor-pointer hover:border-white/50 leading-6 flex justify-between items-center">
+                {selected} {/* Show selected option */}
+                <img 
+                    src={ArrowIcon} 
+                    alt="arrow" 
+                    className={`w-[1vw] cursor-pointer rotate-90 float-right mt-1.5 mr-0.5 ${isOpen ? 'rotate-270': ''}`}
+                />  {/* Down arrow icon */}
+                
+            </button>
+
+            {isOpen && (
+                <ul className="font-sans bg-[#011522] border border-teal-500/30 rounded-lg focus:ring-teal-400 focus:border-teal-400 outline-none transition w-full p-2 absolute left-0 mt-1  max-h-40 overflow-y-auto shadow-lg z-50">
+                    {options.map((option, idx) => (     // Map over options to create list items
+                        <li 
+                            key={idx}
+                            onClick= { () => {
+                                setSelected(option); // Update selected option
+                                if (sendDataToParent) {
+                                sendDataToParent(option);
+                                }
+                                setIsOpen(false);    // Close dropdown
+                                handleSelect(option);
+                            }}
+                            className="flex justify-start p-2 leading-6 hover:bg-[#4bddb433]/50  cursor-pointer text-white text-[14px]"> {/* List items styling */}
+                            {option}        {/* Display option text */}
+                        </li>
+                    ))}
+                </ul>
+            )}
+        </div>
+
+    );
+}
+
+
+export default Dropdown

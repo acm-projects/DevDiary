@@ -1,3 +1,18 @@
 export { default as CreateNewProject } from "./CreateNewProject.tsx";
-export { default as DefaultReactApp } from "./DefaultReactApp.tsx";
+export { default as SearchResults } from "./SearchResults.tsx";
 export { default as Home } from "./Home.tsx";
+export { default as Settings } from "./Settings.tsx";
+export { default as Login } from "./Login.tsx";
+export { default as SignUp } from "./SignUp.tsx";
+export { default as AllLogs } from "./AllLogs.tsx";
+export { default as ViewLog } from "./ViewLog.tsx";
+export { default as LogMetaData } from "./LogMetaData.tsx";
+export { default as EditLog } from "./EditLog.tsx";
+export { default as LandingPage } from "./LandingPage.tsx";
+export { default as Projects } from "./Projects.tsx";
+export { default as AllLogsInProject } from "./AllLogsInProject.tsx";
+export { default as EditProject } from "./EditProject.tsx";
+export { default as Calendar } from "./Calendar.tsx";
+export { default as QuickLog } from "./QuickLog.tsx";
+
+

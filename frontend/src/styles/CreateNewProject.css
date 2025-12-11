@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+
+.input-field {
+  background-color: rgba(1, 21, 34, 0.5); /* #011522 at 50% opacity */
+  padding-left: 0.75rem;       /* px-3 */
+  padding-right: 0.75rem;
+  padding-top: 0.25rem;        /* py-1 */
+  padding-bottom: 0.25rem;
+  color: white;                /* text-white */
+  font-size: 1rem;         /* text-lg = 18px */
+  width: 100%;                 /* w-full */
+  border-radius: 0.5rem;       /* rounded-lg */
+  border-color: #011522;         /* border-white (needs a border width to show) */
+  border-width: 0.1rem;           /* default Tailwind border width */
+  font-family: var(--font-headvig);
+
+  /* Placeholder styling */
+}
+
+.input-field::placeholder {
+  color: #9ca3af;              /* placeholder-gray-400 */
+  font-family: var(--font-headvig);
+}

@@ -1,0 +1,6 @@
+config.ini
+.env
+secrets/
+*.local
+node_modules/
+my-node-cli/node_modules/
